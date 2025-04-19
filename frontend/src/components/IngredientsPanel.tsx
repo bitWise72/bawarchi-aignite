@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { X, Edit, Check } from "lucide-react"
+import { X, Edit, Check, ShoppingCart } from "lucide-react"
 import type { Recipe } from "@/services/recipeService"
 
 interface MarketplaceOption {
@@ -19,12 +19,71 @@ interface IngredientsPanelProps {
   marketplaceData?: IngredientMarketplaceData
 }
 
+function normalize(str: string): string {
+  return str
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+}
+
+
+function findMatchingIngredientKey(
+  ingredient: string,
+  data: IngredientMarketplaceData
+): string | null {
+  const normalizedInput = normalize(ingredient)
+
+  // First try exact match
+  if (data[ingredient]) {
+    return ingredient
+  }
+
+  // Try to find a key that includes the ingredient or vice versa
+  for (const key of Object.keys(data)) {
+    const normalizedKey = normalize(key)
+
+    // Check if either string includes the other
+    if (
+      normalizedInput.includes(normalizedKey) ||
+      normalizedKey.includes(normalizedInput)
+    ) {
+      return key
+    }
+  }
+
+  return null
+}
+
+function getMarketplaceDataFromRecipe(
+  recipe: Recipe,
+  ingredientData: IngredientMarketplaceData
+): IngredientMarketplaceData {
+  const result: IngredientMarketplaceData = {}
+  const usedIngredients = new Set<string>()
+
+  Object.values(recipe).forEach((step) => {
+    step.measurements.forEach(([ingredient]) => {
+      const norm = normalize(ingredient)
+
+      if (usedIngredients.has(norm)) return
+
+      const matchingKey = findMatchingIngredientKey(ingredient, ingredientData)
+      if (matchingKey) {
+        result[ingredient] = ingredientData[matchingKey]
+        usedIngredients.add(norm)
+      }
+    })
+  })
+
+  return result
+}
+
 const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
   recipe,
   onClose,
   onUpdateIngredient,
   darkMode,
-  marketplaceData = {},
+  marketplaceData: externalMarketplaceData,
 }) => {
   const [ingredients, setIngredients] = useState<[string, string][]>([])
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
@@ -35,6 +94,9 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
   const [cart, setCart] = useState<
     { ingredient: string; brand: string; cost: number }[]
   >([])
+  const [marketplaceData, setMarketplaceData] =
+    useState<IngredientMarketplaceData>({})
+  const [showCart, setShowCart] = useState(false)
 
   useEffect(() => {
     const allIngredients = new Map<string, string>()
@@ -45,6 +107,15 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
     })
     setIngredients(Array.from(allIngredients.entries()))
   }, [recipe])
+
+  useEffect(() => {
+    if (externalMarketplaceData) {
+      setMarketplaceData(externalMarketplaceData)
+    } else {
+      const data = getMarketplaceDataFromRecipe(recipe, ingredientBrandsCosts)
+      setMarketplaceData(data)
+    }
+  }, [recipe, externalMarketplaceData])
 
   const handleEdit = (index: number) => {
     setEditingIndex(index)
@@ -85,6 +156,22 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
     }
   }
 
+  const hasMarketplaceData = (ingredient: string): boolean => {
+    return (
+      !!marketplaceData[ingredient] && marketplaceData[ingredient].length > 0
+    )
+  }
+
+  const removeFromCart = (index: number) => {
+    const newCart = [...cart]
+    newCart.splice(index, 1)
+    setCart(newCart)
+  }
+
+  const getTotalCost = () => {
+    return cart.reduce((sum, item) => sum + item.cost, 0)
+  }
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end animate-fade-in">
       <div
@@ -106,171 +193,315 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
           >
             Precise Ingredients
           </h2>
-          <button
-            onClick={onClose}
-            className={`p-2 rounded-full transition-colors ${
-              darkMode
-                ? "hover:bg-gray-700 text-white"
-                : "hover:bg-gray-200 text-gray-900"
-            }`}
-            aria-label="Close panel"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        <div className="p-4">
-          {ingredients.length === 0 ? (
-            <p
-              className={`italic ${
-                darkMode ? "text-gray-400" : "text-gray-500"
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setShowCart(!showCart)}
+              className={`p-2 rounded-full relative transition-colors ${
+                darkMode
+                  ? "hover:bg-gray-700 text-white"
+                  : "hover:bg-gray-200 text-gray-900"
               }`}
+              aria-label="Shopping cart"
             >
-              No ingredients listed for this recipe.
-            </p>
-          ) : (
-            <ul className="space-y-4">
-              {ingredients.map(([ingredient, quantity], index) => (
-                <li
-                  key={index}
-                  className={`p-3 border rounded-lg transition-colors ${
+              <ShoppingCart size={20} />
+              {cart.length > 0 && (
+                <span
+                  className={`absolute -top-1 -right-1 rounded-full w-5 h-5 flex items-center justify-center text-xs ${
                     darkMode
-                      ? "border-gray-700 hover:bg-gray-700"
-                      : "border-gray-200 hover:bg-gray-50"
+                      ? "bg-blue-500 text-white"
+                      : "bg-blue-600 text-white"
                   }`}
                 >
-                  <div className="flex items-center justify-between">
+                  {cart.length}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={onClose}
+              className={`p-2 rounded-full transition-colors ${
+                darkMode
+                  ? "hover:bg-gray-700 text-white"
+                  : "hover:bg-gray-200 text-gray-900"
+              }`}
+              aria-label="Close panel"
+            >
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+
+        {showCart ? (
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3
+                className={`text-lg font-semibold ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Your Shopping Cart
+              </h3>
+              <button
+                onClick={() => setShowCart(false)}
+                className={`text-sm ${
+                  darkMode ? "text-blue-400" : "text-blue-600"
+                }`}
+              >
+                Back to ingredients
+              </button>
+            </div>
+
+            {cart.length === 0 ? (
+              <p
+                className={`italic ${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
+                Your cart is empty
+              </p>
+            ) : (
+              <>
+                <ul className="space-y-3">
+                  {cart.map((item, index) => (
+                    <li
+                      key={index}
+                      className={`p-3 border rounded-lg flex justify-between items-center ${
+                        darkMode
+                          ? "border-gray-700 bg-gray-700"
+                          : "border-gray-200 bg-gray-50"
+                      }`}
+                    >
+                      <div>
+                        <p
+                          className={`font-medium ${
+                            darkMode ? "text-white" : "text-gray-900"
+                          }`}
+                        >
+                          {capitalizeFirst(item.ingredient)}
+                        </p>
+                        <p
+                          className={`text-sm ${
+                            darkMode ? "text-gray-300" : "text-gray-600"
+                          }`}
+                        >
+                          {item.brand} - ₹{item.cost.toFixed(2)}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => removeFromCart(index)}
+                        className={`p-1 rounded-full ${
+                          darkMode
+                            ? "text-red-400 hover:bg-gray-600"
+                            : "text-red-500 hover:bg-gray-100"
+                        }`}
+                        aria-label="Remove from cart"
+                      >
+                        <X size={18} />
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <div
+                  className={`mt-4 p-4 rounded-lg ${
+                    darkMode ? "bg-gray-700" : "bg-gray-100"
+                  }`}
+                >
+                  <div className="flex justify-between mb-2">
                     <span
-                      className={`font-medium ${
+                      className={darkMode ? "text-gray-300" : "text-gray-700"}
+                    >
+                      Subtotal:
+                    </span>
+                    <span
+                      className={`font-semibold ${
                         darkMode ? "text-white" : "text-gray-900"
                       }`}
                     >
-                      {capitalizeFirst(ingredient)}
+                      ₹{getTotalCost().toFixed(2)}
                     </span>
-
-                    {editingIndex === index ? (
-                      <div className="flex items-center space-x-2">
-                        <input
-                          type="text"
-                          value={editValue}
-                          onChange={(e) => setEditValue(e.target.value)}
-                          className={`border rounded px-2 py-1 w-24 ${
-                            darkMode
-                              ? "border-gray-600 bg-gray-700 text-white"
-                              : "border-gray-200 bg-white text-gray-900"
-                          }`}
-                          placeholder="Enter quantity"
-                          aria-label="Edit ingredient quantity"
-                          autoFocus
-                        />
-                        <button
-                          onClick={() => handleSave(index)}
-                          className={`p-1 rounded ${
-                            darkMode
-                              ? "text-green-400 hover:bg-green-900/20"
-                              : "text-green-600 hover:bg-green-50"
-                          }`}
-                          aria-label="Save"
-                        >
-                          <Check size={18} />
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="flex items-center space-x-3">
-                        <span
-                          className={
-                            darkMode ? "text-gray-300" : "text-gray-700"
-                          }
-                        >
-                          {quantity}
-                        </span>
-                        <button
-                          onClick={() => handleEdit(index)}
-                          className={`p-1 rounded ${
-                            darkMode
-                              ? "text-gray-400 hover:bg-gray-700"
-                              : "text-gray-500 hover:bg-gray-100"
-                          }`}
-                          aria-label="Edit"
-                        >
-                          <Edit size={16} />
-                        </button>
-                      </div>
-                    )}
                   </div>
+                  <button
+                    className={`w-full py-2 px-4 rounded-lg font-medium mt-2 ${
+                      darkMode
+                        ? "bg-blue-600 hover:bg-blue-700 text-white"
+                        : "bg-blue-500 hover:bg-blue-600 text-white"
+                    }`}
+                    onClick={() => {
+                      alert(
+                        `Order placed successfully! Total: ₹${getTotalCost().toFixed(
+                          2
+                        )}`
+                      )
+                      setCart([])
+                    }}
+                  >
+                    Proceed to Checkout
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        ) : (
+          <div className="p-4">
+            {ingredients.length === 0 ? (
+              <p
+                className={`italic ${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
+                No ingredients listed for this recipe.
+              </p>
+            ) : (
+              <ul className="space-y-4">
+                {ingredients.map(([ingredient, quantity], index) => (
+                  <li
+                    key={index}
+                    className={`p-3 border rounded-lg transition-colors ${
+                      darkMode
+                        ? "border-gray-700 hover:bg-gray-700"
+                        : "border-gray-200 hover:bg-gray-50"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span
+                        className={`font-medium ${
+                          darkMode ? "text-white" : "text-gray-900"
+                        }`}
+                      >
+                        {capitalizeFirst(ingredient)}
+                      </span>
 
-                  {/* Buy near you dropdown */}
-                  <div className="mt-2">
-                    <button
-                      onClick={() =>
-                        setExpandedIngredient(
-                          expandedIngredient === ingredient ? null : ingredient
-                        )
-                      }
-                      className={`text-sm mt-2 ${
-                        darkMode
-                          ? "text-blue-400 hover:underline"
-                          : "text-blue-600 hover:underline"
-                      }`}
-                    >
-                      Buy near you
-                    </button>
-
-                    {expandedIngredient === ingredient &&
-                      marketplaceData?.[ingredient] && (
-                        <div className="mt-2 space-y-2 pl-2">
-                          {marketplaceData[ingredient].map((option, i) => {
-                            const isChecked = cart.some(
-                              (item) =>
-                                item.ingredient === ingredient &&
-                                item.brand === option.brand
-                            )
-                            return (
-                              <label
-                                key={i}
-                                className="flex items-center space-x-2 text-sm"
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={isChecked}
-                                  onChange={(e) =>
-                                    handleCartToggle(
-                                      ingredient,
-                                      option,
-                                      e.target.checked
-                                    )
-                                  }
-                                />
-                                <span>
-                                  {option.brand} — ${option.cost.toFixed(2)}
-                                </span>
-                              </label>
-                            )
-                          })}
+                      {editingIndex === index ? (
+                        <div className="flex items-center space-x-2">
+                          <input
+                            type="text"
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value)}
+                            className={`border rounded px-2 py-1 w-24 ${
+                              darkMode
+                                ? "border-gray-600 bg-gray-700 text-white"
+                                : "border-gray-200 bg-white text-gray-900"
+                            }`}
+                            placeholder="Enter quantity"
+                            aria-label="Edit ingredient quantity"
+                            autoFocus
+                          />
+                          <button
+                            onClick={() => handleSave(index)}
+                            className={`p-1 rounded ${
+                              darkMode
+                                ? "text-green-400 hover:bg-green-900/20"
+                                : "text-green-600 hover:bg-green-50"
+                            }`}
+                            aria-label="Save"
+                          >
+                            <Check size={18} />
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center space-x-3">
+                          <span
+                            className={
+                              darkMode ? "text-gray-300" : "text-gray-700"
+                            }
+                          >
+                            {quantity}
+                          </span>
+                          <button
+                            onClick={() => handleEdit(index)}
+                            className={`p-1 rounded ${
+                              darkMode
+                                ? "text-gray-400 hover:bg-gray-700"
+                                : "text-gray-500 hover:bg-gray-100"
+                            }`}
+                            aria-label="Edit"
+                          >
+                            <Edit size={16} />
+                          </button>
                         </div>
                       )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
+                    </div>
 
-          {cart.length > 0 && (
-            <div className="mt-6 p-4 border rounded-lg bg-gray-100 dark:bg-gray-900">
-              <h4 className="font-semibold mb-2 text-sm">
-                🛒 Selected Ingredients
-              </h4>
-              <ul className="text-sm space-y-1">
-                {cart.map((item, i) => (
-                  <li key={i}>
-                    ✅ {capitalizeFirst(item.ingredient)} — {item.brand} @ $
-                    {item.cost.toFixed(2)}
+                    {/* Buy near you dropdown */}
+                    <div className="mt-2">
+                      <button
+                        onClick={() =>
+                          setExpandedIngredient(
+                            expandedIngredient === ingredient
+                              ? null
+                              : ingredient
+                          )
+                        }
+                        className={`text-sm mt-2 ${
+                          darkMode
+                            ? "text-blue-400 hover:underline"
+                            : "text-blue-600 hover:underline"
+                        }`}
+                      >
+                        Buy near you
+                      </button>
+
+                      {expandedIngredient === ingredient && (
+                        <div className="mt-2 pl-2">
+                          {hasMarketplaceData(ingredient) ? (
+                            <div className="space-y-2">
+                              {marketplaceData[ingredient].map((option, i) => {
+                                const isChecked = cart.some(
+                                  (item) =>
+                                    item.ingredient === ingredient &&
+                                    item.brand === option.brand
+                                )
+                                return (
+                                  <label
+                                    key={i}
+                                    className="flex items-center space-x-2 text-sm"
+                                  >
+                                    <input
+                                      type="checkbox"
+                                      checked={isChecked}
+                                      onChange={(e) =>
+                                        handleCartToggle(
+                                          ingredient,
+                                          option,
+                                          e.target.checked
+                                        )
+                                      }
+                                      className={`${
+                                        darkMode
+                                          ? "accent-blue-400"
+                                          : "accent-blue-600"
+                                      }`}
+                                    />
+                                    <span
+                                      className={
+                                        darkMode
+                                          ? "text-gray-300"
+                                          : "text-gray-700"
+                                      }
+                                    >
+                                      {option.brand} — ₹{option.cost.toFixed(2)}
+                                    </span>
+                                  </label>
+                                )
+                              })}
+                            </div>
+                          ) : (
+                            <p
+                              className={`text-sm ${
+                                darkMode ? "text-gray-400" : "text-gray-500"
+                              }`}
+                            >
+                              No marketplace data available for this ingredient.
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )

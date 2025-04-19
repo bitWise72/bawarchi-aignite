@@ -10,18 +10,20 @@ import { useNavigate } from "react-router-dom"
 import Navbar from "@/components/Navbar"
 import { useDarkMode } from "@/contexts/DarkModeContext"
 import RecipeSearch from "@/components/RecipeSearch"
+import ingredient_data from "./ingredient_brands_and_costs.json"
 
 const STORAGE_KEY = "saved_recipes"
-const marketplaceData = {
-  Tomato: [
-    { brand: "FreshFarm", cost: 1.99 },
-    { brand: "OrganicMart", cost: 2.49 },
-  ],
-  Salt: [
-    { brand: "GoodSalt", cost: 0.99 },
-    { brand: "NaturalSpice", cost: 1.29 },
-  ],
-}
+
+// const marketplaceData = {
+//   Tomato: [
+//     { brand: "FreshFarm", cost: 1.99 },
+//     { brand: "OrganicMart", cost: 2.49 },
+//   ],
+//   Salt: [
+//     { brand: "GoodSalt", cost: 0.99 },
+//     { brand: "NaturalSpice", cost: 1.29 },
+//   ],
+// }
 
 
 const Index = () => {
@@ -380,7 +382,7 @@ const Index = () => {
           onClose={() => setShowIngredients(false)}
           onUpdateIngredient={handleUpdateIngredient}
           darkMode={darkMode}
-          marketplaceData={marketplaceData}
+          marketplaceData={ingredient_data}
         />
       )}
     </div>
