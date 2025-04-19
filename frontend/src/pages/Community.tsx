@@ -590,7 +590,7 @@ const Community = () => {
               <div className={`p-2.5 rounded-xl absolute right-2 bottom-2 backdrop-blur-lg bg-black/50 border border-gray-600/50 shadow-lg`}>
                 <div className="flex flex-col items-center">
                   <QRCodeSVG
-                    value={`${window.location.origin}/recipe/${postContent._id}`}
+                    value={`${window.location.origin}/share/${postContent._id}`}
                     size={80}
                     level="H"
                     bgColor='rgba(0, 0, 0, 0.5)'
