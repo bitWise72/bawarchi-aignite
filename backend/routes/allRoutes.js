@@ -223,4 +223,20 @@ router.post("/comment", async (req, res) => {
   }
 });
 
+// post card api call
+router.post("/getIdRecipe", async (req, res) => {
+  const { recipeId } = req.body;
+  if (!recipeId) return res.status(400).json({ message: "Recipe ID required." });
+
+  try {
+    const post = await Post.findById(recipeId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    res.status(200).json({ recipe: post });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch recipe ID" });
+  }
+});
+
 export default router;
