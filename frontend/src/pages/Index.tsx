@@ -11,6 +11,17 @@ import Navbar from "@/components/Navbar"
 import { useDarkMode } from "@/contexts/DarkModeContext"
 
 const STORAGE_KEY = "saved_recipes"
+const marketplaceData = {
+  Tomato: [
+    { brand: "FreshFarm", cost: 1.99 },
+    { brand: "OrganicMart", cost: 2.49 },
+  ],
+  Salt: [
+    { brand: "GoodSalt", cost: 0.99 },
+    { brand: "NaturalSpice", cost: 1.29 },
+  ],
+}
+
 
 const Index = () => {
   const [user, setUser] = useState(null)
@@ -265,7 +276,7 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-2">
         <div className="space-y-8">
           <div className="space-y-6">
-            {/* <RecipeSearch onSearch={handleSearch} darkMode={darkMode} /> */}
+            <RecipeSearch onSearch={handleSearch} darkMode={darkMode} />
 
             {recipe && !loading && (
               <div className="mt-2 mb-6">
@@ -293,8 +304,8 @@ const Index = () => {
                       onClick={() => setShowIngredients(true)}
                       className={`flex items-center px-4 py-2 rounded-lg ${
                         darkMode
-                          ? "bg-gray-700 hover:bg-gray-600 text-white"
-                          : "bg-gray-100 hover:bg-gray-200 text-gray-900"
+                          ? "bg-gray-700 hover:bg-gray-600 text-white "
+                          : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300"
                       } transition-colors`}
                       aria-label="View precise ingredients"
                     >
@@ -368,6 +379,7 @@ const Index = () => {
           onClose={() => setShowIngredients(false)}
           onUpdateIngredient={handleUpdateIngredient}
           darkMode={darkMode}
+          marketplaceData={marketplaceData}
         />
       )}
     </div>
