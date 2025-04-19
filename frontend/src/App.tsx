@@ -15,6 +15,7 @@ import LandingPage from "./pages/LandingPage"
 import AuthCallback from "./components/AuthCallback"
 import Terms from "./pages/Terms"
 import Listing from "./pages/delivery/Listing"
+import SharedRecipePage from "./pages/ShareRecipePage"
 import CreateListing from "./pages/delivery/createListing"
 import Privacy from "./pages/Privacy"
 
@@ -36,6 +37,7 @@ const App = () => (
               <Route path="/auth/callback" element={<AuthCallback />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/share/:id" element={<SharedRecipePage />} />
               <Route
                 path="/home"
                 element={
