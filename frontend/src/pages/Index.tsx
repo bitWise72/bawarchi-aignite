@@ -15,6 +15,17 @@ import { useAuth } from "../contexts/AuthContext"
 import { set } from "date-fns"
 
 const STORAGE_KEY = "saved_recipes"
+const marketplaceData = {
+  Tomato: [
+    { brand: "FreshFarm", cost: 1.99 },
+    { brand: "OrganicMart", cost: 2.49 },
+  ],
+  Salt: [
+    { brand: "GoodSalt", cost: 0.99 },
+    { brand: "NaturalSpice", cost: 1.29 },
+  ],
+}
+
 
 const Index = () => {
   const [user, setUser] = useState(null)
@@ -28,124 +39,6 @@ const Index = () => {
   const navigate = useNavigate()
 
   
-  // useEffect(() => {
-  //   if (darkMode) {
-  //     document.body.classList.add("dark-mode")
-  //   } else {
-  //     document.body.classList.remove("dark-mode")
-  //   }
-
-  //   const params = new URLSearchParams(window.location.search)
-
-  //   // User info handling
-  //   const name = params.get("name")
-  //   const email = params.get("email")
-  //   const image = params.get("image")
-  //   const id = params.get("id")
-
-  //   if (name && email && image && id) {
-  //     const userData = { name, email, image, id }
-  //     localStorage.setItem("user", JSON.stringify(userData))
-  //     setUser(userData)
-  //   } else {
-  //     const storedUser = localStorage.getItem("user")
-  //     if (storedUser) {
-  //       try {
-  //         setUser(JSON.parse(storedUser))
-  //       } catch (e) {
-  //         console.error("Failed to parse stored user", e)
-  //       }
-  //     }
-  //   }
-
-  //   // Recipe data processing
-  //   const imageBase64 = params.get("image1")
-  //   const recipeName = params.get("recipeName1")
-  //   const recipeText = params.get("recipeText1")
-  //   const image2Base64 = params.get("image2")
-
-  //   // Process data based on what's available
-  //   const processData = async () => {
-  //     setLoading(true)
-  //     console.log(loading )
-  //     try {
-  //       // If we have a recipe name, set it
-  //       if (recipeName) {
-
-  //         console.log("Case 1")
-  //         const decodedName = decodeURIComponent(recipeName)
-  //         setRecipeName(decodedName)
-
-  //         // If we have recipe text, we'll use that for API processing
-  //         if (recipeText) {
-  //           console.log("Case 2")
-  //           const decodedText = decodeURIComponent(recipeText)
-
-  //           // Format the recipe text appropriately for your API
-  //           // You might need to adjust this based on your API's expectations
-  //           const apiQuery = `${decodedName}: ${decodedText}`
-
-  //           // Use your existing API function
-  //           const data = await fetchRecipe(apiQuery)
-  //           setRecipe(data)
-  //           toast.success("Recipe processed successfully!")
-  //         }
-  //         // If we have an image, we'll use that (and recipe name) for API processing
-  //         else if (imageBase64 || image2Base64) {
-  //           console.log("Case 3")
-
-  //           // Here you might need a different approach than fetchRecipe
-  //           // If your API supports image processing directly:
-  //           const data = await fetchRecipe(decodedName) // Or use a different API function for images
-  //           setRecipe(data)
-  //           toast.success("Recipe extracted from image successfully!")
-  //         }
-  //         // If we only have a recipe name, just search for it as before
-  //         else {
-  //           handleSearch(decodedName)
-  //         }
-  //       }
-  //       // If we have image or text but no name, generate a placeholder name
-  //       else if (recipeText || imageBase64 || image2Base64) {
-  //         const placeholderName = "Untitled Recipe"
-  //         setRecipeName(placeholderName)
-
-  //         if (recipeText) {
-  //           const decodedText = decodeURIComponent(recipeText)
-  //           const data = await fetchRecipe(decodedText)
-  //           setRecipe(data)
-  //           toast.success("Recipe processed successfully!")
-  //         } else if (imageBase64 || image2Base64) {
-  //           const imageToProcess = imageBase64 || image2Base64
-  //           setLoading(true)
-  //           console.log("Processing image:", imageToProcess)
-  //           // Process image with your API
-  //           // If your API doesn't support direct image processing:
-  //           const data = await fetchRecipe(imageToProcess) // Replace with appropriate query
-  //           setRecipe(data)
-  //           toast.success("Recipe extracted from image successfully!")
-  //         }
-  //       }
-  //     } catch (error) {
-  //       const errorMessage =
-  //         error instanceof Error
-  //           ? error.message
-  //           : "An unexpected error occurred"
-  //       console.error("Error processing recipe data:", error)
-  //       setError(errorMessage)
-  //       toast.error(`Failed to process recipe: ${errorMessage}`)
-  //     } finally {
-  //       // console.log(loading)
-  //       // console.log("Recipe processing complete")
-  //       setLoading(false)
-  //     }
-  //   }
-
-  //   // Process data if any recipe-related param exists
-  //   if (recipeName || recipeText || imageBase64) {
-  //     processData()
-  //   }
-  // }, [darkMode])
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add("dark-mode")
@@ -388,7 +281,7 @@ const Index = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-2">
         <div className="space-y-8">
           <div className="space-y-6">
-            {/* <RecipeSearch onSearch={handleSearch} darkMode={darkMode} /> */}
+            <RecipeSearch onSearch={handleSearch} darkMode={darkMode} />
 
             {recipe && !loading && (
               <div className="mt-2 mb-6">
@@ -416,8 +309,8 @@ const Index = () => {
                       onClick={() => setShowIngredients(true)}
                       className={`flex items-center px-4 py-2 rounded-lg ${
                         darkMode
-                          ? "bg-gray-700 hover:bg-gray-600 text-white"
-                          : "bg-gray-100 hover:bg-gray-200 text-gray-900"
+                          ? "bg-gray-700 hover:bg-gray-600 text-white "
+                          : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300"
                       } transition-colors`}
                       aria-label="View precise ingredients"
                     >
@@ -491,6 +384,7 @@ const Index = () => {
           onClose={() => setShowIngredients(false)}
           onUpdateIngredient={handleUpdateIngredient}
           darkMode={darkMode}
+          marketplaceData={marketplaceData}
         />
       )}
     </div>

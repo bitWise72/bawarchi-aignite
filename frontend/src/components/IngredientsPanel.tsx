@@ -2,32 +2,47 @@ import React, { useState, useEffect } from "react"
 import { X, Edit, Check } from "lucide-react"
 import type { Recipe } from "@/services/recipeService"
 
+interface MarketplaceOption {
+  brand: string
+  cost: number
+}
+
+type IngredientMarketplaceData = {
+  [ingredient: string]: MarketplaceOption[]
+}
+
 interface IngredientsPanelProps {
   recipe: Recipe
   onClose: () => void
   onUpdateIngredient: (ingredient: string, newQuantity: string) => void
   darkMode: boolean
+  marketplaceData?: IngredientMarketplaceData
 }
-//dark mode is working
+
 const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
   recipe,
   onClose,
   onUpdateIngredient,
   darkMode,
+  marketplaceData = {},
 }) => {
   const [ingredients, setIngredients] = useState<[string, string][]>([])
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
   const [editValue, setEditValue] = useState("")
+  const [expandedIngredient, setExpandedIngredient] = useState<string | null>(
+    null
+  )
+  const [cart, setCart] = useState<
+    { ingredient: string; brand: string; cost: number }[]
+  >([])
 
   useEffect(() => {
     const allIngredients = new Map<string, string>()
-
     Object.values(recipe).forEach((step) => {
       step.measurements.forEach(([ingredient, quantity]) => {
         allIngredients.set(ingredient, quantity)
       })
     })
-
     setIngredients(Array.from(allIngredients.entries()))
   }, [recipe])
 
@@ -39,22 +54,35 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
   const handleSave = (index: number) => {
     const ingredient = ingredients[index][0]
     const newQuantity = editValue
-
     const newIngredients = [...ingredients]
     newIngredients[index] = [ingredient, newQuantity]
     setIngredients(newIngredients)
-
     onUpdateIngredient(ingredient, newQuantity)
-
     setEditingIndex(null)
     setEditValue("")
   }
 
-  const capitalizeFirst = (str: string) => {
-    return str
+  const capitalizeFirst = (str: string) =>
+    str
       .split(" ")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ")
+
+  const handleCartToggle = (
+    ingredient: string,
+    option: MarketplaceOption,
+    checked: boolean
+  ) => {
+    if (checked) {
+      setCart([...cart, { ingredient, ...option }])
+    } else {
+      setCart(
+        cart.filter(
+          (item) =>
+            !(item.ingredient === ingredient && item.brand === option.brand)
+        )
+      )
+    }
   }
 
   return (
@@ -102,7 +130,7 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
             </p>
           ) : (
             <ul className="space-y-4">
-              {ingredients.map((ingredient, index) => (
+              {ingredients.map(([ingredient, quantity], index) => (
                 <li
                   key={index}
                   className={`p-3 border rounded-lg transition-colors ${
@@ -117,7 +145,7 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                         darkMode ? "text-white" : "text-gray-900"
                       }`}
                     >
-                      {capitalizeFirst(ingredient[0])}
+                      {capitalizeFirst(ingredient)}
                     </span>
 
                     {editingIndex === index ? (
@@ -154,7 +182,7 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                             darkMode ? "text-gray-300" : "text-gray-700"
                           }
                         >
-                          {ingredient[1]}
+                          {quantity}
                         </span>
                         <button
                           onClick={() => handleEdit(index)}
@@ -170,9 +198,77 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                       </div>
                     )}
                   </div>
+
+                  {/* Buy near you dropdown */}
+                  <div className="mt-2">
+                    <button
+                      onClick={() =>
+                        setExpandedIngredient(
+                          expandedIngredient === ingredient ? null : ingredient
+                        )
+                      }
+                      className={`text-sm mt-2 ${
+                        darkMode
+                          ? "text-blue-400 hover:underline"
+                          : "text-blue-600 hover:underline"
+                      }`}
+                    >
+                      Buy near you
+                    </button>
+
+                    {expandedIngredient === ingredient &&
+                      marketplaceData?.[ingredient] && (
+                        <div className="mt-2 space-y-2 pl-2">
+                          {marketplaceData[ingredient].map((option, i) => {
+                            const isChecked = cart.some(
+                              (item) =>
+                                item.ingredient === ingredient &&
+                                item.brand === option.brand
+                            )
+                            return (
+                              <label
+                                key={i}
+                                className="flex items-center space-x-2 text-sm"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={isChecked}
+                                  onChange={(e) =>
+                                    handleCartToggle(
+                                      ingredient,
+                                      option,
+                                      e.target.checked
+                                    )
+                                  }
+                                />
+                                <span>
+                                  {option.brand} — ${option.cost.toFixed(2)}
+                                </span>
+                              </label>
+                            )
+                          })}
+                        </div>
+                      )}
+                  </div>
                 </li>
               ))}
             </ul>
+          )}
+
+          {cart.length > 0 && (
+            <div className="mt-6 p-4 border rounded-lg bg-gray-100 dark:bg-gray-900">
+              <h4 className="font-semibold mb-2 text-sm">
+                🛒 Selected Ingredients
+              </h4>
+              <ul className="text-sm space-y-1">
+                {cart.map((item, i) => (
+                  <li key={i}>
+                    ✅ {capitalizeFirst(item.ingredient)} — {item.brand} @ $
+                    {item.cost.toFixed(2)}
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </div>
       </div>
