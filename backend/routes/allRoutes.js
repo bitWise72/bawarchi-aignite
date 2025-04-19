@@ -111,15 +111,28 @@ router.post("/post", async (req, res) => {
 });
 
 // Get posts by current user
+// router.post("/yourPosts", async (req, res) => {
+//   const { id } = req.body;
+//   if (!id) return res.status(400).json({ message: "User ID required." });
+
+//   try {
+//     const user = await User.findById(id).populate("posts");
+//     if (!user) return res.status(404).json({ message: "User not found" });
+
+//     res.status(200).json({ posts: user.posts });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ message: "Failed to fetch user posts" });
+//   }
+// });
+
 router.post("/yourPosts", async (req, res) => {
   const { id } = req.body;
   if (!id) return res.status(400).json({ message: "User ID required." });
 
   try {
-    const user = await User.findById(id).populate("posts");
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    res.status(200).json({ posts: user.posts });
+    const posts = await Post.find({ userId: new mongoose.Types.ObjectId(id) }).sort({ createdAt: -1 });
+    res.status(200).json({ posts });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to fetch user posts" });
