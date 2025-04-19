@@ -497,6 +497,7 @@ const Community = () => {
     const [error, setError] = useState<string | null>(null);
     
     const postContent = post.posts;
+    console.log(post);
     const imageUrl = postContent.imageUrl?.[0]?.includes('res.cloudinary.com')
       ? postContent.imageUrl[0]
       : `https://res.cloudinary.com/dv28lfhwr/image/upload/w_1200,h_800,c_fill/${postContent.imageUrl?.[0]}`;
@@ -590,7 +591,7 @@ const Community = () => {
               <div className={`p-2.5 rounded-xl absolute right-2 bottom-2 backdrop-blur-lg bg-black/50 border border-gray-600/50 shadow-lg`}>
                 <div className="flex flex-col items-center">
                   <QRCodeSVG
-                    value={`${window.location.origin}/share/${postContent._id}`}
+                    value={`${window.location.origin}/share/${post._id}`}
                     size={80}
                     level="H"
                     bgColor='rgba(0, 0, 0, 0.5)'
