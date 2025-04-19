@@ -34,6 +34,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       console.log("Stored user:", storedUser)
       console.log("Token:", token)
+      console.log("id: ", storedUser ? JSON.parse(storedUser).id : null);
 
       if (storedUser && token) {
         setUser(JSON.parse(storedUser))

@@ -15,6 +15,7 @@ import { useDarkMode } from "@/contexts/DarkModeContext";
 import { QRCodeSVG } from 'qrcode.react';
 import { toBlob } from 'html-to-image';
 import { Download } from 'lucide-react';
+import { toast } from "sonner";
 
 const logo = "./logo.png";
 
@@ -133,6 +134,79 @@ const Community = () => {
 
     fetchUserPosts();
   }, []);
+
+  const likeHandler = async (postId: any) => {
+    const storedUser = localStorage.getItem("user");
+  if (!storedUser) return toast.error("You must be logged in");
+
+  const userId = JSON.parse(storedUser).id;
+
+  try {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_PORT}/auth/like`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ postId, userId }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      toast.error(data.message || "Failed to like post");
+      return;
+    }
+
+    // Success
+    toast.success(data.message);
+
+    // Optionally update your state here:
+    // - If you're maintaining local post state, update likes array
+    // - Re-fetch posts if needed
+
+    // Update the posts state to reflect the like change
+    if (activeTab === "trending") {
+      setTrendingPosts(prevPosts => 
+        prevPosts.map(post => {
+          if (post._id === postId) {
+            // Toggle like status for this user
+            const isLiked = post.likes?.includes(userId);
+            return {
+              ...post,
+              likes: isLiked 
+                ? post.likes?.filter(id => id !== userId) // Remove like
+                : [...(post.likes || []), userId] // Add like
+            };
+          }
+          return post;
+        })
+      );
+    } else {
+      setUserData(prevData => {
+        if (!prevData) return null;
+        return {
+          ...prevData,
+          posts: prevData.posts.map(post => {
+            if (post._id === postId) {
+              // Toggle like status for this user
+              const isLiked = post.likes?.includes(userId);
+              return {
+                ...post,
+                likes: isLiked 
+                  ? post.likes?.filter(id => id !== userId) // Remove like
+                  : [...(post.likes || []), userId] // Add like
+              };
+            }
+            return post;
+          })
+        };
+      });
+    }
+  } catch (error) {
+    console.error("Like error:", error);
+    toast.error("Something went wrong");
+  }
+  }
 
   const fetchTrendingPosts = useCallback(async (isInitialLoad = false) => {
     if ((loadingMore && !isInitialLoad) || !hasMorePosts) return;
@@ -293,15 +367,21 @@ const Community = () => {
           {/* Post Actions */}
           <div className="mt-4 flex justify-between items-center">
             <div className="flex space-x-4">
-              <button
-                
-                className={`flex items-center ${
-                  darkMode ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"
-                }`}
-              >
-                <Heart className="h-5 w-5 mr-1" />
-                <span className="text-sm">Like</span>
-              </button>
+            <button
+            onClick={() => likeHandler(post._id)}
+            className={`flex items-center ${
+              darkMode ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"
+            }`}
+          >
+            <Heart 
+              className="h-5 w-5 mr-1" 
+              fill={post.likes?.includes(user?.id || '') ? "red" : "none"}
+              color={post.likes?.includes(user?.id || '') ? "#ef4444" : "currentColor"} // Red if liked
+            />
+            <span className="text-sm">
+              {post.likes?.length || 0} {/* Show like count */}
+            </span>
+          </button>
               <button
                 className={`flex items-center ${
                   darkMode ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"
