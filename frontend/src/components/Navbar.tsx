@@ -42,7 +42,7 @@ const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
   const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const userImage = JSON.parse(localStorage.getItem("user") || "{}").picture;
-  console.log(userImage);
+
   return (
     <header className={`${darkMode ? "bg-gray-800" : "bg-white"} shadow-sm`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
