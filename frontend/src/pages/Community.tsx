@@ -382,14 +382,14 @@ const Community = () => {
               {post.likes?.length || 0} {/* Show like count */}
             </span>
           </button>
-              <button
+              {/* <button
                 className={`flex items-center ${
                   darkMode ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-gray-900"
                 }`}
               >
                 <MessageCircle className="h-5 w-5 mr-1" />
                 <span className="text-sm">Comment</span>
-              </button>
+              </button> */}
               <button
                 onClick={() => setSharedPost(post)}
                 className={`flex items-center ${
