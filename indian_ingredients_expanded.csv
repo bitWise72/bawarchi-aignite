@@ -1,0 +1,83 @@
+Ingredient,Brand1,Cost1,Brand2,Cost2
+Wheat Flour (Atta),Aashirvaad,42,Pillsbury,45
+Rice (Basmati),Daawat,120,India Gate,140
+Rice (Sona Masoori),24 Mantra,60,Kalanamak,70
+Rice (Non-Basmati),India Gate Classic,60,Daawat Traditional,65
+Rice (Brown),24 Mantra,100,Organic India,110
+Rice (Idli Rice),Double Horse,80,Aachi,85
+Rice (Poha),Tata Sampann,50,24 Mantra,55
+Semolina (Suji/Rava),Aashirvaad,55,Tata Sampann,60
+Besan (Gram Flour),Tata Sampann,120,24 Mantra,130
+Toor Dal,Tata Sampann,120,24 Mantra,130
+Moong Dal,Tata Sampann,90,24 Mantra,95
+Urad Dal,Tata Sampann,100,24 Mantra,110
+Chana Dal,Tata Sampann,80,24 Mantra,85
+Rajma (Kidney Beans),Tata Sampann,120,24 Mantra,125
+Chickpeas (Chana),Tata Sampann,100,24 Mantra,110
+Masoor Dal,Tata Sampann,80,24 Mantra,85
+Black Gram (Whole Urad),Tata Sampann,150,24 Mantra,160
+Salt,Tata Salt,25,Annapurna,30
+Sugar,Dhampure,50,Tirumala,45
+Jaggery (Gur),Madhur,60,Organic India,70
+Turmeric Powder,MDH,300,Everest,280
+Red Chili Powder,MDH,350,Everest,330
+Coriander Powder,MDH,250,Everest,240
+Cumin Seeds,MDH,500,Everest,480
+Black Pepper Powder,MDH,900,Everest,850
+Garam Masala,MDH,450,Everest,430
+Cardamom (Elaichi),MDH,1400,Everest,1350
+Cinnamon (Dalchini),MDH,600,Everest,580
+Cloves (Laung),MDH,1500,Everest,1450
+Bay Leaf (Tej Patta),Everest,300,MDH,320
+Asafoetida (Hing),MDH,2000,Patanjali,1800
+Mustard Seeds,Tata Sampann,200,24 Mantra,220
+Fenugreek Seeds (Methi),Tata Sampann,300,24 Mantra,320
+Fennel Seeds (Saunf),Tata Sampann,180,24 Mantra,200
+Curry Leaves,Catch,200,Fresh,150
+Tamarind Paste,Catch,250,MDH,240
+Tomato Ketchup,Kissan,180,Maggi,170
+Ginger Garlic Paste,Mother’s Recipe,230,Patanjali,220
+Vinegar (White),Figaro,85,Madhur,80
+Vinegar (Apple Cider),Bragg,600,HealthKart,500
+Coconut Oil,Parachute,250,Dabur,260
+Mustard Oil,Fortune,150,Dhara,140
+Vegetable Oil (Soybean),Fortune,130,Dhara,125
+Olive Oil (Extra Virgin),Figaro,600,Borges,650
+Ghee,Amul,550,Gowardhan,600
+Butter,Amul,400,Britannia,420
+Milk (Toned),Amul,50,Mother Dairy,55
+Yogurt (Dahi),Amul,45,Mother Dairy,50
+Tea Leaves,Tata Tea Gold,280,Brooke Bond Red Label,250
+Coffee (Instant),Nescafe Classic,800,Bru,600
+Paneer,Amul,300,Mother Dairy,320
+Pasta (Penne),Del Monte,115,Borges,135
+Rice Vermicelli,24 Mantra,100,Tata Sampann,95
+Hakka Noodles,Wai Wai,90,Maggi,80
+Instant Noodles,Maggi,90,Top Ramen,70
+Ramen Noodles,Top Ramen,70,Knorr,80
+Tortilla Wraps,Olive Country,200,Del Monte,180
+Bread (Sliced White),Britannia,35,Harvest Gold,40
+Bread (Multigrain),Britannia,45,Harvest Gold,50
+Burger Buns,Britannia,120,Harvest Gold,110
+Hot Dog Buns,Britannia,130,Harvest Gold,120
+Dough (Frozen Pizza Base),McCain,150,Del Monte,140
+Canned Tomatoes,Del Monte,180,Kissan,170
+Tomato Paste,Appleton,200,Del Monte,190
+Canned Corn,Del Monte,220,Green Giant,200
+Canned Pineapple,Del Monte,400,Dole,380
+Mixed Pickle,Mother’s Recipe,320,Patanjali,300
+Mango Pickle,Mother’s Recipe,300,Priya,280
+Honey,Dabur,600,Patanjali,550
+Peanut Butter,Pintola,400,Dabur,380
+Jam (Mixed Fruit),Kissan,150,Mapro,140
+Cheese (Processed),Amul,500,Britannia,480
+Cheese (Mozzarella),Britannia,600,Milky Mist,580
+Cheese (Cheddar),Amul,550,Britannia,530
+Parmesan Cheese,Duke’s,1200,Milky Mist,1100
+Cream of Mushroom Soup (Mix),Knorr,150,Campbell’s,140
+Tomato Soup (Mix),Knorr,120,Campbell’s,110
+Chili Flakes,24 Mantra,300,McCormick,320
+Oregano (Dried),24 Mantra,350,McCormick,330
+Basil (Dried),24 Mantra,350,McCormick,330
+Roasted Cumin Powder,24 Mantra,250,Tata Sampann,240
+Black Salt (Kala Namak),Patanjali,80,24 Mantra,90

@@ -1,0 +1,5618 @@
+{
+  "atta": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "atta wheat flour": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "atta wheat flours": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "attas": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "wheat flour": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "wheat flour (atta)": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "wheat flour (atta)s": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "wheat flour atta": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "wheat flour attas": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "wheat flours": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "Wheat Flour (Atta)": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 42
+    },
+    {
+      "brand": "Pillsbury",
+      "cost": 45
+    }
+  ],
+  "basmati": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "basmati rice": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "basmati rices": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "basmatis": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "rice": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    },
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    },
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "rice (basmati)": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "rice (basmati)s": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "rice basmati": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "rice basmatis": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "rices": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    },
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    },
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "Rice (Basmati)": [
+    {
+      "brand": "Daawat",
+      "cost": 120
+    },
+    {
+      "brand": "India Gate",
+      "cost": 140
+    }
+  ],
+  "rice (sona masoori)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "rice (sona masoori)s": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "rice sona masoori": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "rice sona masooris": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "sona masoori": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "sona masoori rice": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "sona masoori rices": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "sona masooris": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "Rice (Sona Masoori)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 60
+    },
+    {
+      "brand": "Kalanamak",
+      "cost": 70
+    }
+  ],
+  "non-basmati": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "non-basmati rice": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "non-basmati rices": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "non-basmatis": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "rice (non-basmati)": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "rice (non-basmati)s": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "rice non-basmati": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "rice non-basmatis": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "Rice (Non-Basmati)": [
+    {
+      "brand": "India Gate Classic",
+      "cost": 60
+    },
+    {
+      "brand": "Daawat Traditional",
+      "cost": 65
+    }
+  ],
+  "brown": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "brown rice": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "brown rices": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "browns": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "rice (brown)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "rice (brown)s": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "rice brown": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "rice browns": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "Rice (Brown)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Organic India",
+      "cost": 110
+    }
+  ],
+  "idli rice": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "idli rice rice": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "idli rice rices": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "idli rices": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "rice (idli rice)": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "rice (idli rice)s": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "rice idli rice": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "rice idli rices": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "Rice (Idli Rice)": [
+    {
+      "brand": "Double Horse",
+      "cost": 80
+    },
+    {
+      "brand": "Aachi",
+      "cost": 85
+    }
+  ],
+  "poha": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "poha rice": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "poha rices": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "pohas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "rice (poha)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "rice (poha)s": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "rice poha": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "rice pohas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "Rice (Poha)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 50
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 55
+    }
+  ],
+  "semolina": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "semolina (suji/rava)": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "semolina (suji/rava)s": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "semolina suji/rava": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "semolina suji/ravas": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "semolinas": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "suji/rava": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "suji/rava semolina": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "suji/rava semolinas": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "suji/ravas": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "Semolina (Suji/Rava)": [
+    {
+      "brand": "Aashirvaad",
+      "cost": 55
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 60
+    }
+  ],
+  "besan": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "besan (gram flour)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "besan (gram flour)s": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "besan gram flour": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "besan gram flours": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "besans": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "gram flour": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "gram flour besan": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "gram flour besans": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "gram flours": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "Besan (Gram Flour)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "toor dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "toor dals": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "Toor Dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 130
+    }
+  ],
+  "moong dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 90
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 95
+    }
+  ],
+  "moong dals": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 90
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 95
+    }
+  ],
+  "Moong Dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 90
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 95
+    }
+  ],
+  "urad dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "urad dals": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "Urad Dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chana dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 85
+    }
+  ],
+  "chana dals": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 85
+    }
+  ],
+  "Chana Dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 85
+    }
+  ],
+  "kidney bean": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "kidney beans": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "kidney beans rajma": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "kidney beans rajmas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "rajma": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "rajma (kidney beans)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "rajma (kidney beans)s": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "rajma kidney bean": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "rajma kidney beans": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "rajmas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "Rajma (Kidney Beans)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 120
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 125
+    }
+  ],
+  "chana": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chana chickpea": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chana chickpeas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chanas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chickpea": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chickpeas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chickpeas (chana)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chickpeas (chana)s": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chickpeas chana": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "chickpeas chanas": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "Chickpeas (Chana)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 100
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 110
+    }
+  ],
+  "masoor dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 85
+    }
+  ],
+  "masoor dals": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 85
+    }
+  ],
+  "Masoor Dal": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 85
+    }
+  ],
+  "black gram": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "black gram (whole urad)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "black gram (whole urad)s": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "black gram whole urad": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "black gram whole urads": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "black grams": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "whole urad": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "whole urad black gram": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "whole urad black grams": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "whole urads": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "Black Gram (Whole Urad)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 150
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 160
+    }
+  ],
+  "salt": [
+    {
+      "brand": "Tata Salt",
+      "cost": 25
+    },
+    {
+      "brand": "Annapurna",
+      "cost": 30
+    }
+  ],
+  "salts": [
+    {
+      "brand": "Tata Salt",
+      "cost": 25
+    },
+    {
+      "brand": "Annapurna",
+      "cost": 30
+    }
+  ],
+  "Salt": [
+    {
+      "brand": "Tata Salt",
+      "cost": 25
+    },
+    {
+      "brand": "Annapurna",
+      "cost": 30
+    }
+  ],
+  "sugar": [
+    {
+      "brand": "Dhampure",
+      "cost": 50
+    },
+    {
+      "brand": "Tirumala",
+      "cost": 45
+    }
+  ],
+  "sugars": [
+    {
+      "brand": "Dhampure",
+      "cost": 50
+    },
+    {
+      "brand": "Tirumala",
+      "cost": 45
+    }
+  ],
+  "Sugar": [
+    {
+      "brand": "Dhampure",
+      "cost": 50
+    },
+    {
+      "brand": "Tirumala",
+      "cost": 45
+    }
+  ],
+  "gur": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "gur jaggery": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "gur jaggerys": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "gurs": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "jaggery": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "jaggery (gur)": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "jaggery (gur)s": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "jaggery gur": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "jaggery gurs": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "jaggerys": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "Jaggery (Gur)": [
+    {
+      "brand": "Madhur",
+      "cost": 60
+    },
+    {
+      "brand": "Organic India",
+      "cost": 70
+    }
+  ],
+  "turmeric powder": [
+    {
+      "brand": "MDH",
+      "cost": 300
+    },
+    {
+      "brand": "Everest",
+      "cost": 280
+    }
+  ],
+  "turmeric powders": [
+    {
+      "brand": "MDH",
+      "cost": 300
+    },
+    {
+      "brand": "Everest",
+      "cost": 280
+    }
+  ],
+  "Turmeric Powder": [
+    {
+      "brand": "MDH",
+      "cost": 300
+    },
+    {
+      "brand": "Everest",
+      "cost": 280
+    }
+  ],
+  "red chili powder": [
+    {
+      "brand": "MDH",
+      "cost": 350
+    },
+    {
+      "brand": "Everest",
+      "cost": 330
+    }
+  ],
+  "red chili powders": [
+    {
+      "brand": "MDH",
+      "cost": 350
+    },
+    {
+      "brand": "Everest",
+      "cost": 330
+    }
+  ],
+  "Red Chili Powder": [
+    {
+      "brand": "MDH",
+      "cost": 350
+    },
+    {
+      "brand": "Everest",
+      "cost": 330
+    }
+  ],
+  "coriander powder": [
+    {
+      "brand": "MDH",
+      "cost": 250
+    },
+    {
+      "brand": "Everest",
+      "cost": 240
+    }
+  ],
+  "coriander powders": [
+    {
+      "brand": "MDH",
+      "cost": 250
+    },
+    {
+      "brand": "Everest",
+      "cost": 240
+    }
+  ],
+  "Coriander Powder": [
+    {
+      "brand": "MDH",
+      "cost": 250
+    },
+    {
+      "brand": "Everest",
+      "cost": 240
+    }
+  ],
+  "cumin seed": [
+    {
+      "brand": "MDH",
+      "cost": 500
+    },
+    {
+      "brand": "Everest",
+      "cost": 480
+    }
+  ],
+  "cumin seeds": [
+    {
+      "brand": "MDH",
+      "cost": 500
+    },
+    {
+      "brand": "Everest",
+      "cost": 480
+    }
+  ],
+  "Cumin Seeds": [
+    {
+      "brand": "MDH",
+      "cost": 500
+    },
+    {
+      "brand": "Everest",
+      "cost": 480
+    }
+  ],
+  "black pepper powder": [
+    {
+      "brand": "MDH",
+      "cost": 900
+    },
+    {
+      "brand": "Everest",
+      "cost": 850
+    }
+  ],
+  "black pepper powders": [
+    {
+      "brand": "MDH",
+      "cost": 900
+    },
+    {
+      "brand": "Everest",
+      "cost": 850
+    }
+  ],
+  "Black Pepper Powder": [
+    {
+      "brand": "MDH",
+      "cost": 900
+    },
+    {
+      "brand": "Everest",
+      "cost": 850
+    }
+  ],
+  "garam masala": [
+    {
+      "brand": "MDH",
+      "cost": 450
+    },
+    {
+      "brand": "Everest",
+      "cost": 430
+    }
+  ],
+  "garam masalas": [
+    {
+      "brand": "MDH",
+      "cost": 450
+    },
+    {
+      "brand": "Everest",
+      "cost": 430
+    }
+  ],
+  "Garam Masala": [
+    {
+      "brand": "MDH",
+      "cost": 450
+    },
+    {
+      "brand": "Everest",
+      "cost": 430
+    }
+  ],
+  "cardamom": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "cardamom (elaichi)": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "cardamom (elaichi)s": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "cardamom elaichi": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "cardamom elaichis": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "cardamoms": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "elaichi": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "elaichi cardamom": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "elaichi cardamoms": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "elaichis": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "Cardamom (Elaichi)": [
+    {
+      "brand": "MDH",
+      "cost": 1400
+    },
+    {
+      "brand": "Everest",
+      "cost": 1350
+    }
+  ],
+  "cinnamon": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "cinnamon (dalchini)": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "cinnamon (dalchini)s": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "cinnamon dalchini": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "cinnamon dalchinis": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "cinnamons": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "dalchini": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "dalchini cinnamon": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "dalchini cinnamons": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "dalchinis": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "Cinnamon (Dalchini)": [
+    {
+      "brand": "MDH",
+      "cost": 600
+    },
+    {
+      "brand": "Everest",
+      "cost": 580
+    }
+  ],
+  "clov": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "cloves": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "cloves (laung)": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "cloves (laung)s": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "cloves laung": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "cloves laungs": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "laung": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "laung clov": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "laung cloves": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "laungs": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "Cloves (Laung)": [
+    {
+      "brand": "MDH",
+      "cost": 1500
+    },
+    {
+      "brand": "Everest",
+      "cost": 1450
+    }
+  ],
+  "bay leaf": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "bay leaf (tej patta)": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "bay leaf (tej patta)s": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "bay leaf tej patta": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "bay leaf tej pattas": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "bay leafs": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "tej patta": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "tej patta bay leaf": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "tej patta bay leafs": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "tej pattas": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "Bay Leaf (Tej Patta)": [
+    {
+      "brand": "Everest",
+      "cost": 300
+    },
+    {
+      "brand": "MDH",
+      "cost": 320
+    }
+  ],
+  "asafoetida": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "asafoetida (hing)": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "asafoetida (hing)s": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "asafoetida hing": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "asafoetida hings": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "asafoetidas": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "hing": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "hing asafoetida": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "hing asafoetidas": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "hings": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "Asafoetida (Hing)": [
+    {
+      "brand": "MDH",
+      "cost": 2000
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 1800
+    }
+  ],
+  "mustard seed": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 200
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 220
+    }
+  ],
+  "mustard seeds": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 200
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 220
+    }
+  ],
+  "Mustard Seeds": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 200
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 220
+    }
+  ],
+  "fenugreek seed": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "fenugreek seeds": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "fenugreek seeds (methi)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "fenugreek seeds (methi)s": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "fenugreek seeds methi": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "fenugreek seeds methis": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "methi": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "methi fenugreek seed": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "methi fenugreek seeds": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "methis": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "Fenugreek Seeds (Methi)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 300
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 320
+    }
+  ],
+  "fennel seed": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "fennel seeds": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "fennel seeds (saunf)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "fennel seeds (saunf)s": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "fennel seeds saunf": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "fennel seeds saunfs": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "saunf": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "saunf fennel seed": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "saunf fennel seeds": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "saunfs": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "Fennel Seeds (Saunf)": [
+    {
+      "brand": "Tata Sampann",
+      "cost": 180
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 200
+    }
+  ],
+  "curry leav": [
+    {
+      "brand": "Catch",
+      "cost": 200
+    },
+    {
+      "brand": "Fresh",
+      "cost": 150
+    }
+  ],
+  "curry leaves": [
+    {
+      "brand": "Catch",
+      "cost": 200
+    },
+    {
+      "brand": "Fresh",
+      "cost": 150
+    }
+  ],
+  "Curry Leaves": [
+    {
+      "brand": "Catch",
+      "cost": 200
+    },
+    {
+      "brand": "Fresh",
+      "cost": 150
+    }
+  ],
+  "tamarind paste": [
+    {
+      "brand": "Catch",
+      "cost": 250
+    },
+    {
+      "brand": "MDH",
+      "cost": 240
+    }
+  ],
+  "tamarind pastes": [
+    {
+      "brand": "Catch",
+      "cost": 250
+    },
+    {
+      "brand": "MDH",
+      "cost": 240
+    }
+  ],
+  "Tamarind Paste": [
+    {
+      "brand": "Catch",
+      "cost": 250
+    },
+    {
+      "brand": "MDH",
+      "cost": 240
+    }
+  ],
+  "tomato ketchup": [
+    {
+      "brand": "Kissan",
+      "cost": 180
+    },
+    {
+      "brand": "Maggi",
+      "cost": 170
+    }
+  ],
+  "tomato ketchups": [
+    {
+      "brand": "Kissan",
+      "cost": 180
+    },
+    {
+      "brand": "Maggi",
+      "cost": 170
+    }
+  ],
+  "Tomato Ketchup": [
+    {
+      "brand": "Kissan",
+      "cost": 180
+    },
+    {
+      "brand": "Maggi",
+      "cost": 170
+    }
+  ],
+  "ginger garlic paste": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 230
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 220
+    }
+  ],
+  "ginger garlic pastes": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 230
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 220
+    }
+  ],
+  "Ginger Garlic Paste": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 230
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 220
+    }
+  ],
+  "vinegar": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    },
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "vinegar (white)": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "vinegar (white)s": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "vinegar white": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "vinegar whites": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "vinegars": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    },
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "white": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "white vinegar": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "white vinegars": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "whites": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "Vinegar (White)": [
+    {
+      "brand": "Figaro",
+      "cost": 85
+    },
+    {
+      "brand": "Madhur",
+      "cost": 80
+    }
+  ],
+  "apple cider": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "apple cider vinegar": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "apple cider vinegars": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "apple ciders": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "vinegar (apple cider)": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "vinegar (apple cider)s": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "vinegar apple cider": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "vinegar apple ciders": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "Vinegar (Apple Cider)": [
+    {
+      "brand": "Bragg",
+      "cost": 600
+    },
+    {
+      "brand": "HealthKart",
+      "cost": 500
+    }
+  ],
+  "coconut oil": [
+    {
+      "brand": "Parachute",
+      "cost": 250
+    },
+    {
+      "brand": "Dabur",
+      "cost": 260
+    }
+  ],
+  "coconut oils": [
+    {
+      "brand": "Parachute",
+      "cost": 250
+    },
+    {
+      "brand": "Dabur",
+      "cost": 260
+    }
+  ],
+  "Coconut Oil": [
+    {
+      "brand": "Parachute",
+      "cost": 250
+    },
+    {
+      "brand": "Dabur",
+      "cost": 260
+    }
+  ],
+  "mustard oil": [
+    {
+      "brand": "Fortune",
+      "cost": 150
+    },
+    {
+      "brand": "Dhara",
+      "cost": 140
+    }
+  ],
+  "mustard oils": [
+    {
+      "brand": "Fortune",
+      "cost": 150
+    },
+    {
+      "brand": "Dhara",
+      "cost": 140
+    }
+  ],
+  "Mustard Oil": [
+    {
+      "brand": "Fortune",
+      "cost": 150
+    },
+    {
+      "brand": "Dhara",
+      "cost": 140
+    }
+  ],
+  "soybean": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "soybean vegetable oil": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "soybean vegetable oils": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "soybeans": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "vegetable oil": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "vegetable oil (soybean)": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "vegetable oil (soybean)s": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "vegetable oil soybean": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "vegetable oil soybeans": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "vegetable oils": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "Vegetable Oil (Soybean)": [
+    {
+      "brand": "Fortune",
+      "cost": 130
+    },
+    {
+      "brand": "Dhara",
+      "cost": 125
+    }
+  ],
+  "extra virgin": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "extra virgin olive oil": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "extra virgin olive oils": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "extra virgins": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "olive oil": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "olive oil (extra virgin)": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "olive oil (extra virgin)s": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "olive oil extra virgin": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "olive oil extra virgins": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "olive oils": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "Olive Oil (Extra Virgin)": [
+    {
+      "brand": "Figaro",
+      "cost": 600
+    },
+    {
+      "brand": "Borges",
+      "cost": 650
+    }
+  ],
+  "ghee": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Gowardhan",
+      "cost": 600
+    }
+  ],
+  "ghees": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Gowardhan",
+      "cost": 600
+    }
+  ],
+  "Ghee": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Gowardhan",
+      "cost": 600
+    }
+  ],
+  "butter": [
+    {
+      "brand": "Amul",
+      "cost": 400
+    },
+    {
+      "brand": "Britannia",
+      "cost": 420
+    }
+  ],
+  "butters": [
+    {
+      "brand": "Amul",
+      "cost": 400
+    },
+    {
+      "brand": "Britannia",
+      "cost": 420
+    }
+  ],
+  "Butter": [
+    {
+      "brand": "Amul",
+      "cost": 400
+    },
+    {
+      "brand": "Britannia",
+      "cost": 420
+    }
+  ],
+  "milk": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "milk (toned)": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "milk (toned)s": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "milk toned": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "milk toneds": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "milks": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "toned": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "toned milk": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "toned milks": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "toneds": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "Milk (Toned)": [
+    {
+      "brand": "Amul",
+      "cost": 50
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 55
+    }
+  ],
+  "dahi": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "dahi yogurt": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "dahi yogurts": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "dahis": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "yogurt": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "yogurt (dahi)": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "yogurt (dahi)s": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "yogurt dahi": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "yogurt dahis": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "yogurts": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "Yogurt (Dahi)": [
+    {
+      "brand": "Amul",
+      "cost": 45
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 50
+    }
+  ],
+  "tea leav": [
+    {
+      "brand": "Tata Tea Gold",
+      "cost": 280
+    },
+    {
+      "brand": "Brooke Bond Red Label",
+      "cost": 250
+    }
+  ],
+  "tea leaves": [
+    {
+      "brand": "Tata Tea Gold",
+      "cost": 280
+    },
+    {
+      "brand": "Brooke Bond Red Label",
+      "cost": 250
+    }
+  ],
+  "Tea Leaves": [
+    {
+      "brand": "Tata Tea Gold",
+      "cost": 280
+    },
+    {
+      "brand": "Brooke Bond Red Label",
+      "cost": 250
+    }
+  ],
+  "coffee": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "coffee (instant)": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "coffee (instant)s": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "coffee instant": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "coffee instants": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "coffees": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "instant": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "instant coffee": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "instant coffees": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "instants": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "Coffee (Instant)": [
+    {
+      "brand": "Nescafe Classic",
+      "cost": 800
+    },
+    {
+      "brand": "Bru",
+      "cost": 600
+    }
+  ],
+  "paneer": [
+    {
+      "brand": "Amul",
+      "cost": 300
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 320
+    }
+  ],
+  "paneers": [
+    {
+      "brand": "Amul",
+      "cost": 300
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 320
+    }
+  ],
+  "Paneer": [
+    {
+      "brand": "Amul",
+      "cost": 300
+    },
+    {
+      "brand": "Mother Dairy",
+      "cost": 320
+    }
+  ],
+  "pasta": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "pasta (penne)": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "pasta (penne)s": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "pasta penne": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "pasta pennes": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "pastas": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "penne": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "penne pasta": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "penne pastas": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "pennes": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "Pasta (Penne)": [
+    {
+      "brand": "Del Monte",
+      "cost": 115
+    },
+    {
+      "brand": "Borges",
+      "cost": 135
+    }
+  ],
+  "rice vermicelli": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 95
+    }
+  ],
+  "rice vermicellis": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 95
+    }
+  ],
+  "Rice Vermicelli": [
+    {
+      "brand": "24 Mantra",
+      "cost": 100
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 95
+    }
+  ],
+  "hakka noodl": [
+    {
+      "brand": "Wai Wai",
+      "cost": 90
+    },
+    {
+      "brand": "Maggi",
+      "cost": 80
+    }
+  ],
+  "hakka noodles": [
+    {
+      "brand": "Wai Wai",
+      "cost": 90
+    },
+    {
+      "brand": "Maggi",
+      "cost": 80
+    }
+  ],
+  "Hakka Noodles": [
+    {
+      "brand": "Wai Wai",
+      "cost": 90
+    },
+    {
+      "brand": "Maggi",
+      "cost": 80
+    }
+  ],
+  "instant noodl": [
+    {
+      "brand": "Maggi",
+      "cost": 90
+    },
+    {
+      "brand": "Top Ramen",
+      "cost": 70
+    }
+  ],
+  "instant noodles": [
+    {
+      "brand": "Maggi",
+      "cost": 90
+    },
+    {
+      "brand": "Top Ramen",
+      "cost": 70
+    }
+  ],
+  "Instant Noodles": [
+    {
+      "brand": "Maggi",
+      "cost": 90
+    },
+    {
+      "brand": "Top Ramen",
+      "cost": 70
+    }
+  ],
+  "ramen noodl": [
+    {
+      "brand": "Top Ramen",
+      "cost": 70
+    },
+    {
+      "brand": "Knorr",
+      "cost": 80
+    }
+  ],
+  "ramen noodles": [
+    {
+      "brand": "Top Ramen",
+      "cost": 70
+    },
+    {
+      "brand": "Knorr",
+      "cost": 80
+    }
+  ],
+  "Ramen Noodles": [
+    {
+      "brand": "Top Ramen",
+      "cost": 70
+    },
+    {
+      "brand": "Knorr",
+      "cost": 80
+    }
+  ],
+  "tortilla wrap": [
+    {
+      "brand": "Olive Country",
+      "cost": 200
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 180
+    }
+  ],
+  "tortilla wraps": [
+    {
+      "brand": "Olive Country",
+      "cost": 200
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 180
+    }
+  ],
+  "Tortilla Wraps": [
+    {
+      "brand": "Olive Country",
+      "cost": 200
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 180
+    }
+  ],
+  "bread": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    },
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "bread (sliced white)": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "bread (sliced white)s": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "bread sliced white": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "bread sliced whites": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "breads": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    },
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "sliced white": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "sliced white bread": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "sliced white breads": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "sliced whites": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "Bread (Sliced White)": [
+    {
+      "brand": "Britannia",
+      "cost": 35
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 40
+    }
+  ],
+  "bread (multigrain)": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "bread (multigrain)s": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "bread multigrain": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "bread multigrains": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "multigrain": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "multigrain bread": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "multigrain breads": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "multigrains": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "Bread (Multigrain)": [
+    {
+      "brand": "Britannia",
+      "cost": 45
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 50
+    }
+  ],
+  "burger bun": [
+    {
+      "brand": "Britannia",
+      "cost": 120
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 110
+    }
+  ],
+  "burger buns": [
+    {
+      "brand": "Britannia",
+      "cost": 120
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 110
+    }
+  ],
+  "Burger Buns": [
+    {
+      "brand": "Britannia",
+      "cost": 120
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 110
+    }
+  ],
+  "hot dog bun": [
+    {
+      "brand": "Britannia",
+      "cost": 130
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 120
+    }
+  ],
+  "hot dog buns": [
+    {
+      "brand": "Britannia",
+      "cost": 130
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 120
+    }
+  ],
+  "Hot Dog Buns": [
+    {
+      "brand": "Britannia",
+      "cost": 130
+    },
+    {
+      "brand": "Harvest Gold",
+      "cost": 120
+    }
+  ],
+  "dough": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "dough (frozen pizza base)": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "dough (frozen pizza base)s": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "dough frozen pizza base": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "dough frozen pizza bases": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "doughs": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "frozen pizza base": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "frozen pizza base dough": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "frozen pizza base doughs": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "frozen pizza bases": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "Dough (Frozen Pizza Base)": [
+    {
+      "brand": "McCain",
+      "cost": 150
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 140
+    }
+  ],
+  "canned tomato": [
+    {
+      "brand": "Del Monte",
+      "cost": 180
+    },
+    {
+      "brand": "Kissan",
+      "cost": 170
+    }
+  ],
+  "canned tomatoes": [
+    {
+      "brand": "Del Monte",
+      "cost": 180
+    },
+    {
+      "brand": "Kissan",
+      "cost": 170
+    }
+  ],
+  "Canned Tomatoes": [
+    {
+      "brand": "Del Monte",
+      "cost": 180
+    },
+    {
+      "brand": "Kissan",
+      "cost": 170
+    }
+  ],
+  "tomato paste": [
+    {
+      "brand": "Appleton",
+      "cost": 200
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 190
+    }
+  ],
+  "tomato pastes": [
+    {
+      "brand": "Appleton",
+      "cost": 200
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 190
+    }
+  ],
+  "Tomato Paste": [
+    {
+      "brand": "Appleton",
+      "cost": 200
+    },
+    {
+      "brand": "Del Monte",
+      "cost": 190
+    }
+  ],
+  "canned corn": [
+    {
+      "brand": "Del Monte",
+      "cost": 220
+    },
+    {
+      "brand": "Green Giant",
+      "cost": 200
+    }
+  ],
+  "canned corns": [
+    {
+      "brand": "Del Monte",
+      "cost": 220
+    },
+    {
+      "brand": "Green Giant",
+      "cost": 200
+    }
+  ],
+  "Canned Corn": [
+    {
+      "brand": "Del Monte",
+      "cost": 220
+    },
+    {
+      "brand": "Green Giant",
+      "cost": 200
+    }
+  ],
+  "canned pineapple": [
+    {
+      "brand": "Del Monte",
+      "cost": 400
+    },
+    {
+      "brand": "Dole",
+      "cost": 380
+    }
+  ],
+  "canned pineapples": [
+    {
+      "brand": "Del Monte",
+      "cost": 400
+    },
+    {
+      "brand": "Dole",
+      "cost": 380
+    }
+  ],
+  "Canned Pineapple": [
+    {
+      "brand": "Del Monte",
+      "cost": 400
+    },
+    {
+      "brand": "Dole",
+      "cost": 380
+    }
+  ],
+  "mixed pickle": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 320
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 300
+    }
+  ],
+  "mixed pickles": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 320
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 300
+    }
+  ],
+  "Mixed Pickle": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 320
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 300
+    }
+  ],
+  "mango pickle": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 300
+    },
+    {
+      "brand": "Priya",
+      "cost": 280
+    }
+  ],
+  "mango pickles": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 300
+    },
+    {
+      "brand": "Priya",
+      "cost": 280
+    }
+  ],
+  "Mango Pickle": [
+    {
+      "brand": "Mother\u2019s Recipe",
+      "cost": 300
+    },
+    {
+      "brand": "Priya",
+      "cost": 280
+    }
+  ],
+  "honey": [
+    {
+      "brand": "Dabur",
+      "cost": 600
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 550
+    }
+  ],
+  "honeys": [
+    {
+      "brand": "Dabur",
+      "cost": 600
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 550
+    }
+  ],
+  "Honey": [
+    {
+      "brand": "Dabur",
+      "cost": 600
+    },
+    {
+      "brand": "Patanjali",
+      "cost": 550
+    }
+  ],
+  "peanut butter": [
+    {
+      "brand": "Pintola",
+      "cost": 400
+    },
+    {
+      "brand": "Dabur",
+      "cost": 380
+    }
+  ],
+  "peanut butters": [
+    {
+      "brand": "Pintola",
+      "cost": 400
+    },
+    {
+      "brand": "Dabur",
+      "cost": 380
+    }
+  ],
+  "Peanut Butter": [
+    {
+      "brand": "Pintola",
+      "cost": 400
+    },
+    {
+      "brand": "Dabur",
+      "cost": 380
+    }
+  ],
+  "jam": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "jam (mixed fruit)": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "jam (mixed fruit)s": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "jam mixed fruit": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "jam mixed fruits": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "jams": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "mixed fruit": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "mixed fruit jam": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "mixed fruit jams": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "mixed fruits": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "Jam (Mixed Fruit)": [
+    {
+      "brand": "Kissan",
+      "cost": 150
+    },
+    {
+      "brand": "Mapro",
+      "cost": 140
+    }
+  ],
+  "cheese": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    },
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    },
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheese (processed)": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "cheese (processed)s": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "cheese processed": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "cheese processeds": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "cheeses": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    },
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    },
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "processed": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "processed cheese": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "processed cheeses": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "processeds": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "Cheese (Processed)": [
+    {
+      "brand": "Amul",
+      "cost": 500
+    },
+    {
+      "brand": "Britannia",
+      "cost": 480
+    }
+  ],
+  "cheese (mozzarella)": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "cheese (mozzarella)s": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "cheese mozzarella": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "cheese mozzarellas": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "mozzarella": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "mozzarella cheese": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "mozzarella cheeses": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "mozzarellas": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "Cheese (Mozzarella)": [
+    {
+      "brand": "Britannia",
+      "cost": 600
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 580
+    }
+  ],
+  "cheddar": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheddar cheese": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheddar cheeses": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheddars": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheese (cheddar)": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheese (cheddar)s": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheese cheddar": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "cheese cheddars": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "Cheese (Cheddar)": [
+    {
+      "brand": "Amul",
+      "cost": 550
+    },
+    {
+      "brand": "Britannia",
+      "cost": 530
+    }
+  ],
+  "parmesan cheese": [
+    {
+      "brand": "Duke\u2019s",
+      "cost": 1200
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 1100
+    }
+  ],
+  "parmesan cheeses": [
+    {
+      "brand": "Duke\u2019s",
+      "cost": 1200
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 1100
+    }
+  ],
+  "Parmesan Cheese": [
+    {
+      "brand": "Duke\u2019s",
+      "cost": 1200
+    },
+    {
+      "brand": "Milky Mist",
+      "cost": 1100
+    }
+  ],
+  "cream of mushroom soup": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "cream of mushroom soup (mix)": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "cream of mushroom soup (mix)s": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "cream of mushroom soup mix": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "cream of mushroom soup mixs": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "cream of mushroom soups": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "mix": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    },
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "mix cream of mushroom soup": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "mix cream of mushroom soups": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "mixs": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    },
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "Cream of Mushroom Soup (Mix)": [
+    {
+      "brand": "Knorr",
+      "cost": 150
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 140
+    }
+  ],
+  "mix tomato soup": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "mix tomato soups": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "tomato soup": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "tomato soup (mix)": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "tomato soup (mix)s": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "tomato soup mix": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "tomato soup mixs": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "tomato soups": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "Tomato Soup (Mix)": [
+    {
+      "brand": "Knorr",
+      "cost": 120
+    },
+    {
+      "brand": "Campbell\u2019s",
+      "cost": 110
+    }
+  ],
+  "chili flak": [
+    {
+      "brand": "24 Mantra",
+      "cost": 300
+    },
+    {
+      "brand": "McCormick",
+      "cost": 320
+    }
+  ],
+  "chili flakes": [
+    {
+      "brand": "24 Mantra",
+      "cost": 300
+    },
+    {
+      "brand": "McCormick",
+      "cost": 320
+    }
+  ],
+  "Chili Flakes": [
+    {
+      "brand": "24 Mantra",
+      "cost": 300
+    },
+    {
+      "brand": "McCormick",
+      "cost": 320
+    }
+  ],
+  "dried": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "dried oregano": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "dried oreganos": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "drieds": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "oregano": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "oregano (dried)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "oregano (dried)s": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "oregano dried": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "oregano drieds": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "oreganos": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "Oregano (Dried)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "basil": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "basil (dried)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "basil (dried)s": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "basil dried": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "basil drieds": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "basils": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "dried basil": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "dried basils": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "Basil (Dried)": [
+    {
+      "brand": "24 Mantra",
+      "cost": 350
+    },
+    {
+      "brand": "McCormick",
+      "cost": 330
+    }
+  ],
+  "roasted cumin powder": [
+    {
+      "brand": "24 Mantra",
+      "cost": 250
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 240
+    }
+  ],
+  "roasted cumin powders": [
+    {
+      "brand": "24 Mantra",
+      "cost": 250
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 240
+    }
+  ],
+  "Roasted Cumin Powder": [
+    {
+      "brand": "24 Mantra",
+      "cost": 250
+    },
+    {
+      "brand": "Tata Sampann",
+      "cost": 240
+    }
+  ],
+  "black salt": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "black salt (kala namak)": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "black salt (kala namak)s": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "black salt kala namak": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "black salt kala namaks": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "black salts": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "kala namak": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "kala namak black salt": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "kala namak black salts": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "kala namaks": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ],
+  "Black Salt (Kala Namak)": [
+    {
+      "brand": "Patanjali",
+      "cost": 80
+    },
+    {
+      "brand": "24 Mantra",
+      "cost": 90
+    }
+  ]
+}

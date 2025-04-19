@@ -1,0 +1,650 @@
+{
+  "Wheat Flour (Atta)": [
+    "atta",
+    "atta wheat flour",
+    "atta wheat flours",
+    "attas",
+    "wheat flour",
+    "wheat flour (atta)",
+    "wheat flour (atta)s",
+    "wheat flour atta",
+    "wheat flour attas",
+    "wheat flours"
+  ],
+  "Rice (Basmati)": [
+    "basmati",
+    "basmati rice",
+    "basmati rices",
+    "basmatis",
+    "rice",
+    "rice (basmati)",
+    "rice (basmati)s",
+    "rice basmati",
+    "rice basmatis",
+    "rices"
+  ],
+  "Rice (Sona Masoori)": [
+    "rice",
+    "rice (sona masoori)",
+    "rice (sona masoori)s",
+    "rice sona masoori",
+    "rice sona masooris",
+    "rices",
+    "sona masoori",
+    "sona masoori rice",
+    "sona masoori rices",
+    "sona masooris"
+  ],
+  "Rice (Non-Basmati)": [
+    "non-basmati",
+    "non-basmati rice",
+    "non-basmati rices",
+    "non-basmatis",
+    "rice",
+    "rice (non-basmati)",
+    "rice (non-basmati)s",
+    "rice non-basmati",
+    "rice non-basmatis",
+    "rices"
+  ],
+  "Rice (Brown)": [
+    "brown",
+    "brown rice",
+    "brown rices",
+    "browns",
+    "rice",
+    "rice (brown)",
+    "rice (brown)s",
+    "rice brown",
+    "rice browns",
+    "rices"
+  ],
+  "Rice (Idli Rice)": [
+    "idli rice",
+    "idli rice rice",
+    "idli rice rices",
+    "idli rices",
+    "rice",
+    "rice (idli rice)",
+    "rice (idli rice)s",
+    "rice idli rice",
+    "rice idli rices",
+    "rices"
+  ],
+  "Rice (Poha)": [
+    "poha",
+    "poha rice",
+    "poha rices",
+    "pohas",
+    "rice",
+    "rice (poha)",
+    "rice (poha)s",
+    "rice poha",
+    "rice pohas",
+    "rices"
+  ],
+  "Semolina (Suji/Rava)": [
+    "semolina",
+    "semolina (suji/rava)",
+    "semolina (suji/rava)s",
+    "semolina suji/rava",
+    "semolina suji/ravas",
+    "semolinas",
+    "suji/rava",
+    "suji/rava semolina",
+    "suji/rava semolinas",
+    "suji/ravas"
+  ],
+  "Besan (Gram Flour)": [
+    "besan",
+    "besan (gram flour)",
+    "besan (gram flour)s",
+    "besan gram flour",
+    "besan gram flours",
+    "besans",
+    "gram flour",
+    "gram flour besan",
+    "gram flour besans",
+    "gram flours"
+  ],
+  "Toor Dal": [
+    "toor dal",
+    "toor dals"
+  ],
+  "Moong Dal": [
+    "moong dal",
+    "moong dals"
+  ],
+  "Urad Dal": [
+    "urad dal",
+    "urad dals"
+  ],
+  "Chana Dal": [
+    "chana dal",
+    "chana dals"
+  ],
+  "Rajma (Kidney Beans)": [
+    "kidney bean",
+    "kidney beans",
+    "kidney beans rajma",
+    "kidney beans rajmas",
+    "rajma",
+    "rajma (kidney beans)",
+    "rajma (kidney beans)s",
+    "rajma kidney bean",
+    "rajma kidney beans",
+    "rajmas"
+  ],
+  "Chickpeas (Chana)": [
+    "chana",
+    "chana chickpea",
+    "chana chickpeas",
+    "chanas",
+    "chickpea",
+    "chickpeas",
+    "chickpeas (chana)",
+    "chickpeas (chana)s",
+    "chickpeas chana",
+    "chickpeas chanas"
+  ],
+  "Masoor Dal": [
+    "masoor dal",
+    "masoor dals"
+  ],
+  "Black Gram (Whole Urad)": [
+    "black gram",
+    "black gram (whole urad)",
+    "black gram (whole urad)s",
+    "black gram whole urad",
+    "black gram whole urads",
+    "black grams",
+    "whole urad",
+    "whole urad black gram",
+    "whole urad black grams",
+    "whole urads"
+  ],
+  "Salt": [
+    "salt",
+    "salts"
+  ],
+  "Sugar": [
+    "sugar",
+    "sugars"
+  ],
+  "Jaggery (Gur)": [
+    "gur",
+    "gur jaggery",
+    "gur jaggerys",
+    "gurs",
+    "jaggery",
+    "jaggery (gur)",
+    "jaggery (gur)s",
+    "jaggery gur",
+    "jaggery gurs",
+    "jaggerys"
+  ],
+  "Turmeric Powder": [
+    "turmeric powder",
+    "turmeric powders"
+  ],
+  "Red Chili Powder": [
+    "red chili powder",
+    "red chili powders"
+  ],
+  "Coriander Powder": [
+    "coriander powder",
+    "coriander powders"
+  ],
+  "Cumin Seeds": [
+    "cumin seed",
+    "cumin seeds"
+  ],
+  "Black Pepper Powder": [
+    "black pepper powder",
+    "black pepper powders"
+  ],
+  "Garam Masala": [
+    "garam masala",
+    "garam masalas"
+  ],
+  "Cardamom (Elaichi)": [
+    "cardamom",
+    "cardamom (elaichi)",
+    "cardamom (elaichi)s",
+    "cardamom elaichi",
+    "cardamom elaichis",
+    "cardamoms",
+    "elaichi",
+    "elaichi cardamom",
+    "elaichi cardamoms",
+    "elaichis"
+  ],
+  "Cinnamon (Dalchini)": [
+    "cinnamon",
+    "cinnamon (dalchini)",
+    "cinnamon (dalchini)s",
+    "cinnamon dalchini",
+    "cinnamon dalchinis",
+    "cinnamons",
+    "dalchini",
+    "dalchini cinnamon",
+    "dalchini cinnamons",
+    "dalchinis"
+  ],
+  "Cloves (Laung)": [
+    "clov",
+    "cloves",
+    "cloves (laung)",
+    "cloves (laung)s",
+    "cloves laung",
+    "cloves laungs",
+    "laung",
+    "laung clov",
+    "laung cloves",
+    "laungs"
+  ],
+  "Bay Leaf (Tej Patta)": [
+    "bay leaf",
+    "bay leaf (tej patta)",
+    "bay leaf (tej patta)s",
+    "bay leaf tej patta",
+    "bay leaf tej pattas",
+    "bay leafs",
+    "tej patta",
+    "tej patta bay leaf",
+    "tej patta bay leafs",
+    "tej pattas"
+  ],
+  "Asafoetida (Hing)": [
+    "asafoetida",
+    "asafoetida (hing)",
+    "asafoetida (hing)s",
+    "asafoetida hing",
+    "asafoetida hings",
+    "asafoetidas",
+    "hing",
+    "hing asafoetida",
+    "hing asafoetidas",
+    "hings"
+  ],
+  "Mustard Seeds": [
+    "mustard seed",
+    "mustard seeds"
+  ],
+  "Fenugreek Seeds (Methi)": [
+    "fenugreek seed",
+    "fenugreek seeds",
+    "fenugreek seeds (methi)",
+    "fenugreek seeds (methi)s",
+    "fenugreek seeds methi",
+    "fenugreek seeds methis",
+    "methi",
+    "methi fenugreek seed",
+    "methi fenugreek seeds",
+    "methis"
+  ],
+  "Fennel Seeds (Saunf)": [
+    "fennel seed",
+    "fennel seeds",
+    "fennel seeds (saunf)",
+    "fennel seeds (saunf)s",
+    "fennel seeds saunf",
+    "fennel seeds saunfs",
+    "saunf",
+    "saunf fennel seed",
+    "saunf fennel seeds",
+    "saunfs"
+  ],
+  "Curry Leaves": [
+    "curry leav",
+    "curry leaves"
+  ],
+  "Tamarind Paste": [
+    "tamarind paste",
+    "tamarind pastes"
+  ],
+  "Tomato Ketchup": [
+    "tomato ketchup",
+    "tomato ketchups"
+  ],
+  "Ginger Garlic Paste": [
+    "ginger garlic paste",
+    "ginger garlic pastes"
+  ],
+  "Vinegar (White)": [
+    "vinegar",
+    "vinegar (white)",
+    "vinegar (white)s",
+    "vinegar white",
+    "vinegar whites",
+    "vinegars",
+    "white",
+    "white vinegar",
+    "white vinegars",
+    "whites"
+  ],
+  "Vinegar (Apple Cider)": [
+    "apple cider",
+    "apple cider vinegar",
+    "apple cider vinegars",
+    "apple ciders",
+    "vinegar",
+    "vinegar (apple cider)",
+    "vinegar (apple cider)s",
+    "vinegar apple cider",
+    "vinegar apple ciders",
+    "vinegars"
+  ],
+  "Coconut Oil": [
+    "coconut oil",
+    "coconut oils"
+  ],
+  "Mustard Oil": [
+    "mustard oil",
+    "mustard oils"
+  ],
+  "Vegetable Oil (Soybean)": [
+    "soybean",
+    "soybean vegetable oil",
+    "soybean vegetable oils",
+    "soybeans",
+    "vegetable oil",
+    "vegetable oil (soybean)",
+    "vegetable oil (soybean)s",
+    "vegetable oil soybean",
+    "vegetable oil soybeans",
+    "vegetable oils"
+  ],
+  "Olive Oil (Extra Virgin)": [
+    "extra virgin",
+    "extra virgin olive oil",
+    "extra virgin olive oils",
+    "extra virgins",
+    "olive oil",
+    "olive oil (extra virgin)",
+    "olive oil (extra virgin)s",
+    "olive oil extra virgin",
+    "olive oil extra virgins",
+    "olive oils"
+  ],
+  "Ghee": [
+    "ghee",
+    "ghees"
+  ],
+  "Butter": [
+    "butter",
+    "butters"
+  ],
+  "Milk (Toned)": [
+    "milk",
+    "milk (toned)",
+    "milk (toned)s",
+    "milk toned",
+    "milk toneds",
+    "milks",
+    "toned",
+    "toned milk",
+    "toned milks",
+    "toneds"
+  ],
+  "Yogurt (Dahi)": [
+    "dahi",
+    "dahi yogurt",
+    "dahi yogurts",
+    "dahis",
+    "yogurt",
+    "yogurt (dahi)",
+    "yogurt (dahi)s",
+    "yogurt dahi",
+    "yogurt dahis",
+    "yogurts"
+  ],
+  "Tea Leaves": [
+    "tea leav",
+    "tea leaves"
+  ],
+  "Coffee (Instant)": [
+    "coffee",
+    "coffee (instant)",
+    "coffee (instant)s",
+    "coffee instant",
+    "coffee instants",
+    "coffees",
+    "instant",
+    "instant coffee",
+    "instant coffees",
+    "instants"
+  ],
+  "Paneer": [
+    "paneer",
+    "paneers"
+  ],
+  "Pasta (Penne)": [
+    "pasta",
+    "pasta (penne)",
+    "pasta (penne)s",
+    "pasta penne",
+    "pasta pennes",
+    "pastas",
+    "penne",
+    "penne pasta",
+    "penne pastas",
+    "pennes"
+  ],
+  "Rice Vermicelli": [
+    "rice vermicelli",
+    "rice vermicellis"
+  ],
+  "Hakka Noodles": [
+    "hakka noodl",
+    "hakka noodles"
+  ],
+  "Instant Noodles": [
+    "instant noodl",
+    "instant noodles"
+  ],
+  "Ramen Noodles": [
+    "ramen noodl",
+    "ramen noodles"
+  ],
+  "Tortilla Wraps": [
+    "tortilla wrap",
+    "tortilla wraps"
+  ],
+  "Bread (Sliced White)": [
+    "bread",
+    "bread (sliced white)",
+    "bread (sliced white)s",
+    "bread sliced white",
+    "bread sliced whites",
+    "breads",
+    "sliced white",
+    "sliced white bread",
+    "sliced white breads",
+    "sliced whites"
+  ],
+  "Bread (Multigrain)": [
+    "bread",
+    "bread (multigrain)",
+    "bread (multigrain)s",
+    "bread multigrain",
+    "bread multigrains",
+    "breads",
+    "multigrain",
+    "multigrain bread",
+    "multigrain breads",
+    "multigrains"
+  ],
+  "Burger Buns": [
+    "burger bun",
+    "burger buns"
+  ],
+  "Hot Dog Buns": [
+    "hot dog bun",
+    "hot dog buns"
+  ],
+  "Dough (Frozen Pizza Base)": [
+    "dough",
+    "dough (frozen pizza base)",
+    "dough (frozen pizza base)s",
+    "dough frozen pizza base",
+    "dough frozen pizza bases",
+    "doughs",
+    "frozen pizza base",
+    "frozen pizza base dough",
+    "frozen pizza base doughs",
+    "frozen pizza bases"
+  ],
+  "Canned Tomatoes": [
+    "canned tomato",
+    "canned tomatoes"
+  ],
+  "Tomato Paste": [
+    "tomato paste",
+    "tomato pastes"
+  ],
+  "Canned Corn": [
+    "canned corn",
+    "canned corns"
+  ],
+  "Canned Pineapple": [
+    "canned pineapple",
+    "canned pineapples"
+  ],
+  "Mixed Pickle": [
+    "mixed pickle",
+    "mixed pickles"
+  ],
+  "Mango Pickle": [
+    "mango pickle",
+    "mango pickles"
+  ],
+  "Honey": [
+    "honey",
+    "honeys"
+  ],
+  "Peanut Butter": [
+    "peanut butter",
+    "peanut butters"
+  ],
+  "Jam (Mixed Fruit)": [
+    "jam",
+    "jam (mixed fruit)",
+    "jam (mixed fruit)s",
+    "jam mixed fruit",
+    "jam mixed fruits",
+    "jams",
+    "mixed fruit",
+    "mixed fruit jam",
+    "mixed fruit jams",
+    "mixed fruits"
+  ],
+  "Cheese (Processed)": [
+    "cheese",
+    "cheese (processed)",
+    "cheese (processed)s",
+    "cheese processed",
+    "cheese processeds",
+    "cheeses",
+    "processed",
+    "processed cheese",
+    "processed cheeses",
+    "processeds"
+  ],
+  "Cheese (Mozzarella)": [
+    "cheese",
+    "cheese (mozzarella)",
+    "cheese (mozzarella)s",
+    "cheese mozzarella",
+    "cheese mozzarellas",
+    "cheeses",
+    "mozzarella",
+    "mozzarella cheese",
+    "mozzarella cheeses",
+    "mozzarellas"
+  ],
+  "Cheese (Cheddar)": [
+    "cheddar",
+    "cheddar cheese",
+    "cheddar cheeses",
+    "cheddars",
+    "cheese",
+    "cheese (cheddar)",
+    "cheese (cheddar)s",
+    "cheese cheddar",
+    "cheese cheddars",
+    "cheeses"
+  ],
+  "Parmesan Cheese": [
+    "parmesan cheese",
+    "parmesan cheeses"
+  ],
+  "Cream of Mushroom Soup (Mix)": [
+    "cream of mushroom soup",
+    "cream of mushroom soup (mix)",
+    "cream of mushroom soup (mix)s",
+    "cream of mushroom soup mix",
+    "cream of mushroom soup mixs",
+    "cream of mushroom soups",
+    "mix",
+    "mix cream of mushroom soup",
+    "mix cream of mushroom soups",
+    "mixs"
+  ],
+  "Tomato Soup (Mix)": [
+    "mix",
+    "mix tomato soup",
+    "mix tomato soups",
+    "mixs",
+    "tomato soup",
+    "tomato soup (mix)",
+    "tomato soup (mix)s",
+    "tomato soup mix",
+    "tomato soup mixs",
+    "tomato soups"
+  ],
+  "Chili Flakes": [
+    "chili flak",
+    "chili flakes"
+  ],
+  "Oregano (Dried)": [
+    "dried",
+    "dried oregano",
+    "dried oreganos",
+    "drieds",
+    "oregano",
+    "oregano (dried)",
+    "oregano (dried)s",
+    "oregano dried",
+    "oregano drieds",
+    "oreganos"
+  ],
+  "Basil (Dried)": [
+    "basil",
+    "basil (dried)",
+    "basil (dried)s",
+    "basil dried",
+    "basil drieds",
+    "basils",
+    "dried",
+    "dried basil",
+    "dried basils",
+    "drieds"
+  ],
+  "Roasted Cumin Powder": [
+    "roasted cumin powder",
+    "roasted cumin powders"
+  ],
+  "Black Salt (Kala Namak)": [
+    "black salt",
+    "black salt (kala namak)",
+    "black salt (kala namak)s",
+    "black salt kala namak",
+    "black salt kala namaks",
+    "black salts",
+    "kala namak",
+    "kala namak black salt",
+    "kala namak black salts",
+    "kala namaks"
+  ]
+}
