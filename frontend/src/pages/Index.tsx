@@ -337,6 +337,16 @@ const Index = () => {
     setRecipe(updatedRecipe)
     toast.success(`Updated ${ingredient} to ${newQuantity}`)
   }
+  const handleSellRecipe = () => {
+    if (!recipe) return
+
+    navigate("/create-listing", {
+      state: {
+        recipe: recipe,
+        recipeName: recipeName,
+      },
+    })
+  }
 
   const handlePost = () => {
     if (!recipe) return
@@ -425,12 +435,12 @@ const Index = () => {
                     </button>
 
                     <button
-                      onClick={handlePost}
+                      onClick={handleSellRecipe} // Add this button and its handler
                       className="flex items-center btn-primary"
-                      aria-label="Post recipe"
+                      aria-label="Sell this recipe"
                     >
-                      <Send className="h-4 w-4 mr-2" />
-                      <span className="text-sm">Post</span>
+                      <List className="mr-2" />
+                      <span className="text-sm">Sell Recipe</span>
                     </button>
                   </div>
                 </div>

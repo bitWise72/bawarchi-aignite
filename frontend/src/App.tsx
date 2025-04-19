@@ -14,8 +14,10 @@ import { AuthProvider } from "./contexts/AuthContext"
 import LandingPage from "./pages/LandingPage"
 import AuthCallback from "./components/AuthCallback"
 import Terms from "./pages/Terms"
-import Listing from "./pages/Listing"
+import Listing from "./pages/delivery/Listing"
+import CreateListing from "./pages/delivery/createListing"
 import Privacy from "./pages/Privacy"
+
 const queryClient = new QueryClient()
 
 const App = () => (
@@ -30,7 +32,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/listing" element={<Listing />} />
-
+              <Route path="/create-listing" element={<CreateListing />} />
               <Route path="/auth/callback" element={<AuthCallback />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
