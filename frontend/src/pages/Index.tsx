@@ -9,6 +9,7 @@ import type { Recipe } from "@/services/recipeService"
 import { useNavigate } from "react-router-dom"
 import Navbar from "@/components/Navbar"
 import { useDarkMode } from "@/contexts/DarkModeContext"
+import RecipeSearch from "@/components/RecipeSearch"
 
 const STORAGE_KEY = "saved_recipes"
 const marketplaceData = {
