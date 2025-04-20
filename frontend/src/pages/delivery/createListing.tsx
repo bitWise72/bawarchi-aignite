@@ -24,6 +24,9 @@ const CreateListing = () => {
   const [price, setPrice] = useState("")
   const [imageLink, setImageLink] = useState<string | null>(null)
   const [uploadedImage, setUploadedImage] = useState<File | null>(null)
+  const [breakdown, setBreakdown] = useState<ReturnType<
+    typeof calculateNetRevenue
+  > | null>(null)
 
   const handleImageLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setImageLink(e.target.value)
@@ -88,11 +91,6 @@ const CreateListing = () => {
     console.log("Listing Data:", listingData)
     toast.success("Listing created successfully! (Data logged to console)")
 
-    // Display the breakdown to the user
-    toast.info(
-      `Net revenue: ₹${netRevenue}\nGST: ₹${gst}\nCommission: ₹${commission}\nShipping Fee: ₹${shippingFee}\nPayment Gateway Fee: ₹${paymentGatewayFee}\nTCS: ₹${tcs}`
-    )
-
     // navigate("/marketplace");
   }
 
@@ -151,10 +149,42 @@ const CreateListing = () => {
             <input
               type="number"
               value={price}
-              onChange={(e) => setPrice(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+                setPrice(value)
+                const parsed = parseFloat(value)
+                if (!isNaN(parsed)) {
+                  setBreakdown(calculateNetRevenue(parsed))
+                } else {
+                  setBreakdown(null)
+                }
+              }}
               className="w-full rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-primary-500 focus:outline-none shadow-sm"
               required
             />
+            {breakdown && (
+              <div className="mt-4 text-sm text-gray-600 space-y-1 border rounded-xl p-3 bg-gray-50">
+                <p>
+                  <strong>Net Revenue:</strong> ₹{breakdown.netRevenue}
+                </p>
+                <p>
+                  <strong>GST:</strong> ₹{breakdown.gst}
+                </p>
+                <p>
+                  <strong>Commission:</strong> ₹{breakdown.commission}
+                </p>
+                <p>
+                  <strong>Shipping Fee:</strong> ₹{breakdown.shippingFee}
+                </p>
+                <p>
+                  <strong>Payment Gateway Fee:</strong> ₹
+                  {breakdown.paymentGatewayFee}
+                </p>
+                <p>
+                  <strong>TCS:</strong> ₹{breakdown.tcs}
+                </p>
+              </div>
+            )}
           </motion.div>
 
           <motion.div variants={fadeIn}>
@@ -165,7 +195,7 @@ const CreateListing = () => {
               <input
                 type="text"
                 placeholder="Enter image link"
-                className="flex-1 border border-gray-500 rounded-xl px-3 py-2 shadow-sm focus:ring-primary-500 focus:border-primary-500 "
+                className="flex-1 border border-gray-500 rounded-xl px-3 py-2 shadow-sm focus:ring-primary-500 focus:border-primary-500"
                 value={imageLink || ""}
                 onChange={handleImageLinkChange}
               />
