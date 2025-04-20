@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from "react"
-import { X, Edit, Check, ShoppingCart } from "lucide-react"
+import {
+  X,
+  Edit,
+  Check,
+  ShoppingCart,
+  Plus,
+  Minus,
+  ChevronDown,
+  ChevronUp,
+  Loader2,
+  CheckCircle,
+} from "lucide-react"
 import stringSimilarity from "string-similarity"
 import type { Recipe } from "@/services/recipeService"
 
@@ -90,6 +101,8 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
   const [marketplaceData, setMarketplaceData] =
     useState<IngredientMarketplaceData>({})
   const [showCart, setShowCart] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [orderPlaced, setOrderPlaced] = useState(false)
 
   // Populate ingredients list from recipe
   useEffect(() => {
@@ -164,209 +177,338 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
     )
   }
 
-
   const removeFromCart = (idx: number) => {
     setCart((c) => c.filter((_, i) => i !== idx))
   }
-  const getTotalCost = () => cart.reduce((sum, i) => sum + i.cost * i.quantity, 0)
+
+  const getTotalCost = () =>
+    cart.reduce((sum, i) => sum + i.cost * i.quantity, 0)
 
   const hasMarketplaceData = (ing: string) => !!marketplaceData[ing]?.length
 
+  const handleCheckout = () => {
+    setIsLoading(true)
+
+    // Simulate API call with timeout
+    setTimeout(() => {
+      setIsLoading(false)
+      setOrderPlaced(true)
+
+      // Reset after showing success message for a few seconds
+      setTimeout(() => {
+        setOrderPlaced(false)
+        setCart([])
+        setShowCart(false)
+      }, 3000)
+    }, 2000)
+  }
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end">
+    <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex justify-end transition-opacity duration-300">
       <div
-        className={`w-full max-w-md h-full overflow-y-auto shadow-xl ${
-          darkMode ? "bg-gray-800" : "bg-white"
+        className={`w-full max-w-md h-full overflow-y-auto shadow-2xl transform transition-transform duration-300 ${
+          darkMode ? "bg-gray-900 text-gray-100" : "bg-white text-gray-800"
         }`}
       >
+        {/* Loading Overlay */}
+        {isLoading && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 flex flex-col items-center max-w-sm mx-auto">
+              <Loader2 size={60} className="text-blue-500 animate-spin mb-6" />
+              <p
+                className={`text-xl font-semibold ${
+                  darkMode ? "text-white" : "text-gray-800"
+                }`}
+              >
+                Processing your order...
+              </p>
+              <p
+                className={`text-center mt-2 ${
+                  darkMode ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
+                Please wait while we confirm your items.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Success Message Overlay */}
+        {orderPlaced && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-xl p-8 flex flex-col items-center max-w-sm mx-auto">
+              <div className="mb-4 text-green-500">
+                <CheckCircle size={80} />
+              </div>
+              <h3
+                className={`text-2xl font-bold mb-2 ${
+                  darkMode ? "text-white" : "text-gray-800"
+                }`}
+              >
+                Order Placed!
+              </h3>
+              <p
+                className={`text-center ${
+                  darkMode ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
+                Your ingredients will be delivered shortly. Thank you for your
+                order!
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div
-          className={`p-4 border-b sticky top-0 flex justify-between items-center ${
+          className={`p-5 border-b sticky top-0 flex justify-between items-center shadow-sm z-10 ${
             darkMode
-              ? "bg-gray-800 border-gray-700"
+              ? "bg-gray-900 border-gray-700"
               : "bg-white border-gray-200"
           }`}
         >
-          <h2 className={darkMode ? "text-white" : "text-gray-900"}>
+          <h2
+            className={`text-xl font-bold ${
+              darkMode ? "text-white" : "text-gray-900"
+            }`}
+          >
             Precise Ingredients
           </h2>
-          <div className="flex items-center space-x-3">
-            <button onClick={() => setShowCart(!showCart)}>
+          <div className="flex items-center space-x-5">
+            <button
+              onClick={() => setShowCart(!showCart)}
+              className={`relative flex items-center transition-colors duration-200 ${
+                darkMode ? "hover:text-blue-400" : "hover:text-blue-600"
+              }`}
+            >
               <ShoppingCart
-                className={darkMode ? "text-white" : "text-gray-900"}
+                className={`${darkMode ? "text-gray-200" : "text-gray-800"} ${
+                  showCart ? (darkMode ? "text-blue-400" : "text-blue-600") : ""
+                }`}
+                size={24}
               />
               {cart.length > 0 && (
-                <span className="ml-1 text-sm font-semibold">
+                <span
+                  className={`absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold`}
+                >
                   {cart.length}
                 </span>
               )}
             </button>
-            <button onClick={onClose}>
-              <X className={darkMode ? "text-white" : "text-gray-900"} />
+            <button
+              onClick={onClose}
+              className={`p-1 rounded-full transition-colors duration-200 ${
+                darkMode ? "hover:bg-gray-700" : "hover:bg-gray-100"
+              }`}
+            >
+              <X
+                className={darkMode ? "text-gray-200" : "text-gray-800"}
+                size={24}
+              />
             </button>
           </div>
         </div>
 
         {/* Cart View */}
         {showCart ? (
-          <div className="p-4">
-            <h3 className={darkMode ? "text-white" : "text-gray-900"}>
-              Your Cart
-            </h3>
-            {cart.length === 0 ? (
-              <p className={darkMode ? "text-gray-400" : "text-gray-500"}>
-                Empty
-              </p>
-            ) : (
-              <>
-                <div className="flex flex-col h-full">
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                    <h3
-                      className={`text-xl font-semibold ${
-                        darkMode ? "text-white" : "text-gray-900"
-                      }`}
-                    >
-                      Your Cart
-                    </h3>
-                    {cart.length === 0 ? (
-                      <p
-                        className={darkMode ? "text-gray-400" : "text-gray-500"}
-                      >
-                        Your cart is empty.
-                      </p>
-                    ) : (
-                      cart.map((item, i) => (
-                        <div
-                          key={i}
-                          className={`flex items-center justify-between p-3 rounded-xl border shadow-sm ${
-                            darkMode
-                              ? "bg-gray-700 border-gray-600"
-                              : "bg-white border-gray-200"
-                          }`}
-                        >
-                          <div>
-                            <p
-                              className={`font-semibold ${
-                                darkMode ? "text-white" : "text-gray-900"
-                              }`}
-                            >
-                              {capitalizeFirst(item.ingredient)}
-                            </p>
-                            <div className="flex flex-col items-end">
-                              <span
-                                className={
-                                  darkMode ? "text-gray-300" : "text-gray-700"
-                                }
-                              >
-                                {item.brand}
-                              </span>
-                              <span
-                                className={
-                                  darkMode ? "text-white" : "text-gray-900"
-                                }
-                              >
-                                ₹{(item.cost * item.quantity).toFixed(2)}
-                              </span>
-                              <div className="flex items-center space-x-2 mt-1">
-                                <button
-                                  onClick={() => decrementQty(i)}
-                                  className="px-2 py-1 rounded bg-gray-500 text-white"
-                                >
-                                  –
-                                </button>
-                                <span
-                                  className={
-                                    darkMode ? "text-white" : "text-gray-900"
-                                  }
-                                >
-                                  {item.quantity}
-                                </span>
-                                <button
-                                  onClick={() => incrementQty(i)}
-                                  className="px-2 py-1 rounded bg-gray-500 text-white"
-                                >
-                                  +
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                          <button onClick={() => removeFromCart(i)}>
-                            <X
-                              className={
-                                darkMode ? "text-red-400" : "text-red-500"
-                              }
-                            />
-                          </button>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                  {cart.length > 0 && (
+          <div className="flex flex-col h-full">
+            <div className="flex-1 overflow-y-auto p-5 space-y-4">
+              <h3
+                className={`text-xl font-semibold ${
+                  darkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                Your Cart
+              </h3>
+              {cart.length === 0 ? (
+                <div
+                  className={`py-8 flex flex-col items-center justify-center ${
+                    darkMode ? "text-gray-400" : "text-gray-500"
+                  }`}
+                >
+                  <ShoppingCart size={48} className="mb-3 opacity-50" />
+                  <p className="text-center">
+                    Your cart is empty. <br />
+                    Add ingredients to get started.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {cart.map((item, i) => (
                     <div
-                      className={`border-t p-4 sticky bottom-0 ${
+                      key={i}
+                      className={`flex items-center justify-between p-4 rounded-xl border ${
                         darkMode
-                          ? "bg-gray-800 border-gray-700"
-                          : "bg-white border-gray-200"
-                      }`}
+                          ? "bg-gray-800 border-gray-700 hover:border-gray-600"
+                          : "bg-white border-gray-200 hover:border-gray-300"
+                      } shadow-sm transition-all duration-200`}
                     >
-                      <div className="flex justify-between items-center mb-3">
+                      <div className="flex-1">
                         <p
-                          className={`text-lg ${
-                            darkMode ? "text-gray-300" : "text-gray-700"
-                          }`}
-                        >
-                          Total:
-                        </p>
-                        <p
-                          className={`text-lg font-bold ${
+                          className={`font-semibold ${
                             darkMode ? "text-white" : "text-gray-900"
                           }`}
                         >
-                          ₹{getTotalCost().toFixed(2)}
+                          {capitalizeFirst(item.ingredient)}
                         </p>
+                        <span
+                          className={
+                            darkMode ? "text-gray-300" : "text-gray-600"
+                          }
+                        >
+                          {item.brand}
+                        </span>
                       </div>
-                      <button className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition">
-                        Proceed to Checkout
+
+                      <div className="flex flex-col items-end space-y-2">
+                        <span
+                          className={`font-semibold ${
+                            darkMode ? "text-green-400" : "text-green-600"
+                          }`}
+                        >
+                          ₹{(item.cost * item.quantity).toFixed(2)}
+                        </span>
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => decrementQty(i)}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                              darkMode
+                                ? "bg-gray-700 hover:bg-gray-600 text-white"
+                                : "bg-gray-200 hover:bg-gray-300 text-gray-800"
+                            } transition-colors duration-200`}
+                          >
+                            <Minus size={16} />
+                          </button>
+                          <span
+                            className={`font-medium w-6 text-center ${
+                              darkMode ? "text-white" : "text-gray-900"
+                            }`}
+                          >
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => incrementQty(i)}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                              darkMode
+                                ? "bg-gray-700 hover:bg-gray-600 text-white"
+                                : "bg-gray-200 hover:bg-gray-300 text-gray-800"
+                            } transition-colors duration-200`}
+                          >
+                            <Plus size={16} />
+                          </button>
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() => removeFromCart(i)}
+                        className={`ml-4 p-2 rounded-full ${
+                          darkMode
+                            ? "hover:bg-red-900/30 text-red-400"
+                            : "hover:bg-red-100 text-red-500"
+                        } transition-colors duration-200`}
+                      >
+                        <X size={16} />
                       </button>
                     </div>
-                  )}
+                  ))}
                 </div>
-              </>
+              )}
+            </div>
+            {cart.length > 0 && (
+              <div
+                className={`border-t p-5 sticky bottom-0 shadow-lg ${
+                  darkMode
+                    ? "bg-gray-900 border-gray-700"
+                    : "bg-white border-gray-200"
+                }`}
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <p
+                    className={`text-lg ${
+                      darkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    Total:
+                  </p>
+                  <p
+                    className={`text-xl font-bold ${
+                      darkMode ? "text-green-400" : "text-green-600"
+                    }`}
+                  >
+                    ₹{getTotalCost().toFixed(2)}
+                  </p>
+                </div>
+                <button
+                  onClick={handleCheckout}
+                  className="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-md"
+                >
+                  Proceed to Checkout
+                </button>
+              </div>
             )}
           </div>
         ) : (
           /* Ingredients List View */
-          <div className="p-4 space-y-4">
+          <div className="p-5 space-y-4">
             {ingredients.map(([ing, qty], idx) => (
-              <div key={idx} className="space-y-1">
+              <div
+                key={idx}
+                className={`p-4 rounded-xl border ${
+                  darkMode
+                    ? "border-gray-700 bg-gray-800/50"
+                    : "border-gray-200 bg-gray-50/50"
+                } transition-all duration-200`}
+              >
                 <div className="flex justify-between items-center">
-                  <span className={darkMode ? "text-white" : "text-gray-900"}>
+                  <span
+                    className={`font-medium ${
+                      darkMode ? "text-white" : "text-gray-900"
+                    }`}
+                  >
                     {capitalizeFirst(ing)}
                   </span>
                   {editingIndex === idx ? (
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-2">
                       <input
                         value={editValue}
                         onChange={(e) => setEditValue(e.target.value)}
-                        className="w-16 p-1 border rounded"
+                        className={`w-16 p-1 border rounded focus:outline-none focus:ring-2 ${
+                          darkMode
+                            ? "bg-gray-700 border-gray-600 text-white focus:ring-blue-500/50"
+                            : "bg-white border-gray-300 text-gray-900 focus:ring-blue-500/30"
+                        }`}
                       />
-                      <button onClick={() => handleSave(idx)}>
-                        <Check className="text-green-500" />
+                      <button
+                        onClick={() => handleSave(idx)}
+                        className={`p-1 rounded-full ${
+                          darkMode
+                            ? "hover:bg-gray-700 text-green-400"
+                            : "hover:bg-gray-200 text-green-600"
+                        } transition-colors duration-200`}
+                      >
+                        <Check size={18} />
                       </button>
                     </div>
                   ) : (
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-3">
                       <span
-                        className={darkMode ? "text-gray-400" : "text-gray-600"}
+                        className={`px-2 py-1 rounded ${
+                          darkMode
+                            ? "bg-gray-700 text-gray-300"
+                            : "bg-gray-200 text-gray-700"
+                        }`}
                       >
                         {qty}
                       </span>
-                      <button onClick={() => handleEdit(idx)}>
-                        <Edit
-                          className={
-                            darkMode ? "text-gray-400" : "text-gray-600"
-                          }
-                        />
+                      <button
+                        onClick={() => handleEdit(idx)}
+                        className={`p-1 rounded-full ${
+                          darkMode
+                            ? "hover:bg-gray-700 text-gray-400"
+                            : "hover:bg-gray-200 text-gray-600"
+                        } transition-colors duration-200`}
+                      >
+                        <Edit size={16} />
                       </button>
                     </div>
                   )}
@@ -374,19 +516,31 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
 
                 {/* Buy Near You Dropdown */}
                 {hasMarketplaceData(ing) && (
-                  <div className="pl-2 space-y-1">
+                  <div className="mt-3 space-y-2">
                     <button
                       onClick={() =>
                         setExpandedIngredient(
                           expandedIngredient === ing ? null : ing
                         )
                       }
-                      className={darkMode ? "text-blue-400" : "text-blue-600"}
+                      className={`flex items-center px-3 py-2 rounded-lg w-full ${
+                        darkMode
+                          ? "bg-blue-900/30 text-blue-400 hover:bg-blue-900/50"
+                          : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                      } transition-colors duration-200`}
                     >
-                      Buy Near You
+                      <span className="flex-1 text-left font-medium">
+                        Buy Near You
+                      </span>
+                      {expandedIngredient === ing ? (
+                        <ChevronUp size={18} />
+                      ) : (
+                        <ChevronDown size={18} />
+                      )}
                     </button>
+
                     {expandedIngredient === ing && (
-                      <div className="pt-2 space-y-2">
+                      <div className="pt-3 space-y-2 pl-2">
                         {marketplaceData[ing].map((opt, i) => {
                           const isChecked = cart.some(
                             (c) => c.ingredient === ing && c.brand === opt.brand
@@ -394,10 +548,14 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                           return (
                             <div
                               key={i}
-                              className={`flex items-center justify-between px-3 py-2 rounded-xl border transition ${
-                                darkMode
-                                  ? `bg-gray-700 border-gray-600 hover:border-blue-400`
-                                  : `bg-gray-100 border-gray-300 hover:border-blue-600`
+                              className={`flex items-center justify-between px-4 py-3 rounded-xl border transition-all duration-200 ${
+                                isChecked
+                                  ? darkMode
+                                    ? "bg-blue-900/30 border-blue-500"
+                                    : "bg-blue-50 border-blue-300"
+                                  : darkMode
+                                  ? "bg-gray-700 border-gray-600 hover:border-blue-500/50"
+                                  : "bg-white border-gray-300 hover:border-blue-300"
                               }`}
                             >
                               <div className="flex items-center space-x-3">
@@ -407,7 +565,11 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                                   onChange={(e) =>
                                     handleCartToggle(ing, opt, e.target.checked)
                                   }
-                                  className="w-5 h-5"
+                                  className={`w-5 h-5 rounded ${
+                                    darkMode
+                                      ? "bg-gray-700 border-gray-500 text-blue-500"
+                                      : "bg-gray-100 border-gray-300 text-blue-600"
+                                  }`}
                                 />
                                 <div>
                                   <p
@@ -418,10 +580,10 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                                     {opt.brand}
                                   </p>
                                   <p
-                                    className={`text-sm ${
+                                    className={`text-sm font-medium ${
                                       darkMode
-                                        ? "text-blue-300"
-                                        : "text-blue-700"
+                                        ? "text-green-400"
+                                        : "text-green-600"
                                     }`}
                                   >
                                     ₹{opt.cost.toFixed(2)}
