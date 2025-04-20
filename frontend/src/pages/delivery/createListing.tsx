@@ -38,6 +38,27 @@ const CreateListing = () => {
     }
   }
 
+  const calculateNetRevenue = (price: number) => {
+    const basePrice = price / 1.18
+    const gst = basePrice * 0.18
+    const commission = basePrice * 0.1 // Assume 10% marketplace fee
+    const shippingFee = 35.4 // Example fixed shipping fee
+    const paymentGatewayFee = price * 0.018 + 0.65 // 1.8% + GST
+    const tcs = price * 0.01 // TCS at 1%
+
+    const totalFees = commission + shippingFee + paymentGatewayFee + tcs
+    const netRevenue = price - totalFees - gst
+
+    return {
+      netRevenue: netRevenue.toFixed(2),
+      gst: gst.toFixed(2),
+      commission: commission.toFixed(2),
+      shippingFee: shippingFee.toFixed(2),
+      paymentGatewayFee: paymentGatewayFee.toFixed(2),
+      tcs: tcs.toFixed(2),
+    }
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -51,10 +72,14 @@ const CreateListing = () => {
       return
     }
 
+    const priceValue = parseFloat(price)
+    const { netRevenue, gst, commission, shippingFee, paymentGatewayFee, tcs } =
+      calculateNetRevenue(priceValue)
+
     const listingData = {
       title,
       description,
-      price: parseFloat(price),
+      price: priceValue,
       image: imageLink || (uploadedImage ? "uploaded" : null),
       recipeName,
       recipe,
@@ -62,6 +87,11 @@ const CreateListing = () => {
 
     console.log("Listing Data:", listingData)
     toast.success("Listing created successfully! (Data logged to console)")
+
+    // Display the breakdown to the user
+    toast.info(
+      `Net revenue: ₹${netRevenue}\nGST: ₹${gst}\nCommission: ₹${commission}\nShipping Fee: ₹${shippingFee}\nPayment Gateway Fee: ₹${paymentGatewayFee}\nTCS: ₹${tcs}`
+    )
 
     // navigate("/marketplace");
   }
@@ -168,7 +198,7 @@ const CreateListing = () => {
               type="submit"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-3 px-6 text-gray-700  border border-gray-300 font-semibold bg-primary-600 hover:bg-primary-700 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition"
+              className="w-full py-3 px-6 text-gray-700 border border-gray-300 font-semibold bg-primary-600 hover:bg-primary-700 rounded-xl shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition"
             >
               List Recipe
             </motion.button>
