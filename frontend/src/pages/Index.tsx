@@ -333,6 +333,13 @@ const Index = () => {
                       <List className="mr-2" />
                       <span className="text-sm">Sell Recipe</span>
                     </button>
+                    <button
+                      onClick={handlePost} // Add this button and its handler
+                      className="flex items-center btn-primary"
+                      aria-label="Sell this recipe"
+                    >
+                      <span className="text-sm">Post</span>
+                    </button>
                   </div>
                 </div>
               </div>
