@@ -2,6 +2,17 @@ import React, { useState, useEffect } from "react"
 import { X, Edit, Check, ShoppingCart } from "lucide-react"
 import type { Recipe } from "@/services/recipeService"
 
+const ingredientBrandsCosts: IngredientMarketplaceData = {
+  "rice": [
+    { brand: "India Gate", cost: 150 },
+    { brand: "Daawat", cost: 130 }
+  ],
+  "salt": [
+    { brand: "Tata", cost: 20 },
+    { brand: "Aashirvaad", cost: 25 }
+  ]
+}
+
 interface MarketplaceOption {
   brand: string
   cost: number
