@@ -49,14 +49,14 @@ const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
         <div className="flex items-center justify-between">
           {/* Logo and Title - Always visible */}
           <div className="flex items-center space-x-3">
-            <a href="/" >
-            <img
-              src={imageLogo}
-              alt="Bawarchi.AI Logo"
-              className="w-16 sm:w-20 object-contain"
-            />
+            <a href="/">
+              <img
+                src={imageLogo}
+                alt="Bawarchi.AI Logo"
+                className="w-16 sm:w-20 object-contain"
+              />
             </a>
-            
+
             <div>
               <h1 className="text-xl sm:text-2xl font-bold">Bawarchi.AI</h1>
               <p
@@ -71,6 +71,12 @@ const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
+            <button
+              className="text-center p-2.5 cursor-pointer lg:font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors font-normal"
+              onClick={() => navigate("/listing")}
+            >
+              FoodMart
+            </button>
             <button
               className="text-center p-2.5 cursor-pointer lg:font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors font-normal"
               onClick={() => navigate("/community")}
@@ -99,7 +105,10 @@ const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
             <DropdownMenu>
               <DropdownMenuTrigger className="outline-none">
                 <img
-                  src={ userImage || `./assets/${Math.floor(Math.random() * 8) + 1}.png`}
+                  src={
+                    userImage ||
+                    `./assets/${Math.floor(Math.random() * 8) + 1}.png`
+                  }
                   className="h-12 w-12 rounded-full"
                   alt="User"
                 />
@@ -137,7 +146,10 @@ const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
             <div className="flex items-center justify-between py-2">
               <div className="flex items-center space-x-3">
                 <img
-                  src={ userImage || `./assets/${Math.floor(Math.random() * 8) + 1}.png`}
+                  src={
+                    userImage ||
+                    `./assets/${Math.floor(Math.random() * 8) + 1}.png`
+                  }
                   className="h-10 w-10 rounded-full"
                   alt="User"
                 />
