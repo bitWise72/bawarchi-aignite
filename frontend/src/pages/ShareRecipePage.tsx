@@ -12,7 +12,7 @@ const SharedRecipePage = () => {
   interface Step {
     procedure: string
     measurements: [string, string][]
-    time?: string
+    time?: string | number | null // Make time more flexible
   }
 
   interface Post {
@@ -29,10 +29,13 @@ const SharedRecipePage = () => {
   }
 
   const [recipeData, setRecipeData] = useState<RecipeData | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
+        setLoading(true)
         const response = await fetch(
           `${import.meta.env.VITE_BACKEND_PORT}/auth/getIdRecipe`,
           {
@@ -44,21 +47,36 @@ const SharedRecipePage = () => {
           }
         )
 
-        const data = await response.json()
-        if (response.ok) {
-          setRecipeData(data.recipe)
-        } else {
-          console.error(data.message)
+        if (!response.ok) {
+          throw new Error(response.statusText)
         }
-      } catch (error) {
-        console.error("Failed to fetch recipe:", error)
+
+        const data = await response.json()
+        setRecipeData(data.recipe)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error occurred")
+      } finally {
+        setLoading(false)
       }
     }
 
     fetchRecipe()
   }, [id])
 
-  if (!recipeData) return <div className="text-center mt-10">Loading...</div>
+  // Helper function to safely format time
+  const formatTime = (time?: string | number | null): string => {
+    if (!time) return "Not specified"
+    
+    // Convert to string if it's a number
+    const timeString = typeof time === 'number' ? time.toString() : time
+    
+    // Remove parentheses if they exist
+    return timeString.replace(/[()]/g, "") + " mins"
+  }
+
+  if (loading) return <div className="text-center mt-10">Loading...</div>
+  if (error) return <div className="text-center mt-10 text-red-500">Error: {error}</div>
+  if (!recipeData) return <div className="text-center mt-10">No recipe found</div>
 
   const { name, picture, posts } = recipeData
   const { title, description, imageUrl, recipe } = posts
@@ -77,12 +95,14 @@ const SharedRecipePage = () => {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <img
-          src={imageUrl[0]}
-          alt={title}
-          crossOrigin="anonymous"
-          className="w-full rounded-2xl object-cover max-h-[400px] shadow-md"
-        />
+        {imageUrl[0] && (
+          <img
+            src={imageUrl[0]}
+            alt={title}
+            crossOrigin="anonymous"
+            className="w-full rounded-2xl object-cover max-h-[400px] shadow-md"
+          />
+        )}
 
         <h1 className={`text-4xl font-extrabold mt-6 ${
           darkMode ? "text-indigo-300" : "text-indigo-700"
@@ -95,11 +115,13 @@ const SharedRecipePage = () => {
           {description}
         </p>
         <div className="flex items-center justify-center gap-2 mt-4">
-          <img
-            src={picture}
-            alt={name}
-            className="w-10 h-10 rounded-full border border-indigo-300"
-          />
+          {picture && (
+            <img
+              src={picture}
+              alt={name}
+              className="w-10 h-10 rounded-full border border-indigo-300"
+            />
+          )}
           <span className={`text-sm ${
             darkMode ? "text-indigo-300" : "text-indigo-500"
           }`}>
@@ -137,7 +159,7 @@ const SharedRecipePage = () => {
                   {step.procedure}
                 </p>
 
-                {step.measurements.length > 0 && (
+                {step.measurements?.length > 0 && (
                   <ul className={`list-disc list-inside mt-2 ${
                     darkMode ? "text-indigo-200" : "text-indigo-900"
                   }`}>
@@ -153,7 +175,7 @@ const SharedRecipePage = () => {
                 <p className={`text-sm ${
                   darkMode ? "text-indigo-400" : "text-indigo-500"
                 }`}>
-                  Estimated Time: {step.time?.replace(/[()]/g, "")} mins
+                  Estimated Time: {formatTime(step.time)}
                 </p>
               </CardContent>
             </Card>
