@@ -325,14 +325,14 @@ const Index = () => {
                       <span className="text-sm">Save</span>
                     </button>
 
-                    <button
+                    {/* <button
                       onClick={handleSellRecipe} // Add this button and its handler
                       className="flex items-center btn-primary"
                       aria-label="Sell this recipe"
                     >
                       <List className="mr-2" />
                       <span className="text-sm">Sell Recipe</span>
-                    </button>
+                    </button> */}
                     <button
                       onClick={handlePost} // Add this button and its handler
                       className="flex items-center btn-primary"

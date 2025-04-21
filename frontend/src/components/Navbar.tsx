@@ -71,12 +71,12 @@ const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
-            <button
+            {/* <button
               className="text-center p-2.5 cursor-pointer lg:font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors font-normal"
               onClick={() => navigate("/listing")}
             >
               FoodMart
-            </button>
+            </button> */}
             <button
               className="text-center p-2.5 cursor-pointer lg:font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors font-normal"
               onClick={() => navigate("/community")}
