@@ -18,7 +18,8 @@ export const fetchRecipe = async (prompt: string): Promise<Recipe> => {
   try {
     console.log("Sending recipe request with prompt:", prompt);
     const response = await fetch(
-      "https://gem-recipe-nopp4bs5f-sayan-gangulys-projects.vercel.app/get_recipe",
+      "https://gem-api-adv.vercel.app/get_recipe",
+      // "https://gem-recipe-nopp4bs5f-sayan-gangulys-projects.vercel.app/get_recipe",
       {
         method: "POST",
         headers: {
