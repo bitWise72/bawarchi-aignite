@@ -28,7 +28,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:8080", "https://your-precise-baker-bice.vercel.app"],
+    origin: ["http://localhost:8080", "https://bawarchi-aignite.vercel.app"],
     credentials: true,
   })
 );

@@ -14,6 +14,17 @@ import {
 import stringSimilarity from "string-similarity"
 import type { Recipe } from "@/services/recipeService"
 
+const ingredientBrandsCosts: IngredientMarketplaceData = {
+  "rice": [
+    { brand: "India Gate", cost: 150 },
+    { brand: "Daawat", cost: 130 }
+  ],
+  "salt": [
+    { brand: "Tata", cost: 20 },
+    { brand: "Aashirvaad", cost: 25 }
+  ]
+}
+
 interface MarketplaceOption {
   brand: string
   cost: number
@@ -97,6 +108,7 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
   const [expandedIngredient, setExpandedIngredient] = useState<string | null>(
     null
   )
+  const [visibleCommingSoon, setVisibleCommingSoon] = useState(false);
 
   const [marketplaceData, setMarketplaceData] =
     useState<IngredientMarketplaceData>({})
@@ -515,14 +527,15 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                 </div>
 
                 {/* Buy Near You Dropdown */}
-                {hasMarketplaceData(ing) && (
+                {(
                   <div className="mt-3 space-y-2">
                     <button
-                      onClick={() =>
-                        setExpandedIngredient(
-                          expandedIngredient === ing ? null : ing
-                        )
-                      }
+                      // onClick={() =>
+                      //   // setExpandedIngredient(
+                      //   //   expandedIngredient === ing ? null : ing
+                      //   // )
+                      //   setVisibleCommingSoon(!visibleCommingSoon)
+                      // }
                       className={`flex items-center px-3 py-2 rounded-lg w-full ${
                         darkMode
                           ? "bg-blue-900/30 text-blue-400 hover:bg-blue-900/50"
@@ -532,11 +545,12 @@ const IngredientsPanel: React.FC<IngredientsPanelProps> = ({
                       <span className="flex-1 text-left font-medium">
                         Buy Near You
                       </span>
-                      {expandedIngredient === ing ? (
+                       <p className="text-sm italic">Comming Soon</p>
+                      {/* {expandedIngredient === ing ? (
                         <ChevronUp size={18} />
                       ) : (
                         <ChevronDown size={18} />
-                      )}
+                      )} */}
                     </button>
 
                     {expandedIngredient === ing && (
