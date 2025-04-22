@@ -316,7 +316,7 @@ const Index = () => {
                     >
                       <List className="mr-2" />
                       <span className="text-sm">Sell Recipe</span>
-                    </button> */}
+                    </button> 
                     <button
                       onClick={handlePost}
                       className="flex items-center btn-primary"
