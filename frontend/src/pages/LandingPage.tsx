@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom"
 import { Upload, ArrowRight, FileText, Type, Moon, Sun } from "lucide-react"
 import { toast } from "sonner"
 import { useDarkMode } from "@/contexts/DarkModeContext"
-import Navbar from "@/components/Navbar"
 
 const LandingPage = () => {
   const navigate = useNavigate()
@@ -33,8 +32,40 @@ const LandingPage = () => {
     }
   }, [darkMode])
 
-  const handleImageChange = (e, imageKey) => {
+  const uploadToCloudinary = async (file) => {
+    if (!file) return null
+
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("upload_preset", "Bawarchi.AI")
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dtgegh9ya/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+
+      if (!res.ok) {
+        throw new Error("Failed to upload image to Cloudinary")
+      }
+
+      const data = await res.json()
+      console.log("Cloudinary upload response:", data.url)
+      return data.secure_url // this is the public URL
+    } catch (error) {
+      console.error("Error uploading to Cloudinary:", error)
+      toast.error("Failed to upload image. Please try again.")
+      return null
+    }
+  }
+
+  // image upload handler
+  const handleImageChange = async (e, imageKey) => {
     const file = e.target.files[0]
+
     if (!file) return
 
     // Check if the file is an image
@@ -76,7 +107,6 @@ const LandingPage = () => {
     )
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -89,42 +119,37 @@ const LandingPage = () => {
     setLoading(true)
 
     try {
-      // Simulate uploading process
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      // Convert images to base64 strings if they exist
-      const image1Base64 = images.image1
-        ? await fileToBase64(images.image1)
-        : null
+      // Upload both images to Cloudinary if they exist
+      const [imageUrl1, imageUrl2] = await Promise.all([
+        uploadToCloudinary(images.image1),
+        uploadToCloudinary(images.image2),
+      ])
 
       // Build query parameters for navigation
       const params = new URLSearchParams()
 
-      // Only send one set of data (simplified from your original)
-      if (image1Base64) {
-        params.append("image1", encodeURIComponent(image1Base64))
-      }
-      const image2Base64 = images.image2
-        ? await fileToBase64(images.image2)
-        : null
-
-      if (image2Base64) {
-        params.append("image2", encodeURIComponent(image2Base64))
-      }
-
-
+      // Add text parameters if they exist
       if (recipeTexts.name1) {
-        params.append("recipeName1", encodeURIComponent(recipeTexts.name1))
+        params.append("recipeName1", recipeTexts.name1)
       }
 
       if (recipeTexts.fullRecipe1) {
         params.append(
           "recipeText1",
-          encodeURIComponent(recipeTexts.fullRecipe1)
+          recipeTexts.fullRecipe1
         )
       }
 
-      // Navigate to Index page with the collected data
+      // Add Cloudinary image URLs if they were successfully uploaded
+      if (imageUrl1) {
+        params.append("imageUrl1", imageUrl1)
+      }
+
+      if (imageUrl2) {
+        params.append("imageUrl2", imageUrl2)
+      }
+
+      // Navigate to dashboard with the collected data
       navigate(`/dashboard?${params.toString()}`)
     } catch (error) {
       console.error("Error processing form:", error)
@@ -132,16 +157,6 @@ const LandingPage = () => {
     } finally {
       setLoading(false)
     }
-  }
-
-  // Helper function to convert File to base64
-  const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result)
-      reader.onerror = (error) => reject(error)
-    })
   }
 
   // Toggle dark mode
@@ -234,16 +249,13 @@ const LandingPage = () => {
                 </label>
                 <div className="flex items-center space-x-2">
                   <div
-                    className="flex-1 flex rounded-md shadow-sm ring-1 ring-inset 
-      ${darkMode ? 'ring-gray-600 bg-gray-700' : 'ring-gray-300 bg-white'}"
+                    className={`flex-1 flex rounded-md shadow-sm ring-1 ring-inset 
+                    ${
+                      darkMode
+                        ? "ring-gray-600 bg-gray-700"
+                        : "ring-gray-300 bg-white"
+                    }`}
                   >
-                    {/* <span
-                      className={`flex items-center pl-3 ${
-                        darkMode ? "text-gray-400" : "text-gray-500"
-                      }`}
-                    >
-                      <Type className="h-4 w-4" />
-                    </span> */}
                     <input
                       type="text"
                       value={recipeTexts.name1}

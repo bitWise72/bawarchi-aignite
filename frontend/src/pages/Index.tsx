@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { toast } from "sonner"
-import { Save, List} from "lucide-react"
+import { Save, List } from "lucide-react"
 import RecipeTimeline from "@/components/RecipeTimeline"
 import IngredientsPanel from "@/components/IngredientsPanel"
 import SavedRecipes from "@/components/SavedRecipes"
@@ -13,18 +13,6 @@ import RecipeSearch from "@/components/RecipeSearch"
 import ingredient_data from "./ingredient_brands_and_costs.json"
 
 const STORAGE_KEY = "saved_recipes"
-
-// const marketplaceData = {
-//   Tomato: [
-//     { brand: "FreshFarm", cost: 1.99 },
-//     { brand: "OrganicMart", cost: 2.49 },
-//   ],
-//   Salt: [
-//     { brand: "GoodSalt", cost: 0.99 },
-//     { brand: "NaturalSpice", cost: 1.29 },
-//   ],
-// }
-
 
 const Index = () => {
   const [user, setUser] = useState(null)
@@ -67,11 +55,27 @@ const Index = () => {
       }
     }
 
-    // Recipe data processing
+    // Recipe data processing - now using decodeURIComponent for all parameters
     const recipeText = params.get("recipeText1")
+      ? decodeURIComponent(params.get("recipeText1"))
+      : null
     const recipeName = params.get("recipeName1")
-    const foodImage = params.get("image1")
-    const recipeImage = params.get("image2")
+      ? decodeURIComponent(params.get("recipeName1"))
+      : null
+
+    // Handle the Cloudinary image URLs
+    const imageUrl1 = params.get("imageUrl1")
+      ? decodeURIComponent(params.get("imageUrl1"))
+      : null
+    const imageUrl2 = params.get("imageUrl2")
+      ? decodeURIComponent(params.get("imageUrl2"))
+      : null
+
+    console.log("Recipe Text:", recipeText)
+    console.log("Recipe Name:", recipeName)
+
+    console.log("Image URL 1:", imageUrl1)
+    console.log("Image URL 2:", imageUrl2)
 
     // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
     const processData = async () => {
@@ -80,19 +84,17 @@ const Index = () => {
         // Priority 1: Recipe details (full text)
         if (recipeText) {
           console.log("Processing recipe details")
-          const decodedText = decodeURIComponent(recipeText)
 
           // If we also have a recipe name, use it with the text
           if (recipeName) {
-            const decodedName = decodeURIComponent(recipeName)
-            setRecipeName(decodedName)
-            const apiQuery = `${decodedName}: ${decodedText}`
+            setRecipeName(recipeName)
+            const apiQuery = `${recipeName}: ${recipeText}`
             const data = await fetchRecipe(apiQuery)
             setRecipe(data)
           } else {
             // Process just the text and set a placeholder name
             setRecipeName("Untitled Recipe")
-            const data = await fetchRecipe(decodedText)
+            const data = await fetchRecipe(recipeText)
             setRecipe(data)
           }
           toast.success("Recipe processed successfully!")
@@ -100,25 +102,22 @@ const Index = () => {
         // Priority 2: Recipe name
         else if (recipeName) {
           console.log("Processing by recipe name")
-          const decodedName = decodeURIComponent(recipeName)
-          setRecipeName(decodedName)
-          await handleSearch(decodedName)
+          setRecipeName(recipeName)
+          await handleSearch(recipeName)
         }
         // Priority 3: Food image from attach button
-        else if (foodImage) {
+        else if (imageUrl1) {
           console.log("Processing food image")
           setRecipeName("Untitled Recipe")
-          const decodedImage = decodeURIComponent(foodImage)
-          const data = await fetchRecipe(decodedImage)
+          const data = await fetchRecipe(imageUrl1)
           setRecipe(data)
           toast.success("Recipe extracted from food image successfully!")
         }
         // Priority 4: Recipe screenshot image
-        else if (recipeImage) {
+        else if (imageUrl2) {
           console.log("Processing recipe screenshot")
           setRecipeName("Untitled Recipe")
-          const decodedImage = decodeURIComponent(recipeImage)
-          const data = await fetchRecipe(decodedImage)
+          const data = await fetchRecipe(imageUrl2)
           setRecipe(data)
           toast.success("Recipe extracted from recipe image successfully!")
         }
@@ -136,7 +135,7 @@ const Index = () => {
     }
 
     // Process data if any recipe-related param exists
-    if (recipeText || recipeName || foodImage || recipeImage) {
+    if (recipeText || recipeName || imageUrl1 || imageUrl2) {
       processData()
     }
   }, [darkMode])
@@ -228,6 +227,7 @@ const Index = () => {
     setRecipe(updatedRecipe)
     toast.success(`Updated ${ingredient} to ${newQuantity}`)
   }
+
   const handleSellRecipe = () => {
     if (!recipe) return
 
@@ -249,23 +249,6 @@ const Index = () => {
       },
     })
   }
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const name = params.get("name")
-    const email = params.get("email")
-    const image = params.get("image")
-    const id = params.get("id")
-
-    if (name && email && image && id) {
-      const userData = { name, email, image, id }
-      localStorage.setItem("user", JSON.stringify(userData)) // ✅ Store in localStorage
-      setUser(userData)
-      console.log(userData)
-    } else {
-      console.log("error")
-    }
-  }, [])
 
   return (
     <div className={`min-h-screen ${darkMode ? "bg-gray-900" : "bg-gray-50"}`}>
@@ -325,8 +308,8 @@ const Index = () => {
                       <span className="text-sm">Save</span>
                     </button>
 
-                    {/* <button
-                      onClick={handleSellRecipe} // Add this button and its handler
+                    <button
+                      onClick={handleSellRecipe}
                       className="flex items-center btn-primary"
                       aria-label="Sell this recipe"
                     >
@@ -334,7 +317,7 @@ const Index = () => {
                       <span className="text-sm">Sell Recipe</span>
                     </button> */}
                     <button
-                      onClick={handlePost} // Add this button and its handler
+                      onClick={handlePost}
                       className="flex items-center btn-primary"
                       aria-label="Sell this recipe"
                     >
