@@ -53,10 +53,10 @@ const LandingPage = () => {
       }
 
       const data = await res.json()
-      console.log("Cloudinary upload response:", data.url)
+      // console.log("Cloudinary upload response:", data.url)
       return data.secure_url // this is the public URL
     } catch (error) {
-      console.error("Error uploading to Cloudinary:", error)
+      // console.error("Error uploading to Cloudinary:", error)
       toast.error("Failed to upload image. Please try again.")
       return null
     }
@@ -126,31 +126,29 @@ const LandingPage = () => {
       ])
 
       // Build query parameters for navigation
-      const params = new URLSearchParams()
+      let query = [];
 
-      // Add text parameters if they exist
       if (recipeTexts.name1) {
-        params.append("recipeName1", recipeTexts.name1)
+        query.push(`recipeName1=${recipeTexts.name1}`);
       }
 
       if (recipeTexts.fullRecipe1) {
-        params.append(
-          "recipeText1",
-          recipeTexts.fullRecipe1
-        )
+        query.push(`recipeText1=${recipeTexts.fullRecipe1}`);
       }
 
-      // Add Cloudinary image URLs if they were successfully uploaded
       if (imageUrl1) {
-        params.append("imageUrl1", imageUrl1)
+        query.push(`imageUrl1=${imageUrl1}`);
       }
 
       if (imageUrl2) {
-        params.append("imageUrl2", imageUrl2)
+        query.push(`imageUrl2=${imageUrl2}`);
       }
 
-      // Navigate to dashboard with the collected data
-      navigate(`/dashboard?${params.toString()}`)
+      // Join manually without encoding
+      const queryString = query.join("&");
+
+      navigate(`/dashboard?${queryString}`);
+
     } catch (error) {
       console.error("Error processing form:", error)
       toast.error("Failed to process your request. Please try again.")
