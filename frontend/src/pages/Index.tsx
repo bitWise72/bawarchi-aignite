@@ -70,6 +70,7 @@ const Index = () => {
     const imageUrl2 = params.get("imageUrl2")
       ? decodeURIComponent(params.get("imageUrl2"))
       : null
+      
 
     console.log("Recipe Text:", recipeText)
     console.log("Recipe Name:", recipeName)
