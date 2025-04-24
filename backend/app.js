@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 import { createRequire } from "module";
 import connectDB from "./config/dataBase.js";
 import router from "./routes/allRoutes.js";
-import "./config/passport.js";
+import "./config/passport.js"; 
 
 dotenv.config();
  
