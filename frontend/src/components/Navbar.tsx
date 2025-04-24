@@ -1,207 +1,124 @@
-import { Moon, Sun, Menu, X } from "lucide-react"
-import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { motion } from "framer-motion"
 
-interface NavbarProps {
-  darkMode: boolean
-  setDarkMode: (value: boolean) => void
-  name: string | null
-  image: string | null
-}
-
-const handleLogout = async () => {
-  try {
-    await fetch(`${import.meta.env.VITE_BACKEND_PORT}/auth/logout`, {
-      method: "GET",
-      credentials: "include",
-    })
-
-    // ✅ Clear ALL stored authentication data
-    localStorage.removeItem("token")
-    sessionStorage.removeItem("token")
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-
-    // ✅ Force full page reload to clear session
-    window.location.href = "/"
-  } catch (error) {
-    console.error("Logout failed:", error)
-  }
-}
-
-const imageLogo = "./logo.png";
-
-const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
-  const navigate = useNavigate()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const userImage = JSON.parse(localStorage.getItem("user") || "{}").picture;
+function ChoicePage() {
+  const [darkMode, setDarkMode] = useState(false)
 
   return (
-    <header className={`${darkMode ? "bg-gray-800" : "bg-white"} shadow-sm`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex items-center justify-between">
-          {/* Logo and Title - Always visible */}
-          <div className="flex items-center space-x-3">
-            <a href="/">
-              <img
-                src={imageLogo}
-                alt="Bawarchi.AI Logo"
-                className="w-16 sm:w-20 object-contain"
-              />
-            </a>
-
-            <div>
-              <h1 className="text-xl sm:text-2xl font-bold">Bawarchi.AI</h1>
-              <p
-                className={`text-xs sm:text-sm ${
-                  darkMode ? "text-gray-300" : "text-gray-600"
-                }`}
-              >
-                Your Personal Kitchen Assistant
-              </p>
-            </div>
+    <div
+      className={`h-screen w-screen flex transition-colors duration-500 ${
+        darkMode ? "bg-black text-white" : "bg-white text-black"
+      }`}
+    >
+      {/* Left Side Content */}
+      <div className="w-1/2 p-10 flex flex-col justify-between">
+        {/* Header */}
+        <motion.div
+          className="flex items-center justify-between"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="flex items-center">
+            <motion.img
+              src="./logo.png"
+              alt="logo"
+              className="h-10 w-10"
+              initial={{ rotate: -20 }}
+              animate={{ rotate: 0 }}
+              transition={{ type: "spring", stiffness: 100 }}
+            />
+            <h3 className="text-xl font-bold ml-2">Bawarchi.AI</h3>
           </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-4">
-            {/* <button
-              className="text-center p-2.5 cursor-pointer lg:font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors font-normal"
-              onClick={() => navigate("/listing")}
-            >
-              FoodMart
-            </button> */}
-            <button
-              className="text-center p-2.5 cursor-pointer lg:font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors font-normal"
-              onClick={() => navigate("/community")}
-            >
-              Community
-            </button>
-
-            <button
-              onClick={() => setDarkMode(!darkMode)}
-              className={`p-2 rounded-lg ${
-                darkMode
-                  ? "bg-gray-700 hover:bg-gray-600 text-white"
-                  : "bg-gray-100 hover:bg-gray-200 text-gray-900"
-              } transition-colors`}
-              aria-label={
-                darkMode ? "Switch to light mode" : "Switch to dark mode"
-              }
-            >
-              {darkMode ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
-            </button>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className="outline-none">
-                <img
-                  src={
-                    userImage ||
-                    `./assets/${Math.floor(Math.random() * 8) + 1}.png`
-                  }
-                  className="h-12 w-12 rounded-full"
-                  alt="User"
-                />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuLabel>{name || "User"}</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {/* <DropdownMenuItem onClick={() => navigate("/profile")}>
-                  Profile
-                </DropdownMenuItem> */}
-                <DropdownMenuItem onClick={handleLogout}>
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-
-          {/* Mobile Hamburger Menu */}
           <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
+            onClick={() => setDarkMode(!darkMode)}
+            className="bg-gray-800 text-white px-3 py-1 rounded shadow-md text-sm hover:bg-gray-700"
           >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {darkMode ? "Light Mode" : "Dark Mode"}
           </button>
-        </div>
+        </motion.div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 space-y-4 pb-4">
-            <div className="flex items-center justify-between py-2">
-              <div className="flex items-center space-x-3">
-                <img
-                  src={
-                    userImage ||
-                    `./assets/${Math.floor(Math.random() * 8) + 1}.png`
-                  }
-                  className="h-10 w-10 rounded-full"
-                  alt="User"
-                />
-                <span className="font-medium">{name || "User"}</span>
-              </div>
-              <button
-                onClick={() => setDarkMode(!darkMode)}
-                className={`p-2 rounded-lg ${
-                  darkMode
-                    ? "bg-gray-700 hover:bg-gray-600 text-white"
-                    : "bg-gray-100 hover:bg-gray-200 text-gray-900"
-                } transition-colors`}
-              >
-                {darkMode ? (
-                  <Sun className="h-5 w-5" />
-                ) : (
-                  <Moon className="h-5 w-5" />
-                )}
-              </button>
-            </div>
-
-            <button
-              className="w-full text-center p-2.5 cursor-pointer font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors"
-              onClick={() => {
-                navigate("/community")
-                setIsMenuOpen(false)
-              }}
+        {/* Main Content - Centered */}
+        <motion.div
+          className="flex-grow flex flex-col justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          <h1 className="text-5xl font-bold mb-4">Bawarchi.AI</h1>
+          <h2 className="text-3xl font-semibold mb-4">Your Food Companion</h2>
+          <p className="text-lg mb-8">Please select an option below:</p>
+          <div className="flex space-x-4">
+            <motion.button
+              className="bg-blue-500 text-white px-4 py-2 rounded shadow hover:scale-105 transition-transform"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Community
-            </button>
-
-            {/* <button
-              className="w-full text-center p-2.5 cursor-pointer font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors"
-              onClick={() => {
-                navigate("/profile")
-                setIsMenuOpen(false)
-              }}
+              Option 1
+            </motion.button>
+            <motion.button
+              className="bg-green-500 text-white px-4 py-2 rounded shadow hover:scale-105 transition-transform"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Profile
-            </button> */}
-
-            <button
-              className="w-full text-center p-2.5 cursor-pointer font-semibold rounded-lg text-white bg-primary hover:bg-primary-hover transition-colors"
-              onClick={handleLogout}
-            >
-              Logout
-            </button>
+              Option 2
+            </motion.button>
           </div>
-        )}
+        </motion.div>
       </div>
-    </header>
+
+      {/* Right Side with Animated Images */}
+      <div className="relative w-1/2 flex items-center justify-center overflow-hidden">
+        <motion.img
+          src={
+            darkMode
+              ? "./animation/dark-back.png"
+              : "./animation/light-back.png"
+          }
+          alt="background shape"
+          className="absolute w-4/5 h-4/5 object-contain max-w-[700px]"
+          animate={{ rotate: 360 }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        <motion.img
+          src={
+            darkMode
+              ? "./animation/dark-front.png"
+              : "./animation/light-front.png"
+          }
+          alt="foreground shape"
+          className="absolute w-3/5 h-3/5 object-contain max-w-[800px]"
+          animate={{ rotate: -360 }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+        <motion.img
+          src="./animation/burger.png"
+          alt="burger"
+          className="relative z-10 w-2/3 max-w-[375px]"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{
+            opacity: 1,
+            y: [0, -5, 0],
+          }}
+          transition={{
+            duration: 1,
+            ease: "easeOut",
+            delay: 0.2,
+            repeat: Infinity,
+            repeatType: "loop",
+          }}
+        />
+      </div>
+    </div>
   )
 }
 
-export default Navbar
+export default ChoicePage
