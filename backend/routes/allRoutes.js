@@ -200,7 +200,7 @@ router.post("/like", async (req, res) => {
 
 router.post("/comment", async (req, res) => {
   const { postId, userId, commentText } = req.body;
-
+    // console.log("Comment data:", req.body);
   if (!postId || !userId || !commentText)
     return res.status(400).json({ message: "Missing fields" });
 
@@ -217,6 +217,28 @@ router.post("/comment", async (req, res) => {
     await post.save();
 
     res.status(201).json({ message: "Comment added", comments: post.comments });
+  } catch (error) {
+    console.error("Comment error:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+router.post("/fetchComment", async (req, res) => {
+  const { postId} = req.body;
+
+  if (!postId)
+    return res.status(400).json({ message: "Missing fields" });
+
+  try {
+    const post = await Post.findById(postId);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    const comments = post.comments.map((comment) => ({
+      userId: comment.userId,
+      commentText: comment.commentText,
+    }));
+
+    res.status(201).json({ message: "Comment added", comments: comments });
   } catch (error) {
     console.error("Comment error:", error);
     res.status(500).json({ message: "Internal Server Error" });
