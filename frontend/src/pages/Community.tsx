@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback, ReactNode, Key } from "react";
 import {
   Heart,
   MessageCircle,
@@ -44,11 +44,15 @@ interface PostContent {
 }
 
 interface Comment {
-  authorAvatar: string;
-  id: string;
-  author: string;
-  text: string;
-  timestamp: string;
+  userPicture: string;
+  userName: string;
+  commentText: string;
+  userId: Key;
+  authorAvatar?: string;
+  id?: string;
+  author?: string;
+  text?: string;
+  timestamp?: string;
 }
 
 interface Post {
@@ -82,7 +86,7 @@ const Community = () => {
   });
   const [expandedPost, setExpandedPost] = useState<number | null>(null);
   const [expendedComment, setExpandedComment] = useState<string | null>(null);
-
+  const [bool, setBool] = useState(false);
   const [user, setUser] = useState<{
     picture: string;
     name: string;
@@ -287,9 +291,16 @@ const Community = () => {
   };
 
   const toggleCommentExpansion = (postId: string) => {
-    // console.log("postID",postId);
-    setExpandedComment(expendedComment === postId ? null : postId);
-  }
+    // If we're clicking on the same post that's already expanded
+    if (expendedComment === postId) {
+      // Closing the comment section - don't fetch comments
+      setExpandedComment(null);
+    } else {
+      // Opening a new comment section - fetch comments
+      setExpandedComment(postId);
+      fetchComments(postId); // Make sure to pass the postId to your fetch function
+    }
+  };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user")
@@ -299,8 +310,12 @@ const Community = () => {
       // console.log("Token:", token)
       // console.log("id: ", storedUser ? JSON.parse(storedUser).id : null);
       setId(storedUser ? JSON.parse(storedUser).id : null);
+      setName(storedUser ? JSON.parse(storedUser).name : null);
+      setPic(storedUser ? JSON.parse(storedUser).picture : null);
   }, [])
   const [id, setId] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
+  const [pic, setPic] = useState<string | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -310,13 +325,13 @@ const Community = () => {
   const commentInputRef = useRef<HTMLTextAreaElement>(null);
   
     // Fetch comments when component mounts or postId changes
-    useEffect(() => {
-      if (showComments) {
-        fetchComments();
-      }
-    }, [showComments, postId]);
+    // useEffect(() => {
+    //   if (showComments) {
+    //     fetchComments();
+    //   }
+    // }, [ expandedPost]);
   
-    const fetchComments = async () => {
+    const fetchComments = async (postId: string) => {
       setIsLoading(true);
       try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_PORT}/auth/fetchComment`, {
@@ -325,20 +340,20 @@ const Community = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            postId:expendedComment,
+            postId:postId,
           }),
         });
         
         const data = await response.json();
         console.log(data);
-        setComments(data);
+        setComments(data.comments);
       } catch (err) {
         setError(err.message);
       } finally {
         setIsLoading(false);
       }
     };
-  
+    
     const handleSubmitComment = async (e: React.FormEvent) => {
       e.preventDefault();
       if (!newComment.trim()) return;
@@ -353,14 +368,18 @@ const Community = () => {
           body: JSON.stringify({
             postId:expendedComment,
             commentText: newComment,
-            userId: id
+            userId: id,
+            userName:name,
+            userPicture: pic,
           }),
         });
   
         if (!response.ok) throw new Error('Failed to post comment');
   
-        const newCommentData = await response.json();
-        setComments([...comments, newCommentData]);
+        const commentText = await response.json();
+        // console.log(commentText);
+        setComments(commentText.comments);
+        // console.log(comments);
         setNewComment('');
       } catch (err) {
         setError(err.message);
@@ -780,7 +799,7 @@ const Community = () => {
       <h3 className={`text-lg font-bold mb-3 ${
         darkMode ? 'text-yellow-300' : 'text-yellow-700'
       }`}>
-        Comments ({comments.length})
+        Comments ({comments.length || 0})
       </h3>
       
       <div className="space-y-3 max-h-64 overflow-y-auto pr-2">
@@ -792,32 +811,54 @@ const Community = () => {
           </div>
         ) : comments.length > 0 ? (
           comments.map((comment) => (
-            <div key={comment.id} className={`flex items-start p-3 rounded-lg ${
-              darkMode ? 'bg-gray-700/30' : 'bg-white'
-            }`}>
-              <img
-                src={comment.authorAvatar}
-                alt={comment.author}
-                className="w-8 h-8 rounded-full mr-3 object-cover"
-              />
+            <div key={comment.userId} className={`flex items-start p-4 rounded-lg mb-3 ${
+              darkMode ? 'bg-gray-700/30 border-gray-600' : 'bg-white border-gray-200'
+            } border`}>
+              {/* User Avatar - You'll need to fetch user details separately */}
+              <div className="relative mr-3">
+                <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
+                  <img src={comment.userPicture} alt={comment.userName} className="w-full h-full rounded-full object-cover" crossOrigin="anonymous" />
+                </div>
+              </div>
+          
+              {/* Comment Content */}
               <div className="flex-1">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-1">
+                  {/* User Name - You'll need to fetch this separately */}
                   <span className={`font-medium ${
-                    darkMode ? 'text-yellow-300' : 'text-yellow-700'
+                    darkMode ? 'text-yellow-300' : 'text-yellow-600'
                   }`}>
-                    {comment.author}
+                    {comment.userName}
                   </span>
-                  <span className={`text-xs ${
+                  
+                  {/* Timestamp - Add if available in your data */}
+                  {/* <span className={`text-xs ${
                     darkMode ? 'text-gray-400' : 'text-gray-500'
                   }`}>
-                    {new Date(comment.timestamp).toLocaleString()}
-                  </span>
+                    {comment.timestamp ? new Date(comment.timestamp).toLocaleString() : 'Just now'}
+                  </span> */}
                 </div>
-                <p className={`mt-1 text-sm ${
+          
+                {/* Comment Text */}
+                <p className={`text-sm ${
                   darkMode ? 'text-gray-300' : 'text-gray-700'
                 }`}>
-                  {comment.text}
+                  {comment.commentText}
                 </p>
+          
+                {/* Optional: Comment Actions */}
+                {/* <div className="flex items-center mt-2 space-x-4">
+                  <button className={`text-xs ${
+                    darkMode ? 'text-gray-400 hover:text-yellow-300' : 'text-gray-500 hover:text-yellow-600'
+                  }`}>
+                    Like
+                  </button>
+                  <button className={`text-xs ${
+                    darkMode ? 'text-gray-400 hover:text-yellow-300' : 'text-gray-500 hover:text-yellow-600'
+                  }`}>
+                    Reply
+                  </button>
+                </div> */}
               </div>
             </div>
           ))

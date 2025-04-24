@@ -199,9 +199,9 @@ router.post("/like", async (req, res) => {
 /** -------------------- Add Comment -------------------- **/
 
 router.post("/comment", async (req, res) => {
-  const { postId, userId, commentText } = req.body;
+  const { postId, userId, commentText, userName,userPicture } = req.body;
     // console.log("Comment data:", req.body);
-  if (!postId || !userId || !commentText)
+  if (!postId || !userId || !commentText || !userName || !userPicture)
     return res.status(400).json({ message: "Missing fields" });
 
   try {
@@ -210,7 +210,10 @@ router.post("/comment", async (req, res) => {
 
     const comment = {
       userId: new mongoose.Types.ObjectId(userId),
-      commentText,
+      userName: userName,
+      userPicture: userPicture,
+      commentText: commentText,
+
     };
 
     post.comments.push(comment);
@@ -225,7 +228,7 @@ router.post("/comment", async (req, res) => {
 
 router.post("/fetchComment", async (req, res) => {
   const { postId} = req.body;
-
+  console.log("Comment data:", req.body);
   if (!postId)
     return res.status(400).json({ message: "Missing fields" });
 
@@ -235,7 +238,9 @@ router.post("/fetchComment", async (req, res) => {
 
     const comments = post.comments.map((comment) => ({
       userId: comment.userId,
+      userPicture: comment.userPicture,
       commentText: comment.commentText,
+      userName: comment.userName,
     }));
 
     res.status(201).json({ message: "Comment added", comments: comments });
@@ -260,5 +265,22 @@ router.post("/getIdRecipe", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch recipe ID" });
   }
 });
+
+router.post("/fetchUserData", async (req, res) => {
+  const { userId } = req.body;
+  if (!userId) return res.status(400).json({ message: "User ID required." });
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+
+    res.status(200).json({ user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch user data" });
+  }
+}
+);
 
 export default router;
