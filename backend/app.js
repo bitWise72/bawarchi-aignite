@@ -10,7 +10,7 @@ import router from "./routes/allRoutes.js";
 import "./config/passport.js";
 
 dotenv.config();
-
+ 
 // Required for CommonJS packages
 const require = createRequire(import.meta.url);
 const passport = require("passport");
