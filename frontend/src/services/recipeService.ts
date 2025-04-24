@@ -14,24 +14,28 @@ export interface Recipe {
   [key: string]: RecipeStep;
 }
 
-export const fetchRecipe = async (prompt: string): Promise<Recipe> => {
+export const fetchRecipe = async ( type: string,prompt: string): Promise<Recipe> => {
   try {
-    console.log("Sending recipe request with prompt:", prompt);
+    console.log("Sending recipe request with prompt:", prompt,type);
+
+    const requestBody =
+      type === "user_prompt"
+        ? { user_prompt: prompt }
+        : { image_url: prompt };
+    console.log("Request body:", requestBody);
     const response = await fetch(
       "https://gem-api-adv.vercel.app/get_recipe",
-      // "https://gem-recipe-nopp4bs5f-sayan-gangulys-projects.vercel.app/get_recipe",
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user_prompt: prompt }),
+        body: JSON.stringify(requestBody),
       }
     );
 
     const data = await response.json();
-    
-    // Check if the response contains an error
+
     if (!response.ok || data.error) {
       const errorMessage = data.error || "Failed to fetch recipe";
       console.error("API error:", errorMessage);
@@ -45,3 +49,4 @@ export const fetchRecipe = async (prompt: string): Promise<Recipe> => {
     throw error;
   }
 };
+
