@@ -19,7 +19,7 @@ export const fetchRecipe = async ( type: string,prompt: string): Promise<Recipe>
     console.log("Sending recipe request with prompt:", prompt,type);
 
     const requestBody =
-      type === "user_promt"
+      type === "user_prompt"
         ? { user_prompt: prompt }
         : { image_url: prompt };
     console.log("Request body:", requestBody);

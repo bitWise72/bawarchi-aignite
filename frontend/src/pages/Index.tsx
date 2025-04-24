@@ -91,13 +91,13 @@ const Index = () => {
             setRecipeName(recipeName)
             const apiQuery = `${recipeName}: ${recipeText}`
             console.log(apiQuery);
-            const data = await fetchRecipe("user_promt",apiQuery)
+            const data = await fetchRecipe("user_prompt",apiQuery)
             setRecipe(data)
           } else {
             // Process just the text and set a placeholder name
             setRecipeName("Untitled Recipe")
             console.log(recipeText);
-            const data = await fetchRecipe("user_promt",recipeText)
+            const data = await fetchRecipe("user_prompt",recipeText)
             setRecipe(data)
           }
           toast.success("Recipe processed successfully!")
@@ -151,7 +151,7 @@ const Index = () => {
     setCurrentStep(0)
     setRecipeName(query)
     try {
-      const data = await fetchRecipe("user_promt",query)
+      const data = await fetchRecipe("user_prompt",query)
       const dataArray = Object.values(data) // Convert object to array
       const sortedData = dataArray.sort(
         (a, b) => Number(a.time) - Number(b.time)
@@ -313,14 +313,14 @@ const Index = () => {
                       <span className="text-sm">Save</span>
                     </button>
 
-                    <button
+                    {/* <button
                       onClick={handleSellRecipe}
                       className="flex items-center btn-primary"
                       aria-label="Sell this recipe"
                     >
                       <List className="mr-2" />
                       <span className="text-sm">Sell Recipe</span>
-                    </button> 
+                    </button>  */}
                     <button
                       onClick={handlePost}
                       className="flex items-center btn-primary"
