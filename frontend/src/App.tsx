@@ -18,6 +18,8 @@ import Listing from "./pages/delivery/Listing"
 import SharedRecipePage from "./pages/ShareRecipePage"
 import CreateListing from "./pages/delivery/createListing"
 import Privacy from "./pages/Privacy"
+import ChoicePage from "./pages/ChoicePage"
+import SearchPage from "./pages/SearchPage"
 
 const queryClient = new QueryClient()
 
@@ -38,6 +40,13 @@ const App = () => (
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/share/:id" element={<SharedRecipePage />} />
+              <Route path="/choice" element={<ChoicePage />} />
+              <Route
+                path="/search"
+                element={
+                 <SearchPage /> // Uncomment this line when SearchPage is implemented
+                }
+              />
               <Route
                 path="/home"
                 element={
