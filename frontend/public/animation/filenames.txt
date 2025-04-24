@@ -1,6 +1,0 @@
-C:\MY FILES\CODE\Bawarchi AI - Algnite'25\bawarchi-aignite\frontend\public\animation\burger.png
-C:\MY FILES\CODE\Bawarchi AI - Algnite'25\bawarchi-aignite\frontend\public\animation\dark-back.png
-C:\MY FILES\CODE\Bawarchi AI - Algnite'25\bawarchi-aignite\frontend\public\animation\dark-front.png
-C:\MY FILES\CODE\Bawarchi AI - Algnite'25\bawarchi-aignite\frontend\public\animation\filenames.txt
-C:\MY FILES\CODE\Bawarchi AI - Algnite'25\bawarchi-aignite\frontend\public\animation\light-back.png
-C:\MY FILES\CODE\Bawarchi AI - Algnite'25\bawarchi-aignite\frontend\public\animation\light-front.png

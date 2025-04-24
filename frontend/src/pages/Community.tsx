@@ -586,8 +586,9 @@ const Community = () => {
                   fill={post.likes?.includes(user?.id || '') ? "currentColor" : "none"}
                 />
                 <span className="text-sm font-medium">
-                  {post.likes?.length || 0} Likes
+                  {post.likes?.length || 0}
                 </span>
+                <span className="hidden sm:inline text-sm font-medium pl-2">Likes</span>
               </button>
               
               <button
@@ -598,8 +599,8 @@ const Community = () => {
                     : "bg-gray-100 hover:bg-gray-200 text-gray-700 hover:text-yellow-700"
                 }`}
               >
-                <Share2 className="h-5 w-5 mr-1.5" />
-                <span className="text-sm font-medium">Share</span>
+                <Share2 className="h-5 w-5 sm:mr-1.5" /> {/* Show margin only on sm+ screens */}
+                <span className="hidden sm:inline text-sm font-medium">Share</span> {/* Hide text on small screens */}
               </button>
               <button
                 onClick={() => toggleCommentExpansion(post._id)}
@@ -610,34 +611,39 @@ const Community = () => {
                 }`}
               >
                 <MessageCircle className="h-5 w-5 mr-1" />
-                <span className="text-sm">Comment</span>
+                <span className="hidden sm:inline text-sm font-medium ">Comment</span> {/* Hide text on small screens */}
               </button>
             </div>
 
             <button
-              onClick={() => togglePostExpansion(index)}
-              className={`flex items-center px-5 py-2.5 rounded-full text-sm font-bold transition-all transform hover:scale-105 ${
-                darkMode
-                  ? expandedPost === index
-                    ? "bg-gradient-to-r from-yellow-500 to-amber-500 text-gray-900"
-                    : "bg-gradient-to-r from-yellow-800/70 to-amber-800/70 text-yellow-300"
-                  : expandedPost === index
-                    ? "bg-gradient-to-r from-yellow-500 to-amber-500 text-white"
-                    : "bg-gradient-to-r from-yellow-200 to-amber-200 text-yellow-900"
-              } shadow-md ${darkMode ? "shadow-yellow-500/10" : "shadow-yellow-500/20"}`}
-            >
-              {expandedPost === index ? (
-                <>
-                  <EyeOff className="h-5 w-5 mr-2" />
-                  Hide Alchemy
-                </>
-              ) : (
-                <>
-                  <ChefHat className="h-5 w-5 mr-2" />
-                  Show Secrets
-                </>
-              )}
-            </button>
+  onClick={() => togglePostExpansion(index)}
+  className={`ml-2 sm:ml-4 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all transform hover:scale-105
+    ${
+      darkMode
+        ? expandedPost === index
+          ? "bg-gradient-to-r from-yellow-500 to-amber-500 text-gray-900"
+          : "bg-gradient-to-r from-yellow-800/70 to-amber-800/70 text-yellow-300"
+        : expandedPost === index
+          ? "bg-gradient-to-r from-yellow-500 to-amber-500 text-white"
+          : "bg-gradient-to-r from-yellow-200 to-amber-200 text-yellow-900"
+    }
+    shadow-md ${darkMode ? "shadow-yellow-500/10" : "shadow-yellow-500/20"}
+  `}
+>
+  {expandedPost === index ? (
+    <>
+      <EyeOff className="h-4 w-4 sm:h-5 sm:w-5 scale-150 md:scale-100" />
+      <span>Hide Alchemy</span>
+    </>
+  ) : (
+    <>
+      <ChefHat className="h-4 w-4 sm:h-5 sm:w-5 scale-150 md:scale-100" />
+      <span>Show Secrets</span>
+    </>
+  )}
+</button>
+
+
           </div>
           
         </div>
@@ -693,7 +699,7 @@ const Community = () => {
                             ? darkMode ? "text-orange-400" : "text-orange-500"
                             : darkMode ? "text-amber-400" : "text-amber-500"
                       }`}>
-                        {['🥣', '🍲', '🔥', '🧪', '⚗️', '🧫'][stepIndex % 6]}
+                        {['🥣', '🍲', '🔥', '🧫'][stepIndex % 4]}
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-4">

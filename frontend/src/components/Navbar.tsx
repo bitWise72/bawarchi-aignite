@@ -17,6 +17,7 @@ interface NavbarProps {
   image: string | null
 }
 
+
 const handleLogout = async () => {
   try {
     await fetch(`${import.meta.env.VITE_BACKEND_PORT}/auth/logout`, {
