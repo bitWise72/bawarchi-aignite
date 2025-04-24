@@ -14,15 +14,15 @@ export interface Recipe {
   [key: string]: RecipeStep;
 }
 
-export const fetchRecipe = async (prompt: string, type: string): Promise<Recipe> => {
+export const fetchRecipe = async ( type: string,prompt: string): Promise<Recipe> => {
   try {
-    console.log("Sending recipe request with prompt:", prompt);
+    console.log("Sending recipe request with prompt:", prompt,type);
 
     const requestBody =
       type === "user_promt"
         ? { user_prompt: prompt }
         : { image_url: prompt };
-
+    console.log("Request body:", requestBody);
     const response = await fetch(
       "https://gem-api-adv.vercel.app/get_recipe",
       {
