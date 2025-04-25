@@ -11,7 +11,7 @@ import Navbar from "@/components/Navbar"
 import { useDarkMode } from "@/contexts/DarkModeContext"
 import RecipeSearch from "@/components/RecipeSearch"
 import ingredient_data from "./ingredient_brands_and_costs.json"
-
+import { NutritionProfile } from "@/components/NutriPanel";
 const STORAGE_KEY = "saved_recipes"
 
 const Index = () => {
@@ -22,6 +22,7 @@ const Index = () => {
   const [error, setError] = useState<string | null>(null)
   const [currentStep, setCurrentStep] = useState(0)
   const [showIngredients, setShowIngredients] = useState(false)
+  const [showNutrients, setShowNutrients] = useState(false)
   const [recipeName, setRecipeName] = useState("")
   const navigate = useNavigate()
 
@@ -305,6 +306,19 @@ const Index = () => {
                     </button>
 
                     <button
+                      onClick={() => setShowNutrients(true)}
+                      className={`flex items-center px-4 py-2 rounded-lg ${
+                        darkMode
+                          ? "bg-gray-700 hover:bg-gray-600 text-white "
+                          : "bg-gray-100 hover:bg-gray-200 text-gray-900 border border-gray-300"
+                      } transition-colors`}
+                      aria-label="View precise ingredients"
+                    >
+                      <List className="h-4 w-4 mr-2" />
+                      <span className="text-sm">Nutrition</span>
+                    </button>
+
+                    <button
                       onClick={handleSaveRecipe}
                       className="btn-primary flex items-center"
                       aria-label="Save recipe"
@@ -378,6 +392,16 @@ const Index = () => {
           onUpdateIngredient={handleUpdateIngredient}
           darkMode={darkMode}
           marketplaceData={ingredient_data}
+        />
+      )}
+
+      {showNutrients  && (
+        <NutritionProfile
+          ingredientsString={JSON.stringify(recipe)}
+          // onClose={() => setShowNutrients(false)}
+          // onUpdateIngredient={handleUpdateIngredient}
+          // darkMode={darkMode}
+          // marketplaceData={ingredient_data}
         />
       )}
     </div>
