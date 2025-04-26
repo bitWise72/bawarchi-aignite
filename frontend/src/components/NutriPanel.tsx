@@ -1,115 +1,150 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Type definitions for the API response
 export interface NutritionResponse {
   [ingredient: string]: Record<string, string | null>;
 }
 
-// Props for the NutritionProfile component
 interface NutritionProfileProps {
   ingredientsString: string;
+  isOpen: boolean;
+  onClose: () => void;
+  dark?: boolean;
+  cachedData?: NutritionResponse;
+  saveData: (key: string, data: NutritionResponse) => void;
 }
 
-export const NutritionProfile: React.FC<NutritionProfileProps> = ({ ingredientsString }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [data, setData] = useState<NutritionResponse | null>(null);
+export const NutritionProfile: React.FC<NutritionProfileProps> = ({
+  ingredientsString,
+  isOpen,
+  onClose,
+  dark = false,
+  cachedData,
+  saveData
+}) => {
+  const [data, setData] = useState<NutritionResponse | null>(cachedData || null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchNutrition = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const payload = { ingredients_string: ingredientsString };
-      const resp = await axios.post<NutritionResponse>(
-        'https://gem-api-adv.vercel.app/get_nutri',
-        payload,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      setData(resp.data);
-    } catch (err: any) {
-      console.error(err);
-      setError('Failed to load nutrition data.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    if (!isOpen || cachedData) return;
 
-  const openPanel = () => {
-    setIsOpen(true);
-    if (!data && !loading && !error) {
-      fetchNutrition();
-    }
-  };
+    const fetchNutrition = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const payload = { ingredients_string: ingredientsString };
+        const resp = await axios.post<NutritionResponse>(
+          'https://gem-api-adv.vercel.app/get_nutri',
+          payload,
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+        setData(resp.data);
+        // console.log('Nutrition data:', resp.data);
+        // console.log('Nutrition data:', typeof(resp.data.basmati_rice.Error));
+        saveData(ingredientsString, resp.data); // cache it
+      } catch (err: any) {
+        console.error(err);
+        setError('Failed to load nutrition data.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const closePanel = () => {
-    setIsOpen(false);
-  };
+    fetchNutrition();
+  }, [ingredientsString, isOpen, cachedData, saveData]);
+
 
   return (
-    <>
-      {/* <button
-        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none"
-        onClick={openPanel}
+<div
+  className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-gradient-to-br ${
+    dark ? 'from-yellow-900 via-yellow-800 to-yellow-700' : 'from-orange-100 via-orange-200 to-orange-300'
+  } shadow-xl z-50 transform transition-transform duration-500 ease-in-out ${
+    isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
+  }`}
+>
+  {/* Header */}
+  <div
+    className={`flex justify-between items-center px-6 py-4 border-b ${
+      dark ? 'border-yellow-600' : 'border-orange-500'
+    }`}
+  >
+    <h2
+      className={`text-xl font-bold ${
+        dark ? 'text-yellow-100' : 'text-orange-800'
+      } tracking-wide drop-shadow-md`}
+    >
+      🥗 Nutrition Profile
+    </h2>
+    <button
+      onClick={onClose}
+      className="text-xl transition-all duration-300 transform hover:scale-125 hover:text-red-400"
+    >
+      &times;
+    </button>
+  </div>
+
+  {/* Content */}
+  <div className="p-6 overflow-y-auto h-[calc(100%-4rem)]">
+    {loading && (
+      <p
+        className={`text-lg font-semibold animate-pulse ${
+          dark ? 'text-yellow-100' : 'text-orange-700'
+        }`}
       >
-        Nutrition Profile
-      </button> */}
+        Loading nutrition data...
+      </p>
+    )}
 
-      {/* Slide-over panel */}
-      { (
-        <div className="fixed inset-0 z-50 flex">
-          {/* Overlay */}
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50"
-            onClick={closePanel}
-          />
+    {error && (
+      <p className="text-red-500 font-medium text-md">{error}</p>
+    )}
 
-          {/* Panel */}
-          <aside className="relative ml-auto w-full max-w-md bg-white dark:bg-gray-800 shadow-xl p-6 overflow-y-auto">
-            <header className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Nutrition Profile
-              </h2>
-              <button
-                className="text-gray-700 dark:text-gray-300 hover:text-gray-900"
-                onClick={closePanel}
-                aria-label="Close"
-              >
-                ✕
-              </button>
-            </header>
+    {!loading && !error && data && (
+      <div className="space-y-6 animate-fade-in">
+        {Object.entries(data).map(([ingredient, info], idx) => (
+          <section
+            key={ingredient}
+            className={`p-4 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm ${
+              dark
+                ? 'border border-yellow-600 text-yellow-100'
+                : 'border border-orange-300 text-orange-800'
+            } transition-transform duration-300 hover:scale-[1.02]`}
+          >
+            <h3
+              className={`text-lg font-semibold uppercase mb-3 ${
+                dark ? 'text-yellow-200' : 'text-orange-700'
+              }`}
+            >
+              {ingredient}
+            </h3>
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+            {Object.entries(info).map(([nutrient, value]) => {
+  // Trim nutrient name and compare it to 'Error', ignoring case sensitivity
+  if (nutrient.trim().toLowerCase() === 'error') {
+    return null; // If it's 'Error', return null to skip this entry
+  }
+  return (
+    <React.Fragment key={nutrient}>
+      <dt className="font-medium capitalize">
+        {nutrient.replace(/_/g, ' ')}
+      </dt>
+      <dd>
+        {value ?? (
+          <span className="opacity-50 italic">N/A</span>
+        )}
+      </dd>
+    </React.Fragment>
+  );
+})}
 
-            {loading && <p>Loading...</p>}
-            {error && <p className="text-red-500">{error}</p>}
+            </dl>
+          </section>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
 
-            {/* Render data dynamically */}
-            {!loading && !error && data && (
-              <div className="space-y-6">
-                {Object.entries(data).map(([ingredient, info]) => (
-                  <section key={ingredient}>
-                    <h3 className="text-md font-medium uppercase text-gray-800 dark:text-gray-200 mb-2">
-                      {ingredient}
-                    </h3>
-                    <dl className="grid grid-cols-2 gap-x-4 gap-y-2">
-                      {Object.entries(info).map(([nutrient, value]) => (
-                        <React.Fragment key={nutrient}>
-                          <dt className="text-sm text-gray-600 dark:text-gray-400 capitalize">
-                            {nutrient.replace(/_/g, ' ')}
-                          </dt>
-                          <dd className="text-sm text-gray-800 dark:text-gray-200">
-                            {value ?? 'N/A'}
-                          </dd>
-                        </React.Fragment>
-                      ))}
-                    </dl>
-                  </section>
-                ))}
-              </div>
-            )}
-          </aside>
-        </div>
-      )}
-    </>
   );
 };

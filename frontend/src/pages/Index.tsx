@@ -11,8 +11,9 @@ import Navbar from "@/components/Navbar"
 import { useDarkMode } from "@/contexts/DarkModeContext"
 import RecipeSearch from "@/components/RecipeSearch"
 import ingredient_data from "./ingredient_brands_and_costs.json"
-import { NutritionProfile } from "@/components/NutriPanel";
+import { NutritionProfile, NutritionResponse } from "@/components/NutriPanel";
 const STORAGE_KEY = "saved_recipes"
+import axios from 'axios';
 
 const Index = () => {
   const [user, setUser] = useState(null)
@@ -24,8 +25,19 @@ const Index = () => {
   const [showIngredients, setShowIngredients] = useState(false)
   const [showNutrients, setShowNutrients] = useState(false)
   const [recipeName, setRecipeName] = useState("")
+  const [data, setData] = useState<NutritionResponse | null>(null);
   const navigate = useNavigate()
-
+  const [nutritionDrawerOpen, setNutritionDrawerOpen] = useState(false);
+  const [selectedIngredients, setSelectedIngredients] = useState('');
+  const [nutritionDataCache, setNutritionDataCache] = useState<Record<string, NutritionResponse>>({});
+  
+  interface NutritionProfileProps {
+    ingredientsString: string;
+    isOpen: boolean;
+    onClose: () => void;
+    dark?: boolean; // <-- Optional dark mode flag
+  }
+  
   useEffect(() => {
     if (darkMode) {
       document.body.classList.add("dark-mode")
@@ -182,6 +194,15 @@ const Index = () => {
     }
   }
 
+  const handleOpenNutrition = (ingredientsString: string) => {
+    setSelectedIngredients(ingredientsString);
+    setNutritionDrawerOpen(true);
+  };
+
+  const handleSaveNutritionData = (key: string, data: NutritionResponse) => {
+    setNutritionDataCache(prev => ({ ...prev, [key]: data }));
+  };
+  
   const handleNextStep = () => {
     if (!recipe) return
 
@@ -306,7 +327,18 @@ const Index = () => {
                     </button>
 
                     <button
-                      onClick={() => setShowNutrients(true)}
+                      // onClick={async () => {
+                      //   const payload = { ingredients_string: JSON.stringify(recipe) };
+                      //   const resp = await axios.post<NutritionResponse>(
+                      //     'https://gem-api-adv.vercel.app/get_nutri',
+                      //     payload,
+                      //     { headers: { 'Content-Type': 'application/json' } }
+                      //   );
+                      //   setData(resp.data);
+                      //   console.log(resp.data);
+                      //   setShowNutrients(true)
+                      // }}
+                      onClick={() => handleOpenNutrition(JSON.stringify(recipe) )}
                       className={`flex items-center px-4 py-2 rounded-lg ${
                         darkMode
                           ? "bg-gray-700 hover:bg-gray-600 text-white "
@@ -395,15 +427,25 @@ const Index = () => {
         />
       )}
 
-      {showNutrients  && (
-        <NutritionProfile
-          ingredientsString={JSON.stringify(recipe)}
-          // onClose={() => setShowNutrients(false)}
-          // onUpdateIngredient={handleUpdateIngredient}
-          // darkMode={darkMode}
-          // marketplaceData={ingredient_data}
-        />
-      )}
+
+{/* 
+    <NutritionProfile
+      ingredientsString={JSON.stringify(recipe)}
+      isOpen={showNutrients}
+      onClose={() => setShowNutrients(false)}
+      dark={darkMode}
+    /> */}
+
+      <NutritionProfile
+        ingredientsString={selectedIngredients}
+        isOpen={nutritionDrawerOpen}
+        onClose={() => setNutritionDrawerOpen(false)}
+        cachedData={nutritionDataCache[selectedIngredients]}
+        saveData={handleSaveNutritionData}
+        dark={darkMode} // or false based on theme
+      />
+
+
     </div>
   )
 }
