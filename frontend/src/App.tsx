@@ -20,6 +20,8 @@ import CreateListing from "./pages/delivery/createListing"
 import Privacy from "./pages/Privacy"
 import ChoicePage from "./pages/ChoicePage"
 import SearchPage from "./pages/SearchPage"
+import SearchStructurePage from "./pages/SearchStructurePage"
+import RecipeSearch from "./pages/RecipeSearch"
 
 const queryClient = new QueryClient()
 
@@ -42,27 +44,32 @@ const App = () => (
               <Route path="/share/:id" element={<SharedRecipePage />} />
               <Route path="/choice" element={<ChoicePage />} />
               <Route
-                path="/search"
-                element={
-                 <SearchPage /> // Uncomment this line when SearchPage is implemented
-                }
+              path="/search-structure"
+              element={<SearchStructurePage />}
+              />
+              <Route path="/recipe-search" element={<RecipeSearch />} />
+              <Route
+              path="/search"
+              element={
+                <SearchPage /> // Uncomment this line when SearchPage is implemented
+              }
               />
               <Route
-                path="/home"
-                element={
-                  <ProtectedRoute>
-                    {/* <Index /> */}
-                    <LandingPage />
-                  </ProtectedRoute>
-                }
+              path="/home"
+              element={
+                <ProtectedRoute>
+                {/* <Index /> */}
+                <LandingPage />
+                </ProtectedRoute>
+              }
               />
               <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Index />
-                  </ProtectedRoute>
-                }
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                <Index />
+                </ProtectedRoute>
+              }
               />
               <Route path="/home" element={<Index />} />
               <Route path="/review-post" element={<ReviewPost />} />

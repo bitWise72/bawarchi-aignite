@@ -79,17 +79,22 @@ function ChoicePage() {
             </p>
             <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4">
               <motion.button
+                onClick={() => (window.location.href = "/recipe-search")}
+                // style={{
+                //   backgroundColor: "#FFC700",
+                //   color: "#000000",
+                // }}
                 style={{
-                  backgroundColor: "#FFC700",
-                  color: "#000000",
+                  backgroundColor: "#FF6E00",
+                  color: "#FFFFFF",
                 }}
                 className="px-4 py-2 rounded text-sm sm:text-base shadow transition-transform font-semibold hover:bg-[#e6b600]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Search a Recipe
+                Start Your Cooking Journey
               </motion.button>
-
+              {/* 
               <motion.button
                 style={{
                   backgroundColor: "#FF6E00",
@@ -100,7 +105,7 @@ function ChoicePage() {
                 whileTap={{ scale: 0.95 }}
               >
                 Post your Recipe
-              </motion.button>
+              </motion.button> */}
             </div>
           </motion.div>
         </div>
