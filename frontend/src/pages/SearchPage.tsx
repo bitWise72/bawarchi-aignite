@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from "react"
-import {
-  Search,
-  Mic,
-  Camera,
-  ChefHat,
-  TrendingUp,
-  Moon,
-  Sun,
-} from "lucide-react"
+import React, { useState, useEffect, useRef } from "react"
+import { Search, Mic, Camera, ChefHat, TrendingUp, X } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useDarkMode } from "@/contexts/DarkModeContext"
+import { toast } from "sonner"
+import { useNavigate } from "react-router-dom"
 
 interface SearchPageProps {
   mode: "normal" | "experimental"
@@ -19,8 +13,14 @@ interface SearchPageProps {
 function SearchPage({ mode, setMode }: SearchPageProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [isSearchFocused, setIsSearchFocused] = useState(false)
-  const { darkMode, setDarkMode } = useDarkMode()
+  const { darkMode } = useDarkMode()
   const [mounted, setMounted] = useState(false)
+  const [image, setImage] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [showImageModal, setShowImageModal] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     setMounted(true)
@@ -31,7 +31,105 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Search query:", searchQuery)
+    processSearch()
+  }
+
+  // Upload image to Cloudinary (similar to SearchStructurePage)
+  const uploadToCloudinary = async (file: File | null) => {
+    if (!file) return null
+
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("upload_preset", "Bawarchi.AI")
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dtgegh9ya/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+
+      if (!res.ok) {
+        throw new Error("Failed to upload image to Cloudinary")
+      }
+
+      const data = await res.json()
+      return data.secure_url // this is the public URL
+    } catch (error) {
+      toast.error("Failed to upload image. Please try again.")
+      return null
+    }
+  }
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0]
+      setImage(file)
+
+      // Create preview
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+      setShowImageModal(true)
+    }
+  }
+
+  const removeImage = () => {
+    setImage(null)
+    setImagePreview(null)
+    setShowImageModal(false)
+  }
+
+  const openFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click()
+    }
+  }
+
+  const processSearch = async () => {
+    // Don't process if there's no search query and no image
+    if (!searchQuery.trim() && !image) {
+      toast.error("Please enter a search query or upload an image")
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      // Upload image to Cloudinary if it exists
+      const imageUrl = await uploadToCloudinary(image)
+
+      // Build query parameters for navigation
+      let query = []
+
+      // Add recipeText parameter if search query exists
+      if (searchQuery.trim()) {
+        query.push(`recipeText=${searchQuery}`)
+      }
+
+      // Add imageUrl parameter if image was uploaded
+      if (imageUrl) {
+        query.push(`imageUrl=${imageUrl}`)
+      }
+
+      // Add mode parameter
+      query.push(`mode=${mode}`)
+
+      // Join to create query string
+      const queryString = query.join("&")
+
+      // Navigate to dashboard with parameters
+      navigate(`/dashboard/v1?${queryString}`)
+    } catch (error) {
+      console.error("Error processing search:", error)
+      toast.error("Failed to process your request. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const suggestedRecipes = [
@@ -67,22 +165,117 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
         darkMode ? "bg-oxford-blue-500" : "bg-anti-flash-white-500"
       }`}
     >
+      {/* Hidden file input for image upload */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="hidden"
+      />
+
+      {/* Image Upload Modal */}
+      <AnimatePresence>
+        {showImageModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className={`relative max-w-md w-full mx-4 p-6 rounded-2xl shadow-xl ${
+                darkMode ? "bg-oxford-blue-400" : "bg-white"
+              }`}
+            >
+              <button
+                onClick={() => setShowImageModal(false)}
+                className={`absolute top-3 right-3 p-2 rounded-full hover:bg-opacity-20 ${
+                  darkMode
+                    ? "text-snow-500 hover:bg-snow-700"
+                    : "text-gunmetal-500 hover:bg-gunmetal-100"
+                }`}
+              >
+                <X size={20} />
+              </button>
+
+              <h2
+                className={`text-xl font-bold mb-4 ${
+                  darkMode ? "text-snow-500" : "text-gunmetal-500"
+                }`}
+              >
+                Upload Image
+              </h2>
+
+              {imagePreview && (
+                <div className="mb-4 relative rounded-lg overflow-hidden h-48 group">
+                  <img
+                    src={imagePreview}
+                    alt="Recipe preview"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={removeImage}
+                      className="p-2 bg-red-500 rounded-full text-white"
+                    >
+                      <X size={20} />
+                    </motion.button>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex space-x-3 mt-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={removeImage}
+                  className={`flex-1 py-2 rounded-lg ${
+                    darkMode
+                      ? "bg-cardinal-500 text-snow-500 hover:bg-cardinal-400"
+                      : "bg-gray-200 text-gunmetal-500 hover:bg-gray-300"
+                  }`}
+                >
+                  Cancel
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    setShowImageModal(false)
+                    processSearch()
+                  }}
+                  disabled={loading}
+                  className={`flex-1 py-2 rounded-lg font-medium ${
+                    loading
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : darkMode
+                      ? "bg-amber-500 text-oxford-blue-500 hover:bg-amber-400"
+                      : "bg-burnt-sienna-500 text-white hover:bg-burnt-sienna-400"
+                  }`}
+                >
+                  {loading ? (
+                    <div className="flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
+                      Processing...
+                    </div>
+                  ) : (
+                    "Search with Image"
+                  )}
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Mode toggle and theme toggle buttons */}
       <div className="w-full flex justify-end items-center p-4">
-        {/* <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setDarkMode(!darkMode)}
-          className={`p-3 rounded-full shadow-md transition-all duration-300 ${
-            darkMode
-              ? "bg-snow-500 text-oxford-blue-500 hover:bg-snow-400"
-              : "bg-gunmetal-500 text-anti-flash-white-500 hover:bg-gunmetal-400"
-          }`}
-          aria-label="Toggle dark mode"
-        >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-        </motion.button> */}
-
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -211,16 +404,55 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                 type="button"
                 whileHover={{ scale: 1.15, rotate: -10 }}
                 whileTap={{ scale: 0.9 }}
+                onClick={openFileInput}
                 className={`p-2 rounded-full hover:bg-opacity-20 ${
                   darkMode
                     ? "text-snow-700 hover:bg-snow-900"
                     : "text-gunmetal-400 hover:bg-gunmetal-100"
-                }`}
+                } ${image && "text-amber-500"}`}
               >
                 <Camera size={20} />
               </motion.button>
             </div>
           </motion.div>
+
+          {/* Image Preview Badge (when image is uploaded) */}
+          <AnimatePresence>
+            {image && !showImageModal && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="flex justify-center mt-3"
+              >
+                <div
+                  className={`flex items-center space-x-2 py-2 px-4 rounded-full cursor-pointer ${
+                    darkMode
+                      ? "bg-gunmetal-400 text-snow-500 hover:bg-gunmetal-300"
+                      : "bg-white text-gunmetal-500 hover:bg-timberwolf-500"
+                  } shadow-md`}
+                  onClick={() => setShowImageModal(true)}
+                >
+                  <div className="w-6 h-6 rounded-full overflow-hidden">
+                    <img
+                      src={imagePreview || ""}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-sm font-medium">Image uploaded</span>
+                  <X
+                    size={16}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      removeImage()
+                    }}
+                    className="hover:text-red-500"
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </form>
 
         <div className="flex flex-col md:flex-row gap-8">
@@ -282,6 +514,10 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                       ? "bg-gunmetal-400  text-snow-500 shadow-oxford-blue-200/30"
                       : "bg-white text-gunmetal-500 shadow-gunmetal-100/20"
                   }`}
+                  onClick={() => {
+                    setSearchQuery(recipe)
+                    setTimeout(() => processSearch(), 300)
+                  }}
                 >
                   {recipe}
                 </motion.div>
@@ -354,6 +590,10 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                       ? "bg-gunmetal-400  text-snow-500 shadow-oxford-blue-200/30"
                       : "bg-white text-gunmetal-500 shadow-gunmetal-100/20"
                   }`}
+                  onClick={() => {
+                    setSearchQuery(tag)
+                    setTimeout(() => processSearch(), 300)
+                  }}
                 >
                   #{tag}
                 </motion.span>
