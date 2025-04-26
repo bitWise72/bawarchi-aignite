@@ -36,7 +36,7 @@ const handleLogout = async () => {
   }
 }
 
-const imageLogo = "./logo.png"
+const imageLogo = "/logo.png"
 
 const Navbar = ({ darkMode, setDarkMode, name, image }: NavbarProps) => {
   const navigate = useNavigate()

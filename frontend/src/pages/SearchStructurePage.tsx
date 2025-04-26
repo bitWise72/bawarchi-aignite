@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useDarkMode } from "@/contexts/DarkModeContext"
 import { PlusCircle, X, Image as ImageIcon } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { toast } from "sonner"
 
 interface SearchStructurePageProps {
   mode: "normal" | "experimental"
@@ -12,8 +14,9 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
   mode,
   setMode,
 }) => {
-  const { darkMode, setDarkMode } = useDarkMode()
-  const user = JSON.parse(localStorage.getItem("user") || "{}")
+  const { darkMode } = useDarkMode()
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [recipeName, setRecipeName] = useState("")
   const [recipeDescription, setRecipeDescription] = useState("")
   const [steps, setSteps] = useState<string[]>([""])
@@ -55,6 +58,105 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
   const removeImage = () => {
     setImage(null)
     setImagePreview(null)
+  }
+
+  // Upload image to Cloudinary (similar to LandingPage)
+  const uploadToCloudinary = async (file: File | null) => {
+    if (!file) return null
+
+    const formData = new FormData()
+    formData.append("file", file)
+    formData.append("upload_preset", "Bawarchi.AI")
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dtgegh9ya/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+
+      if (!res.ok) {
+        throw new Error("Failed to upload image to Cloudinary")
+      }
+
+      const data = await res.json()
+      return data.secure_url // this is the public URL
+    } catch (error) {
+      toast.error("Failed to upload image. Please try again.")
+      return null
+    }
+  }
+
+  // Check if form is valid
+  const isFormValid = () => {
+    // Form is valid if at least recipe name or description is filled
+    return (
+      recipeName.trim() ||
+      recipeDescription.trim() ||
+      steps.some((step) => step.trim())
+    )
+  }
+
+  // Submit form handler
+  const handleSubmit = async () => {
+    if (!isFormValid()) {
+      toast.error("Please provide at least recipe name, description or steps")
+      return
+    }
+
+    setLoading(true)
+
+    try {
+      // Upload image to Cloudinary if it exists
+      const imageUrl = await uploadToCloudinary(image)
+
+      // Combine all text fields into one long text
+      let combinedText = ""
+
+      if (recipeName) {
+        combinedText += `RecipeName:${recipeName}&&&\n\n`
+      }
+
+      if (recipeDescription) {
+        combinedText += `Description:${recipeDescription}\n\n`
+      }
+
+      if (steps.some((step) => step.trim())) {
+        combinedText += "Steps:\n"
+        steps.forEach((step, index) => {
+          if (step.trim()) {
+            combinedText += `${index + 1}.${step}\n`
+          }
+        })
+      }
+
+      // Build query parameters for navigation
+      let query = []
+
+      if (combinedText) {
+        query.push(`recipeText=${combinedText}`)
+      }
+
+      if (imageUrl) {
+        query.push(`imageUrl=${imageUrl}`)
+      }
+
+      // Add mode parameter to the query
+      query.push(`mode=${mode}`)
+
+      // Join to create query string
+      const queryString = query.join("&")
+
+      // Navigate to dashboard with parameters
+      navigate(`/dashboard/v1?${queryString}`)
+    } catch (error) {
+      console.error("Error processing form:", error)
+      toast.error("Failed to process your request. Please try again.")
+    } finally {
+      setLoading(false)
+    }
   }
 
   const formVariants = {
@@ -156,7 +258,7 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
             onChange={(e) => setRecipeDescription(e.target.value)}
             className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
               darkMode
-                ? "bg-gunmetal-400   border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
                 : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
             }`}
             rows={4}
@@ -178,7 +280,7 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
             <div
               className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors duration-300 ${
                 darkMode
-                  ? "bg-gunmetal-400  hover:border-orange-wheel-500"
+                  ? "bg-gunmetal-400 hover:border-orange-wheel-500"
                   : "border-timberwolf-500 hover:border-burnt-sienna-500"
               }`}
             >
@@ -281,7 +383,7 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
                   placeholder={`Describe Step ${index + 1}`}
                   className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 resize-none transition-colors duration-300 ${
                     darkMode
-                      ? "bg-gunmetal-400   border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                      ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
                       : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
                   }`}
                   rows={2}
@@ -322,13 +424,24 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
               boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
             }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleSubmit}
+            disabled={loading || !isFormValid()}
             className={`px-8 py-3 rounded-lg font-bold shadow-md transition-colors duration-300 ${
-              darkMode
+              loading || !isFormValid()
+                ? "bg-gray-400 cursor-not-allowed text-gray-200"
+                : darkMode
                 ? "bg-cardinal-500 text-snow-500 hover:bg-cardinal-400"
                 : "bg-amber-500 text-gunmetal-500 hover:bg-amber-600"
             }`}
           >
-            Create Recipe
+            {loading ? (
+              <>
+                <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2 inline-block"></div>
+                Processing...
+              </>
+            ) : (
+              "Create Recipe"
+            )}
           </motion.button>
         </motion.div>
       </motion.div>
