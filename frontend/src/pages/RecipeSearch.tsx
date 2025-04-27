@@ -76,9 +76,9 @@ const RecipeSearch: React.FC = () => {
                 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => setMode("normal")}
-                className={`cursor-pointer rounded-2xl p-6 sm:p-8 transition-all duration-300 border-l-4 ${
+                className={`cursor-pointer rounded-2xl p-6 sm:p-8 transition-all duration-300 border-r-4 ${
                   darkMode
-                    ? "bg-oxford-blue-400 text-snow-500 border-orange-wheel-500 shadow-lg"
+                    ? "bg-gunmetal-300 text-snow-500 border-orange-wheel-500 shadow-lg"
                     : "bg-anti-flash-white-600 text-gunmetal-500 border-burnt-sienna-500 shadow-md"
                 }`}
               >
@@ -121,7 +121,7 @@ const RecipeSearch: React.FC = () => {
                 onClick={() => setMode("experimental")}
                 className={`cursor-pointer rounded-2xl p-6 sm:p-8 transition-all duration-300 border-r-4 ${
                   darkMode
-                    ? "bg-oxford-blue-400 text-snow-500 border-cardinal-500 shadow-lg"
+                    ? "bg-gunmetal-300 text-snow-500 border-cardinal-500 shadow-lg"
                     : "bg-anti-flash-white-600 text-gunmetal-500 border-amber-500 shadow-md"
                 }`}
               >

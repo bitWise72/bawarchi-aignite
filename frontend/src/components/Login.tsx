@@ -2,14 +2,14 @@ import { useAuth } from "../contexts/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import GoogleAuth from "./GoogleAuth"
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
 const Login = () => {
   const { user } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user) navigate("/home")
+    if (user) navigate("/choice")
   }, [user, navigate])
 
   return (
@@ -54,11 +54,17 @@ const Login = () => {
           className="text-sm text-gray-500 text-center mt-6"
         >
           By logging in, you agree to our{" "}
-          <a href="/terms" className="text-violet-600 hover:underline font-medium">
+          <a
+            href="/terms"
+            className="text-violet-600 hover:underline font-medium"
+          >
             Terms of Service
           </a>{" "}
           and{" "}
-          <a href="/privacy" className="text-violet-600 hover:underline font-medium">
+          <a
+            href="/privacy"
+            className="text-violet-600 hover:underline font-medium"
+          >
             Privacy Policy
           </a>
           .
