@@ -175,25 +175,26 @@ const RecipeSearch: React.FC = () => {
 
         {/* Conditionally render pages */}
         {mode === "normal" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full"
-          >
-            <SearchStructurePage mode={mode} setMode={setMode} />
-          </motion.div>
-        )}
-        {mode === "experimental" && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full"
-          >
-            <SearchPage mode={mode} setMode={setMode} />
-          </motion.div>
-        )}
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="w-full"
+  >
+    <SearchStructurePage mode={mode} setMode={setMode} darkMode={darkMode} />
+  </motion.div>
+)}
+{mode === "experimental" && (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    className="w-full"
+  >
+    <SearchPage mode={mode} setMode={setMode} darkMode={darkMode} />
+  </motion.div>
+)}
+
       </div>
     </>
   )

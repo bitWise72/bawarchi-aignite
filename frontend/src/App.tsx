@@ -48,7 +48,7 @@ const App = () => (
                 path="/search-structure"
                 element={<SearchStructurePage mode={"normal"} setMode={function (mode: "normal" | "experimental" | null): void {
                   throw new Error("Function not implemented.")
-                } } />}
+                } } darkMode={false} />}
               />
               <Route path="/recipe-search" element={<RecipeSearch />} />
               <Route
@@ -56,7 +56,7 @@ const App = () => (
                 element={
                   <SearchPage mode={"normal"} setMode={function (mode: "normal" | "experimental" | null): void {
                     throw new Error("Function not implemented.")
-                  } } /> // Uncomment this line when SearchPage is implemented
+                  } } darkMode={false} /> // Uncomment this line when SearchPage is implemented
                 }
               />
               <Route
