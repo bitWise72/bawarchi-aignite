@@ -4,6 +4,7 @@ import { useDarkMode } from "@/contexts/DarkModeContext"
 import { PlusCircle, X, Image as ImageIcon, Mic } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import ISO6391 from "iso-639-1"
 
 interface SearchStructurePageProps {
   mode: "normal" | "experimental"
@@ -24,6 +25,8 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
   const [image, setImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [isSpeechActive, setIsSpeechActive] = useState(false)
+  const [supportLanguage, setSupportLanguage] = useState("")
+
 
   const handleSpeechToText = () => {
     if (
@@ -181,7 +184,7 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
       }
 
       // Build query parameters for navigation
-      let query = []
+      const query = []
 
       if (combinedText) {
         query.push(`recipeText=${combinedText}`)
@@ -270,26 +273,57 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
           Create a Recipe
         </motion.h1>
 
-        {/* Recipe Name */}
         <motion.div variants={itemVariants} className="mb-6">
-          <label
-            className={`block text-lg font-semibold mb-2 ${
-              darkMode ? "text-asparagus-500" : "text-gunmetal-600"
-            }`}
-          >
-            Recipe Name
-          </label>
-          <input
-            type="text"
-            value={recipeName}
-            onChange={(e) => setRecipeName(e.target.value)}
-            className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
-              darkMode
-                ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
-                : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
-            }`}
-            placeholder="Enter recipe name"
-          />
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Recipe Name */}
+            <div className="w-full md:w-1/2">
+              <label
+                className={`block text-lg font-semibold mb-2 ${
+                  darkMode ? "text-asparagus-500" : "text-gunmetal-600"
+                }`}
+              >
+                Recipe Name
+              </label>
+              <input
+                type="text"
+                value={recipeName}
+                onChange={(e) => setRecipeName(e.target.value)}
+                className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
+                  darkMode
+                    ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                    : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
+                }`}
+                placeholder="Enter recipe name"
+              />
+            </div>
+
+            {/* Secondary Support Language */}
+            <div className="w-full md:w-1/2">
+              <label
+                className={`block text-lg font-semibold mb-2 ${
+                  darkMode ? "text-asparagus-500" : "text-gunmetal-600"
+                }`}
+              >
+                Secondary Support Language (optional)
+              </label>
+              <select
+                value={supportLanguage}
+                onChange={(e) => setSupportLanguage(e.target.value)}
+                className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
+                  darkMode
+                    ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                    : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
+                }`}
+              >
+                <option value="">None</option>
+                {ISO6391.getAllCodes().map((code) => (
+                  <option key={code} value={code}>
+                    {ISO6391.getName(code)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </motion.div>
 
         {/* Recipe Description */}
