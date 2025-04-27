@@ -110,7 +110,7 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
         {/* Total Nutrition Panel */}
         {!loading && !error && totals && (
           <section
-            className={`p-4 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm ${dark ? 'border border-yellow-600 text-yellow-100' : 'border border-orange-300 text-orange-800'} transition-transform duration-300 hover:scale-[1.02]`}
+            className={`p-4 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm ${dark ? 'border border-yellow-600 text-yellow-100' : 'border border-orange-300 text-orange-800'} transition-transform duration-300 hover:scale-[1.02] mb-5`}
           >
             <h3 className={`text-lg font-semibold uppercase mb-3 ${dark ? 'text-yellow-200' : 'text-orange-700'}`}>
               Total Nutrition
