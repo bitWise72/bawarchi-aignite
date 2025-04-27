@@ -46,13 +46,17 @@ const App = () => (
               <Route path="/choice" element={<ChoicePage />} />
               <Route
                 path="/search-structure"
-                element={<SearchStructurePage />}
+                element={<SearchStructurePage mode={"normal"} setMode={function (mode: "normal" | "experimental" | null): void {
+                  throw new Error("Function not implemented.")
+                } } />}
               />
               <Route path="/recipe-search" element={<RecipeSearch />} />
               <Route
                 path="/search"
                 element={
-                  <SearchPage /> // Uncomment this line when SearchPage is implemented
+                  <SearchPage mode={"normal"} setMode={function (mode: "normal" | "experimental" | null): void {
+                    throw new Error("Function not implemented.")
+                  } } /> // Uncomment this line when SearchPage is implemented
                 }
               />
               <Route
