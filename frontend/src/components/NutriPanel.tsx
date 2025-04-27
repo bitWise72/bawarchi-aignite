@@ -115,12 +115,12 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
             <h3 className={`text-lg font-semibold uppercase mb-3 ${dark ? 'text-yellow-200' : 'text-orange-700'}`}>
               Total Nutrition
             </h3>
-            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+            <dl className="grid grid-cols-2 gap-x-4  gap-y-3 text-sm">
               {Object.entries(totals).map(([nutrient, value]) => {
                 return (
                   <React.Fragment key={nutrient}>
                     <dt className="font-medium capitalize">{nutrient.replace(/_/g, ' ')}</dt>
-                    <dd>{value.toFixed(2)} {unitMap[nutrient] || ''}</dd>
+                    <dd className='pb-5'>{value.toFixed(2)} {unitMap[nutrient] || ''}</dd>
                   </React.Fragment>
                 );
               })}
@@ -140,7 +140,7 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
         )}
 
         {!loading && !error && data && (
-          <div className="space-y-6 animate-fade-in">
+          <div className="space-y-10 mb-5 animate-fade-in">
             {Object.entries(data).map(([ingredient, info]) => {
               const hasMeaningfulData = Object.entries(info).some(([nutrient, value]) => {
                 const lowerNutrient = nutrient.trim().toLowerCase();
@@ -168,7 +168,7 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
               return (
                 <section
                   key={ingredient}
-                  className={`p-4 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm ${dark ? 'border border-yellow-600 text-yellow-100' : 'border border-orange-300 text-orange-800'} transition-transform duration-300 hover:scale-[1.02]`}
+                  className={`p-4  pb-10 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm ${dark ? 'border border-yellow-600 text-yellow-100' : 'border border-orange-300 text-orange-800'} transition-transform duration-300 hover:scale-[1.02]`}
                 >
                   <h3 className={`text-lg font-semibold uppercase mb-3 ${dark ? 'text-yellow-200' : 'text-orange-700'}`}>
                     {ingredient}
