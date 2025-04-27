@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"
 interface SearchPageProps {
   mode: "normal" | "experimental"
   setMode: (mode: "normal" | "experimental" | null) => void
+  darkMode: boolean; 
 }
 
 function SearchPage({ mode, setMode }: SearchPageProps) {

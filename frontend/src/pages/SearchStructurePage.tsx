@@ -8,6 +8,7 @@ import { toast } from "sonner"
 interface SearchStructurePageProps {
   mode: "normal" | "experimental"
   setMode: (mode: "normal" | "experimental" | null) => void
+  darkMode: boolean; 
 }
 
 const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
