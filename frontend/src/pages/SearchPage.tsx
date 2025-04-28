@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useDarkMode } from "@/contexts/DarkModeContext"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
+import ISO6391 from "iso-639-1"
 
 interface SearchPageProps {
   mode: "normal" | "experimental"
@@ -20,6 +21,9 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [supportLanguage, setSupportLanguage] = useState("")
+
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
 
@@ -119,6 +123,11 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
 
       // Add mode parameter
       query.push(`mode=${mode}`)
+
+      // Add language parameter if selected
+      if (supportLanguage) {
+        query.push(`language=${supportLanguage}`)
+      }
 
       // Join to create query string
       const queryString = query.join("&")
@@ -367,11 +376,31 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
               onChange={handleSearchChange}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
-              className={`flex-grow pl-4 pr-2 h-full bg-transparent outline-none text-lg ${
+              className={`flex-grow pl-4 pr-2 h-full bg-transparent outline-none text-lg w-[90%] ${
                 darkMode ? "text-snow-500" : "text-gunmetal-500"
               }`}
               placeholder="Search for recipes, ingredients, or cuisines"
             />
+
+            {/* Support Language dropdown (small) */}
+            <select
+              value={supportLanguage}
+              onChange={(e) => setSupportLanguage(e.target.value)}
+              className={`w-[10%] min-w-[80px] mr-2 text-sm p-1 rounded-md focus:outline-none focus:ring-1 transition-colors duration-300 ${
+                darkMode
+                  ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                  : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
+              }`}
+              title="Secondary Support Language"
+            >
+              <option value="">Lang</option>
+              {ISO6391.getAllCodes().map((code) => (
+                <option key={code} value={code}>
+                  {ISO6391.getName(code)}
+                </option>
+              ))}
+            </select>
+
             <AnimatePresence>
               {searchQuery && (
                 <motion.button
