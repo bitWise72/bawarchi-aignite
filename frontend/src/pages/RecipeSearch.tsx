@@ -87,7 +87,7 @@ const RecipeSearch: React.FC = () => {
                     darkMode ? "text-orange-wheel-500" : "text-burnt-sienna-500"
                   }`}
                 >
-                  Normal
+                  Recommended
                 </h2>
                 <p
                   className={`mb-3 sm:mb-4 text-sm sm:text-base ${
@@ -130,7 +130,7 @@ const RecipeSearch: React.FC = () => {
                     darkMode ? "text-cardinal-500" : "text-amber-500"
                   }`}
                 >
-                  Experimental
+                  One Shot (Experimental)
                 </h2>
                 <p
                   className={`mb-3 sm:mb-4 text-sm sm:text-base ${

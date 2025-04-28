@@ -9,7 +9,7 @@ import ISO6391 from "iso-639-1"
 interface SearchStructurePageProps {
   mode: "normal" | "experimental"
   setMode: (mode: "normal" | "experimental" | null) => void
-  darkMode: boolean; 
+  darkMode: boolean
 }
 
 const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
@@ -26,7 +26,6 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [isSpeechActive, setIsSpeechActive] = useState(false)
   const [supportLanguage, setSupportLanguage] = useState("")
-
 
   const handleSpeechToText = () => {
     if (
@@ -566,7 +565,7 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
                 Processing...
               </>
             ) : (
-              "Create Recipe"
+              "See the magic✨"
             )}
           </motion.button>
         </motion.div>
