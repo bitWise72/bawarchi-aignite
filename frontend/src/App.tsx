@@ -23,6 +23,7 @@ import SearchPage from "./pages/SearchPage"
 import SearchStructurePage from "./pages/SearchStructurePage"
 import RecipeSearch from "./pages/RecipeSearch"
 import Dashboard from "./pages/Dashboard"
+import ProfileDashboard from "./pages/ProfilePage"
 
 const queryClient = new QueryClient()
 
@@ -86,7 +87,7 @@ const App = () => (
               />
               <Route path="/home" element={<Index />} />
               <Route path="/review-post" element={<ReviewPost />} />
-              <Route path="/community" element={<Community />} />
+              <Route path="/profile" element={<ProfileDashboard/>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>

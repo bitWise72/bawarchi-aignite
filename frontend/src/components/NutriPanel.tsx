@@ -5,8 +5,12 @@ export interface NutritionResponse {
   [ingredient: string]: Record<string, string | null>;
 }
 
+interface Step {
+  measurements: [string, string][];
+}
+
 interface NutritionProfileProps {
-  ingredientsString: string;
+  ingredientsString: string | string[];
   isOpen: boolean;
   onClose: () => void;
   dark?: boolean;
@@ -33,6 +37,7 @@ const unitMap: Record<string, string> = {
   zinc: 'mg',
 };
 
+
 export const NutritionProfile: React.FC<NutritionProfileProps> = ({
   ingredientsString,
   isOpen,
@@ -46,6 +51,40 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [totals, setTotals] = useState<Record<string, number>>({});
 
+  function convertToJSON(ingredientsString) {
+    let steps;
+    try {
+      steps = JSON.parse(ingredientsString);
+    } catch (error) {
+      return "Error: Invalid input data";
+    }
+  
+    let ingredientsArray = [];
+  
+    Object.keys(steps).forEach(step => {
+      const measurements = steps[step]?.measurements;
+      if (measurements) {
+        measurements.forEach(item => {
+          const [name, measurement] = item;
+          ingredientsArray.push(`("${name}", "${measurement}")`);
+        });
+      }
+    });
+  
+    if (ingredientsArray.length === 0) {
+      return JSON.stringify({"ingredients_string": "No ingredients found"});
+    }
+  
+    const ingredientsStringFormatted = `ingredients: ${ingredientsArray.join(', ')}`;
+  
+    // Constructing the desired JSON format
+    const result = {
+      "ingredients_string": ingredientsStringFormatted
+    };
+  
+    return JSON.stringify(result);
+  }
+
   useEffect(() => {
     if (!isOpen || cachedData) return;
 
@@ -53,14 +92,25 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
       setLoading(true);
       setError(null);
       try {
-        const payload = { ingredients_string: ingredientsString };
-        const resp = await axios.post<NutritionResponse>(
-          'https://gem-api-adv.vercel.app/get_nutri',
-          payload,
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-        setData(resp.data);
-        saveData(ingredientsString, resp.data); // cache it
+        console.log(ingredientsString);
+
+    const payload = convertToJSON(ingredientsString);
+    console.log(payload);
+
+try {
+  const resp = await axios.post<NutritionResponse>(
+    'https://gem-api-adv.vercel.app/get_nutri',
+    payload,
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+  setData(resp.data);
+  // const cacheKey = ingredients.join('_');
+  // saveData(cacheKey, resp.data);
+} catch (error) {
+  console.error('Error fetching nutrition data:', error);
+}
+
+
       } catch (err: any) {
         console.error(err);
         setError('Failed to load nutrition data.');
