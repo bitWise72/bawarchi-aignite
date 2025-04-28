@@ -113,14 +113,25 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
       let query = []
 
       // Use currentQuery here
-      if (currentQuery.trim()) {
-        // IMPORTANT: Encode the query parameter value
-        query.push(`recipeText=${encodeURIComponent(currentQuery)}`)
+      let finalQueryText = currentQuery.trim()
+
+      // Append support language information if selected
+      if (supportLanguage && finalQueryText) {
+        const languageName = ISO6391.getName(supportLanguage) // Get full language name
+        if (languageName) {
+          // Add the requested text and language name
+          finalQueryText += ` give ingredients in ${languageName} also for user's simplicity`
+        }
+      }
+
+      if (finalQueryText) {
+        // IMPORTANT: Encode the potentially modified query parameter value
+        query.push(`recipeText=${(finalQueryText)}`)
       }
 
       if (imageUrl) {
         // Also good practice to encode the image URL if it might contain special characters
-        query.push(`imageUrl=${encodeURIComponent(imageUrl)}`)
+        query.push(`imageUrl=${(imageUrl)}`)
       }
       query.push(`mode=${mode}`)
       if (supportLanguage) {

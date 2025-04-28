@@ -184,13 +184,25 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
 
       // Build query parameters for navigation
       const query = []
+      let finalCombinedText = combinedText // Start with the base combined text
 
-      if (combinedText) {
-        query.push(`recipeText=${combinedText}`)
+      // Append support language information if selected and there is text
+      if (supportLanguage && finalCombinedText) {
+        const languageName = ISO6391.getName(supportLanguage) // Get full language name [cite: 154, 156]
+        if (languageName) {
+          // Add the requested text and language name
+          finalCombinedText += ` give ingredients in ${languageName} also for user's simplicity`
+        }
+      }
+
+      if (finalCombinedText) {
+        // IMPORTANT: Encode the potentially modified query parameter value
+        query.push(`recipeText=${encodeURIComponent(finalCombinedText)}`)
       }
 
       if (imageUrl) {
-        query.push(`imageUrl=${imageUrl}`)
+        // Also good practice to encode the image URL
+        query.push(`imageUrl=${encodeURIComponent(imageUrl)}`)
       }
 
       // Add mode parameter to the query
