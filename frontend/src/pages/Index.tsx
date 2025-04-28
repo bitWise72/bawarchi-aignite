@@ -191,8 +191,16 @@ const Index = () => {
     setNutritionDrawerOpen(true);
   };
 
+  // const handleSaveNutritionData = (key: string, data: NutritionResponse) => {
+  //   setNutritionDataCache(prev => ({ ...prev, [key]: data }));
+  // };
   const handleSaveNutritionData = (key: string, data: NutritionResponse) => {
-    setNutritionDataCache(prev => ({ ...prev, [key]: data }));
+    console.log('Saving data for key:', key); // Debugging
+    setNutritionDataCache(prev => {
+      const updatedCache = { ...prev, [key]: data };
+      console.log('Updated cache:', updatedCache); // Debugging
+      return updatedCache;
+    });
   };
   
   const handleNextStep = () => {

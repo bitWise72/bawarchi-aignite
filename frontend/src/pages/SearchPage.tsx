@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useDarkMode } from "@/contexts/DarkModeContext"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom"
+import ISO6391 from "iso-639-1"
 
 interface SearchPageProps {
   mode: "normal" | "experimental"
@@ -20,6 +21,8 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [showImageModal, setShowImageModal] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [supportLanguage, setSupportLanguage] = useState("")
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
 
@@ -27,7 +30,7 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
     setMounted(true)
   }, [])
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleSearchChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setSearchQuery(e.target.value)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -91,9 +94,14 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
     }
   }
 
-  const processSearch = async () => {
-    // Don't process if there's no search query and no image
-    if (!searchQuery.trim() && !image) {
+  // Add an optional parameter, e.g., 'queryOverride'
+  const processSearch = async (queryOverride?: string) => {
+    // Determine the query to use: override first, then state
+    const currentQuery =
+      queryOverride !== undefined ? queryOverride : searchQuery
+
+    // Use 'currentQuery' instead of 'searchQuery' in the checks and query building
+    if (!currentQuery.trim() && !image) {
       toast.error("Please enter a search query or upload an image")
       return
     }
@@ -101,29 +109,36 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
     setLoading(true)
 
     try {
-      // Upload image to Cloudinary if it exists
       const imageUrl = await uploadToCloudinary(image)
-
-      // Build query parameters for navigation
       let query = []
 
-      // Add recipeText parameter if search query exists
-      if (searchQuery.trim()) {
-        query.push(`recipeText=${searchQuery}`)
+      // Use currentQuery here
+      let finalQueryText = currentQuery.trim()
+
+      // Append support language information if selected
+      if (supportLanguage && finalQueryText) {
+        const languageName = ISO6391.getName(supportLanguage) // Get full language name
+        if (languageName) {
+          // Add the requested text and language name
+          finalQueryText += ` give ingredients in ${languageName} also for user's simplicity`
+        }
       }
 
-      // Add imageUrl parameter if image was uploaded
+      if (finalQueryText) {
+        // IMPORTANT: Encode the potentially modified query parameter value
+        query.push(`recipeText=${(finalQueryText)}`)
+      }
+
       if (imageUrl) {
-        query.push(`imageUrl=${imageUrl}`)
+        // Also good practice to encode the image URL if it might contain special characters
+        query.push(`imageUrl=${(imageUrl)}`)
+      }
+      query.push(`mode=${mode}`)
+      if (supportLanguage) {
+        query.push(`language=${supportLanguage}`)
       }
 
-      // Add mode parameter
-      query.push(`mode=${mode}`)
-
-      // Join to create query string
       const queryString = query.join("&")
-
-      // Navigate to dashboard with parameters
       navigate(`/dashboard/v1?${queryString}`)
     } catch (error) {
       console.error("Error processing search:", error)
@@ -340,7 +355,7 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                 : "0 8px 20px rgba(215, 122, 97, 0.15)",
             }}
             transition={{ duration: 0.4 }}
-            className={`flex items-center h-16 px-5 rounded-full border-2 shadow-lg focus-within:shadow-xl transition-all duration-300 ${
+            className={`flex flex-col rounded-xl border-2 shadow-lg focus-within:shadow-xl transition-all duration-300 ${
               isSearchFocused
                 ? darkMode
                   ? "border-amber-500 shadow-amber-500/30"
@@ -348,72 +363,111 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                 : darkMode
                 ? "border-oxford-blue-400"
                 : "border-timberwolf-400"
-            } ${darkMode ? "bg-gunmetal-400 " : "bg-anti-flash-white-500"}`}
+            } ${darkMode ? "bg-gunmetal-400" : "bg-anti-flash-white-500"}`}
           >
-            <motion.div
-              whileHover={{ rotate: [0, -10, 10, -10, 0] }}
-              transition={{ duration: 0.5 }}
-            >
-              <Search
-                className={
-                  darkMode ? "text-amber-500" : "text-burnt-sienna-500"
-                }
-                size={24}
+            {/* Input area with scrolling capability */}
+            <div className="px-4 pt-3">
+              <textarea
+                value={searchQuery}
+                onChange={handleSearchChange}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
+                rows={1}
+                className={`w-full bg-transparent outline-none  text-sm md:text-lg  resize-none overflow-y-auto max-h-32 ${
+                  darkMode ? "text-snow-500" : "text-gunmetal-500"
+                }`}
+                placeholder="Search for recipes, ingredients, or cuisines"
+                style={{
+                  minHeight: "40px",
+                  height: "auto",
+                }}
+                onInput={(e) => {
+                  // Auto-resize the textarea
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = "auto"
+                  target.style.height =
+                    Math.min(target.scrollHeight, 128) + "px"
+                }}
               />
-            </motion.div>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={handleSearchChange}
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
-              className={`flex-grow pl-4 pr-2 h-full bg-transparent outline-none text-lg ${
-                darkMode ? "text-snow-500" : "text-gunmetal-500"
-              }`}
-              placeholder="Search for recipes, ingredients, or cuisines"
-            />
-            <AnimatePresence>
               {searchQuery && (
-                <motion.button
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
+                <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className={`text-2xl hover:opacity-80 ${
+                  className={`absolute top-3 right-4 text-xl hover:opacity-80 ${
                     darkMode ? "text-snow-700" : "text-gunmetal-400"
                   }`}
                 >
                   ×
-                </motion.button>
+                </button>
               )}
-            </AnimatePresence>
-            <div className="flex items-center space-x-4 ml-3">
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.15, rotate: 10 }}
-                whileTap={{ scale: 0.9 }}
-                className={`p-2 rounded-full hover:bg-opacity-20 ${
-                  darkMode
-                    ? "text-snow-700 hover:bg-snow-900"
-                    : "text-gunmetal-400 hover:bg-gunmetal-100"
-                }`}
-              >
-                <Mic size={20} />
-              </motion.button>
-              <motion.button
-                type="button"
-                whileHover={{ scale: 1.15, rotate: -10 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={openFileInput}
-                className={`p-2 rounded-full hover:bg-opacity-20 ${
-                  darkMode
-                    ? "text-snow-700 hover:bg-snow-900"
-                    : "text-gunmetal-400 hover:bg-gunmetal-100"
-                } ${image && "text-amber-500"}`}
-              >
-                <Camera size={20} />
-              </motion.button>
+            </div>
+
+            {/* Bottom toolbar with icons and language selector */}
+            <div className="flex justify-between items-center px-4 py-2  ">
+              {/* Left side - Image upload and language selection */}
+              <div className="flex items-center space-x-3">
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.15, rotate: -10 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={openFileInput}
+                  className={`p-1.5 rounded-full hover:bg-opacity-20 ${
+                    darkMode
+                      ? "text-snow-700 hover:bg-snow-900"
+                      : "text-gunmetal-400 hover:bg-gunmetal-100"
+                  } ${image && "text-amber-500"}`}
+                  title="Upload image"
+                >
+                  <Camera size={18} />
+                </motion.button>
+
+                <select
+                  value={supportLanguage}
+                  onChange={(e) => setSupportLanguage(e.target.value)}
+                  className={`text-sm p-1 rounded-md focus:outline-none focus:ring-1 transition-colors duration-300 ${
+                    darkMode
+                      ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                      : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
+                  }`}
+                  title="Secondary Support Language"
+                >
+                  <option value="">Lang</option>
+                  {ISO6391.getAllCodes().map((code) => (
+                    <option key={code} value={code}>
+                      {ISO6391.getName(code)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Right side - Voice and search */}
+              <div className="flex items-center space-x-3">
+                <motion.button
+                  type="button"
+                  whileHover={{ scale: 1.15, rotate: 10 }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`p-1.5 rounded-full hover:bg-opacity-20 ${
+                    darkMode
+                      ? "text-snow-700 hover:bg-snow-900"
+                      : "text-gunmetal-400 hover:bg-gunmetal-100"
+                  }`}
+                  title="Voice search"
+                >
+                  <Mic size={18} />
+                </motion.button>
+
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`p-1.5 rounded-full ${
+                    darkMode ? "text-amber-500" : "text-burnt-sienna-500"
+                  }`}
+                  title="Search"
+                >
+                  <Search size={20} />
+                </motion.button>
+              </div>
             </div>
           </motion.div>
 
@@ -516,8 +570,8 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                       : "bg-white text-gunmetal-500 shadow-gunmetal-100/20"
                   }`}
                   onClick={() => {
-                    setSearchQuery(recipe)
-                    setTimeout(() => processSearch(), 300)
+                    setSearchQuery(recipe) // Still useful to update the input field visually
+                    processSearch(recipe) // Trigger search with the selected recipe
                   }}
                 >
                   {recipe}
@@ -592,8 +646,8 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                       : "bg-white text-gunmetal-500 shadow-gunmetal-100/20"
                   }`}
                   onClick={() => {
-                    setSearchQuery(tag)
-                    setTimeout(() => processSearch(), 300)
+                    // setSearchQuery(tag)
+                    // setTimeout(() => processSearch(), 300)
                   }}
                 >
                   #{tag}

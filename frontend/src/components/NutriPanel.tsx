@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react"
+import axios from "axios"
 
 export interface NutritionResponse {
   [ingredient: string]: Record<string, string | null>;
@@ -44,17 +44,18 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
   onClose,
   dark = false,
   cachedData,
-  saveData
+  saveData,
 }) => {
   const [data, setData] = useState<NutritionResponse | null>(cachedData || null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [totals, setTotals] = useState<Record<string, number>>({});
 
-  function convertToJSON(ingredientsString) {
-    let steps;
+  function convertToJSON(ingredientsString: string | string[]) {
+    let steps: { [x: string]: { measurements: any; }; };
     try {
-      steps = JSON.parse(ingredientsString);
+      const stringToParse = Array.isArray(ingredientsString) ? ingredientsString.join(',') : ingredientsString;
+      steps = JSON.parse(stringToParse);
     } catch (error) {
       return "Error: Invalid input data";
     }
@@ -64,7 +65,7 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
     Object.keys(steps).forEach(step => {
       const measurements = steps[step]?.measurements;
       if (measurements) {
-        measurements.forEach(item => {
+        measurements.forEach((item: [any, any]) => {
           const [name, measurement] = item;
           ingredientsArray.push(`("${name}", "${measurement}")`);
         });
@@ -82,184 +83,245 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
       "ingredients_string": ingredientsStringFormatted
     };
   
-    return JSON.stringify(result);
+    return result;
   }
 
   useEffect(() => {
-    if (!isOpen || cachedData) return;
+    if (!isOpen || cachedData) return
 
     const fetchNutrition = async () => {
-      setLoading(true);
-      setError(null);
+      setLoading(true)
+      setError(null)
       try {
-        console.log(ingredientsString);
+        // console.log(ingredientsString);
 
     const payload = convertToJSON(ingredientsString);
-    console.log(payload);
+    // console.log(payload);
 
 try {
-  const resp = await axios.post<NutritionResponse>(
-    'https://gem-api-adv.vercel.app/get_nutri',
-    payload,
-    { headers: { 'Content-Type': 'application/json' } }
-  );
-  setData(resp.data);
-  // const cacheKey = ingredients.join('_');
-  // saveData(cacheKey, resp.data);
+  // const resp = await axios.post<NutritionResponse>(
+  //   'https://gem-api-adv.vercel.app/get_nutri',
+  //   payload,
+  //   { headers: { 'Content-Type': 'application/json' } }
+  // );
+  const resp = await fetch('https://gem-api-adv.vercel.app/get_nutri', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await resp.json();
+  setData(data);
+  const cacheKey = 'nutrition_data_';
+  saveData(cacheKey, data);
 } catch (error) {
   console.error('Error fetching nutrition data:', error);
 }
 
 
       } catch (err: any) {
-        console.error(err);
-        setError('Failed to load nutrition data.');
+        console.error(err)
+        setError("Failed to load nutrition data.")
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchNutrition();
-  }, [ingredientsString, isOpen, cachedData, saveData]);
+    fetchNutrition()
+  }, [ingredientsString])
 
   useEffect(() => {
-    if (!data) return;
+    if (!data) return
 
-    const newTotals: Record<string, number> = {};
+    const newTotals: Record<string, number> = {}
 
     Object.values(data).forEach((info) => {
       Object.entries(info).forEach(([nutrient, value]) => {
-        if (nutrient.trim().toLowerCase() === 'error') return;
-        const numericValue = parseFloat(value || '0');
-        if (isNaN(numericValue) || numericValue === 0) return;
-        newTotals[nutrient] = (newTotals[nutrient] || 0) + numericValue;
-      });
-    });
+        if (nutrient.trim().toLowerCase() === "error") return
+        const numericValue = parseFloat(value || "0")
+        if (isNaN(numericValue) || numericValue === 0) return
+        newTotals[nutrient] = (newTotals[nutrient] || 0) + numericValue
+      })
+    })
 
-    setTotals(newTotals);
-  }, [data]);
+    setTotals(newTotals)
+  }, [data])
 
   return (
     <div
-      className={`fixed top-0 right-0 h-full w-full sm:w-[420px] bg-gradient-to-br ${dark ? 'from-yellow-900 via-yellow-800 to-yellow-700' : 'from-orange-100 via-orange-200 to-orange-300'} shadow-xl z-50 transform transition-transform duration-500 ease-in-out ${isOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'}`}
+      className={`fixed top-0 right-0 h-full w-full sm:w-[420px] shadow-xl z-50 transform transition-transform duration-500 ease-in-out font-sans
+      ${
+        dark
+          ? "bg-oxford-blue-500 text-snow-DEFAULT"
+          : "bg-anti-flash-white-500 text-gunmetal-DEFAULT"
+      }
+ ${isOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
     >
       {/* Header */}
       <div
-        className={`flex justify-between items-center px-6 py-4 border-b ${dark ? 'border-yellow-600' : 'border-orange-500'}`}
+        className={`flex justify-between items-center px-6 py-4 border-b
+ ${dark ? "border-oxford-blue-400" : "border-anti-flash-white-400"}`}
       >
-        <h2 className={`text-xl font-bold ${dark ? 'text-yellow-100' : 'text-orange-800'} tracking-wide drop-shadow-md`}>
+        <h2
+          className={`text-xl font-bold tracking-wide drop-shadow-md
+ ${dark ? "text-snow-400" : "text-gunmetal-700"}`}
+        >
           🥗 Nutrition Profile
         </h2>
-        <button onClick={onClose} className="text-xl transition-all duration-300 transform hover:scale-125 hover:text-red-400">
+
+        <button
+          onClick={onClose}
+          className={`text-xl transition-all duration-300 transform hover:scale-125
+ ${
+   dark
+     ? "text-snow-DEFAULT hover:text-cardinal-DEFAULT"
+     : "text-gunmetal-DEFAULT hover:text-cardinal-DEFAULT"
+ }`}
+        >
           &times;
         </button>
       </div>
-
       {/* Scrollable Content */}
-      <div className="p-6 h-full overflow-y-auto">
-        {/* Total Nutrition Panel */}
+      <div className="p-6 h-full overflow-y-auto space-y-8">
+        {/* Added space-y-8 */} {/* Total Nutrition Panel */}
         {!loading && !error && totals && (
           <section
-            className={`p-4 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm ${dark ? 'border border-yellow-600 text-yellow-100' : 'border border-orange-300 text-orange-800'} transition-transform duration-300 hover:scale-[1.02] mb-5`}
+            className={`p-4 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm
+ ${
+   dark
+     ? "border border-oxford-blue-400 text-snow-DEFAULT"
+     : "border border-anti-flash-white-400 text-gunmetal-DEFAULT"
+ }
+ transition-transform duration-300 hover:scale-[1.02]`}
           >
-            <h3 className={`text-lg font-semibold uppercase mb-3 ${dark ? 'text-yellow-200' : 'text-orange-700'}`}>
+            <h3
+              className={`text-lg font-semibold uppercase mb-3
+ ${dark ? "text-snow-500" : "text-gunmetal-600"}`}
+            >
               Total Nutrition
             </h3>
-            <dl className="grid grid-cols-2 gap-x-4  gap-y-3 text-sm">
+
+            <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
               {Object.entries(totals).map(([nutrient, value]) => {
                 return (
                   <React.Fragment key={nutrient}>
-                    <dt className="font-medium capitalize">{nutrient.replace(/_/g, ' ')}</dt>
-                    <dd className='pb-5'>{value.toFixed(2)} {unitMap[nutrient] || ''}</dd>
+                    <dt className="font-medium capitalize">
+                      {nutrient.replace(/_/g, " ")}
+                    </dt>
+                    <dd>
+                      {value.toFixed(2)} {unitMap[nutrient] || ""}
+                    </dd>
+                    {/* Removed pb-5 */}
                   </React.Fragment>
-                );
+                )
               })}
             </dl>
           </section>
         )}
-
         {/* Content */}
         {loading && (
-          <p className={`text-lg font-semibold animate-pulse ${dark ? 'text-yellow-100' : 'text-orange-700'}`}>
+          <p
+            className={`text-lg font-semibold animate-pulse
+ ${dark ? "text-snow-300" : "text-gunmetal-600"}`}
+          >
             Loading nutrition data...
           </p>
         )}
-
         {error && (
-          <p className="text-red-500 font-medium text-md">{error}</p>
+          <p className="text-cardinal-DEFAULT font-medium text-md">{error}</p>
         )}
-
         {!loading && !error && data && (
-          <div className="space-y-10 mb-5 animate-fade-in">
+          <div className="space-y-8 animate-fade-in">
+            {/* Changed space-y-10 to space-y-8 and removed mb-5 */}
             {Object.entries(data).map(([ingredient, info]) => {
-              const hasMeaningfulData = Object.entries(info).some(([nutrient, value]) => {
-                const lowerNutrient = nutrient.trim().toLowerCase();
-                if (lowerNutrient === 'error' || lowerNutrient === 'quantity') {
-                  return false;
+              const hasMeaningfulData = Object.entries(info).some(
+                ([nutrient, value]) => {
+                  const lowerNutrient = nutrient.trim().toLowerCase()
+                  if (
+                    lowerNutrient === "error" ||
+                    lowerNutrient === "quantity"
+                  ) {
+                    return false
+                  }
+                  if (typeof value === "string") {
+                    const lowerValue = value.toLowerCase()
+                    return !(
+                      lowerValue.includes("n/a") ||
+                      lowerValue.includes("data not available") ||
+                      lowerValue.trim() === "0" ||
+                      lowerValue.trim() === "0 g" ||
+                      lowerValue.trim() === "0g" ||
+                      lowerValue.trim() === "0 kcal"
+                    )
+                  }
+                  return value !== 0 && value !== null
                 }
-                if (typeof value === 'string') {
-                  const lowerValue = value.toLowerCase();
-                  return !(
-                    lowerValue.includes('n/a') ||
-                    lowerValue.includes('data not available') ||
-                    lowerValue.trim() === '0' ||
-                    lowerValue.trim() === '0 g' ||
-                    lowerValue.trim() === '0g' ||
-                    lowerValue.trim() === '0 kcal'
-                  );
-                }
-                return value !== 0 && value !== null;
-              });
+              )
 
               if (!hasMeaningfulData) {
-                return null; // skip the whole ingredient
+                return null // skip the whole ingredient
               }
 
               return (
                 <section
                   key={ingredient}
-                  className={`p-4  pb-10 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm ${dark ? 'border border-yellow-600 text-yellow-100' : 'border border-orange-300 text-orange-800'} transition-transform duration-300 hover:scale-[1.02]`}
+                  className={`p-4 rounded-2xl shadow-md bg-white/10 backdrop-blur-sm
+ ${
+   dark
+     ? "border border-oxford-blue-400 text-snow-DEFAULT"
+     : "border border-anti-flash-white-400 text-gunmetal-DEFAULT"
+ }
+ transition-transform duration-300 hover:scale-[1.02]`}
                 >
-                  <h3 className={`text-lg font-semibold uppercase mb-3 ${dark ? 'text-yellow-200' : 'text-orange-700'}`}>
+                  <h3
+                    className={`text-lg font-semibold uppercase mb-3
+ ${dark ? "text-snow-500" : "text-gunmetal-600"}`}
+                  >
                     {ingredient}
                   </h3>
+
                   <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
                     {Object.entries(info).map(([nutrient, value]) => {
-                      const lowerNutrient = nutrient.trim().toLowerCase();
-                      if (lowerNutrient === 'error' || lowerNutrient === 'quantity') {
-                        return null;
+                      const lowerNutrient = nutrient.trim().toLowerCase()
+                      if (
+                        lowerNutrient === "error" ||
+                        lowerNutrient === "quantity"
+                      ) {
+                        return null
                       }
-                      if (typeof value === 'string') {
-                        const lowerValue = value.toLowerCase();
+                      if (typeof value === "string") {
+                        const lowerValue = value.toLowerCase()
                         if (
-                          lowerValue.includes('n/a') ||
-                          lowerValue.includes('data not available') ||
-                          lowerValue.trim() === '0' ||
-                          lowerValue.trim() === '0 g' ||
-                          lowerValue.trim() === '0g' ||
-                          lowerValue.trim() === '0 kcal'
+                          lowerValue.includes("n/a") ||
+                          lowerValue.includes("data not available") ||
+                          lowerValue.trim() === "0" ||
+                          lowerValue.trim() === "0 g" ||
+                          lowerValue.trim() === "0g" ||
+                          lowerValue.trim() === "0 kcal"
                         ) {
-                          return null; // skip this nutrient
+                          return null // skip this nutrient
                         }
                       } else if (value === 0 || value === null) {
-                        return null;
+                        return null
                       }
 
                       return (
                         <React.Fragment key={nutrient}>
-                          <dt className="font-medium capitalize">{nutrient.replace(/_/g, ' ')}</dt>
+                          <dt className="font-medium capitalize">
+                            {nutrient.replace(/_/g, " ")}
+                          </dt>
                           <dd>{value}</dd>
                         </React.Fragment>
-                      );
+                      )
                     })}
                   </dl>
                 </section>
-              );
+              )
             })}
           </div>
         )}
       </div>
     </div>
-  );
-};
-
+  )
+}

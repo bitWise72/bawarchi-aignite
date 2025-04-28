@@ -71,12 +71,12 @@ function ChoicePage() {
             >
               Your Food Companion
             </h2>
-            <p
+            {/* <p
               style={{ color: darkMode ? "#D1D5DB" : "#4B5563" }}
               className="text-sm sm:text-base md:text-lg mb-6"
             >
               Please select an option below:
-            </p>
+            </p> */}
             <div className="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-4">
               <motion.button
                 onClick={() => (window.location.href = "/recipe-search")}

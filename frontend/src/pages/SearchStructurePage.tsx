@@ -1,14 +1,15 @@
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useDarkMode } from "@/contexts/DarkModeContext"
-import { PlusCircle, X, Image as ImageIcon } from "lucide-react"
+import { PlusCircle, X, Image as ImageIcon, Mic } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import ISO6391 from "iso-639-1"
 
 interface SearchStructurePageProps {
   mode: "normal" | "experimental"
   setMode: (mode: "normal" | "experimental" | null) => void
-  darkMode: boolean; 
+  darkMode: boolean
 }
 
 const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
@@ -20,9 +21,57 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
   const [loading, setLoading] = useState(false)
   const [recipeName, setRecipeName] = useState("")
   const [recipeDescription, setRecipeDescription] = useState("")
-  const [steps, setSteps] = useState<string[]>([""])
+  const [steps, setSteps] = useState<string[]>([])
   const [image, setImage] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [isSpeechActive, setIsSpeechActive] = useState(false)
+  const [supportLanguage, setSupportLanguage] = useState("")
+
+  const handleSpeechToText = () => {
+    if (
+      !("webkitSpeechRecognition" in window) &&
+      !("SpeechRecognition" in window)
+    ) {
+      toast.error("Speech recognition is not supported in this browser")
+      return
+    }
+
+    setIsSpeechActive((prev) => !prev)
+
+    // If turning on speech recognition
+    if (!isSpeechActive) {
+      const SpeechRecognition =
+        window.webkitSpeechRecognition || window.SpeechRecognition
+      const recognition = new SpeechRecognition()
+
+      recognition.lang = "en-US"
+      recognition.continuous = true
+      recognition.interimResults = true
+
+      recognition.onresult = (event) => {
+        const transcript = Array.from(event.results)
+          .map((result) => result[0])
+          .map((result) => result.transcript)
+          .join("")
+
+        setRecipeDescription((prev) => prev + " " + transcript)
+      }
+
+      recognition.onend = () => {
+        setIsSpeechActive(false)
+      }
+
+      recognition.start()
+
+      // Store recognition instance to stop it later
+      ;(window as any).recognition = recognition
+    } else {
+      // Stop recognition if it exists
+      if ((window as any).recognition) {
+        ;(window as any).recognition.stop()
+      }
+    }
+  }
 
   const handleStepChange = (index: number, value: string) => {
     const newSteps = [...steps]
@@ -134,14 +183,26 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
       }
 
       // Build query parameters for navigation
-      let query = []
+      const query = []
+      let finalCombinedText = combinedText // Start with the base combined text
 
-      if (combinedText) {
-        query.push(`recipeText=${combinedText}`)
+      // Append support language information if selected and there is text
+      if (supportLanguage && finalCombinedText) {
+        const languageName = ISO6391.getName(supportLanguage) // Get full language name [cite: 154, 156]
+        if (languageName) {
+          // Add the requested text and language name
+          finalCombinedText += ` give ingredients in ${languageName} also for user's simplicity`
+        }
+      }
+
+      if (finalCombinedText) {
+        // IMPORTANT: Encode the potentially modified query parameter value
+        query.push(`recipeText=${encodeURIComponent(finalCombinedText)}`)
       }
 
       if (imageUrl) {
-        query.push(`imageUrl=${imageUrl}`)
+        // Also good practice to encode the image URL
+        query.push(`imageUrl=${encodeURIComponent(imageUrl)}`)
       }
 
       // Add mode parameter to the query
@@ -223,26 +284,57 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
           Create a Recipe
         </motion.h1>
 
-        {/* Recipe Name */}
         <motion.div variants={itemVariants} className="mb-6">
-          <label
-            className={`block text-lg font-semibold mb-2 ${
-              darkMode ? "text-asparagus-500" : "text-gunmetal-600"
-            }`}
-          >
-            Recipe Name
-          </label>
-          <input
-            type="text"
-            value={recipeName}
-            onChange={(e) => setRecipeName(e.target.value)}
-            className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
-              darkMode
-                ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
-                : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
-            }`}
-            placeholder="Enter recipe name"
-          />
+          <div className="flex flex-col md:flex-row gap-4">
+            {/* Recipe Name */}
+            <div className="w-full md:w-1/2">
+              <label
+                className={`block text-lg font-semibold mb-2 ${
+                  darkMode ? "text-asparagus-500" : "text-gunmetal-600"
+                }`}
+              >
+                Recipe Name
+              </label>
+              <input
+                type="text"
+                value={recipeName}
+                onChange={(e) => setRecipeName(e.target.value)}
+                className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
+                  darkMode
+                    ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                    : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
+                }`}
+                placeholder="Enter recipe name"
+              />
+            </div>
+
+            {/* Secondary Support Language */}
+            <div className="w-full md:w-1/2">
+              <label
+                className={`block text-lg font-semibold mb-2 ${
+                  darkMode ? "text-asparagus-500" : "text-gunmetal-600"
+                }`}
+              >
+                Secondary Support Language (optional)
+              </label>
+              <select
+                value={supportLanguage}
+                onChange={(e) => setSupportLanguage(e.target.value)}
+                className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
+                  darkMode
+                    ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                    : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
+                }`}
+              >
+                <option value="">None</option>
+                {ISO6391.getAllCodes().map((code) => (
+                  <option key={code} value={code}>
+                    {ISO6391.getName(code)}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </motion.div>
 
         {/* Recipe Description */}
@@ -254,17 +346,61 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
           >
             Recipe Description
           </label>
-          <textarea
-            value={recipeDescription}
-            onChange={(e) => setRecipeDescription(e.target.value)}
-            className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${
-              darkMode
-                ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
-                : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
-            }`}
-            rows={4}
-            placeholder="Enter recipe description"
-          />
+          <div className="relative">
+            <textarea
+              value={recipeDescription}
+              onChange={(e) => setRecipeDescription(e.target.value)}
+              className={`w-full p-3 rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 pr-12 ${
+                darkMode
+                  ? "bg-gunmetal-400 border border-oxford-blue-200 text-snow-500 focus:ring-orange-wheel-500"
+                  : "bg-anti-flash-white-500 border border-timberwolf-500 text-gunmetal-500 focus:ring-burnt-sienna-500"
+              }`}
+              rows={4}
+              placeholder="Enter recipe description"
+            />
+            <motion.div
+              className="absolute right-3 top-3 cursor-pointer"
+              whileHover={{ scale: 1.2 }}
+              whileTap={{ scale: 0.9 }}
+              animate={
+                isSpeechActive
+                  ? {
+                      scale: [1, 1.2, 1],
+                      color: darkMode
+                        ? ["#F8F9FA", "#FF5C39", "#F8F9FA"]
+                        : ["#393E46", "#FF5C39", "#393E46"],
+                    }
+                  : {}
+              }
+              transition={
+                isSpeechActive
+                  ? {
+                      repeat: Infinity,
+                      duration: 1.5,
+                    }
+                  : {}
+              }
+              onClick={handleSpeechToText}
+            >
+              <Mic
+                size={24}
+                className={`${
+                  isSpeechActive
+                    ? "text-cardinal-500"
+                    : darkMode
+                    ? "text-asparagus-500 hover:text-orange-wheel-500"
+                    : "text-amber-500 hover:text-burnt-sienna-500"
+                } transition-colors duration-300`}
+              />
+              {isSpeechActive && (
+                <motion.div
+                  className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-red-500"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                />
+              )}
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* Recipe Image Upload */}
@@ -441,7 +577,7 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
                 Processing...
               </>
             ) : (
-              "Create Recipe"
+              "See the magic✨"
             )}
           </motion.button>
         </motion.div>
