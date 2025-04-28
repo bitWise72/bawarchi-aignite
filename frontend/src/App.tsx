@@ -88,7 +88,7 @@ const App = () => (
               <Route path="/home" element={<Index />} />
               <Route path="/review-post" element={<ReviewPost />} />
               <Route path="/profile" element={<ProfileDashboard/>} />
-              <Route path="/community" element ={<Community/>}</Route>
+              <Route path="/community" element ={<Community/>} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
