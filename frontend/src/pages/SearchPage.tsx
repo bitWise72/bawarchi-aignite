@@ -120,7 +120,7 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
         const languageName = ISO6391.getName(supportLanguage) // Get full language name
         if (languageName) {
           // Add the requested text and language name
-          finalQueryText += ` give ingredients in ${languageName} also for user's simplicity`
+          finalQueryText += ` give ingredients in ${languageName}`
         }
       }
 

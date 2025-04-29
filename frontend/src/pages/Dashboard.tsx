@@ -83,48 +83,63 @@ const Dashboard = () => {
     console.log("Mode:", modeParam)
 
     // Extract recipe name from recipeText if available
-    if (recipeText && recipeText.includes("RecipeName:")) {
-      const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
-      if (nameMatch && nameMatch[1]) {
-        setRecipeName(nameMatch[1].trim())
-      } else {
-        setRecipeName("Untitled Recipe")
-      }
-    }
+    // if (recipeText && recipeText.includes("RecipeName:")) {
+    //   const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
+    //   if (nameMatch && nameMatch[1]) {
+    //     setRecipeName(nameMatch[1].trim())
+    //   } else {
+    //     setRecipeName("Untitled Recipe")
+    //   }
+    // }
     // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
     const processData = async () => {
       setLoading(true)
       try {
-        console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
+        console.log("😁😁😁 Starting processData")
 
         // Priority 1: Recipe details (full text)
         if (recipeText) {
           console.log("Processing recipe details")
-          let recipeName
-          if (recipeText.includes("RecipeName:")) {
-            console.log("RecipeName found in recipeText")
-
-            recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0]
-          } else {
-            recipeName = recipeText
-          }
           const data = await fetchRecipe("user_prompt", recipeText)
           console.log("Recipe data:", data)
-          setRecipeName(recipeName)
-          // setRecipeName(recipeText)
-          setRecipe(data)
-          console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
 
+          setRecipe(data)
+
+          if (data) {
+            const stepKeys = Object.keys(data)
+            for (const key of stepKeys) {
+              const step = data[key]
+              if (step.name) {
+                setRecipeName(step.name)
+                break // Set it once from the first available step
+              }
+            }
+          }
+
+          console.log("😁😁😁 Finished processing recipe text")
           toast.success("Recipe processed successfully!")
         }
         // Priority 2: Image
         else if (imageUrl) {
           console.log("Processing image")
-          setRecipeName("Untitled Recipe")
           const data = await fetchRecipe("image_url", imageUrl)
           console.log("Recipe data:", data)
 
           setRecipe(data)
+
+          if (data) {
+            const stepKeys = Object.keys(data)
+            for (const key of stepKeys) {
+              const step = data[key]
+              if (step.name) {
+                setRecipeName(step.name)
+                break
+              }
+            }
+          } else {
+            setRecipeName("Untitled Recipe")
+          }
+
           toast.success("Recipe extracted from image successfully!")
         }
       } catch (error) {
@@ -139,6 +154,7 @@ const Dashboard = () => {
         setLoading(false)
       }
     }
+
 
     // Process data if any recipe-related param exists
     if (recipeText || imageUrl) {
