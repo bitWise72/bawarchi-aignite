@@ -30,7 +30,7 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
     setMounted(true)
   }, [])
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleSearchChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setSearchQuery(e.target.value)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -383,9 +383,10 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                 }}
                 onInput={(e) => {
                   // Auto-resize the textarea
-                  e.target.style.height = "auto"
-                  e.target.style.height =
-                    Math.min(e.target.scrollHeight, 128) + "px"
+                  const target = e.target as HTMLTextAreaElement;
+                  target.style.height = "auto"
+                  target.style.height =
+                    Math.min(target.scrollHeight, 128) + "px"
                 }}
               />
               {searchQuery && (

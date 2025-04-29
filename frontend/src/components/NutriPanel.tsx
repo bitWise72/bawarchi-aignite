@@ -2,36 +2,41 @@ import React, { useState, useEffect } from "react"
 import axios from "axios"
 
 export interface NutritionResponse {
-  [ingredient: string]: Record<string, string | null>
+  [ingredient: string]: Record<string, string | null>;
+}
+
+interface Step {
+  measurements: [string, string][];
 }
 
 interface NutritionProfileProps {
-  ingredientsString: string
-  isOpen: boolean
-  onClose: () => void
-  dark?: boolean
-  cachedData?: NutritionResponse
-  saveData: (key: string, data: NutritionResponse) => void
+  ingredientsString: string | string[];
+  isOpen: boolean;
+  onClose: () => void;
+  dark?: boolean;
+  cachedData?: NutritionResponse;
+  saveData: (key: string, data: NutritionResponse) => void;
 }
 
 const unitMap: Record<string, string> = {
-  calories: "kcal",
-  protein: "g",
-  carbohydrates: "g",
-  fat: "g",
-  fiber: "g",
-  sugar: "g",
-  sodium: "mg",
-  cholesterol: "mg",
-  potassium: "mg",
-  calcium: "mg",
-  iron: "mg",
-  vitamin_c: "mg",
-  vitamin_d: "IU",
-  vitamin_b12: "µg",
-  magnesium: "mg",
-  zinc: "mg",
-}
+  calories: 'kcal',
+  protein: 'g',
+  carbohydrates: 'g',
+  fat: 'g',
+  fiber: 'g',
+  sugar: 'g',
+  sodium: 'mg',
+  cholesterol: 'mg',
+  potassium: 'mg',
+  calcium: 'mg',
+  iron: 'mg',
+  vitamin_c: 'mg',
+  vitamin_d: 'IU',
+  vitamin_b12: 'µg',
+  magnesium: 'mg',
+  zinc: 'mg',
+};
+
 
 export const NutritionProfile: React.FC<NutritionProfileProps> = ({
   ingredientsString,
@@ -41,10 +46,45 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
   cachedData,
   saveData,
 }) => {
-  const [data, setData] = useState<NutritionResponse | null>(cachedData || null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [totals, setTotals] = useState<Record<string, number>>({})
+  const [data, setData] = useState<NutritionResponse | null>(cachedData || null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [totals, setTotals] = useState<Record<string, number>>({});
+
+  function convertToJSON(ingredientsString: string | string[]) {
+    let steps: { [x: string]: { measurements: any; }; };
+    try {
+      const stringToParse = Array.isArray(ingredientsString) ? ingredientsString.join(',') : ingredientsString;
+      steps = JSON.parse(stringToParse);
+    } catch (error) {
+      return "Error: Invalid input data";
+    }
+  
+    let ingredientsArray = [];
+  
+    Object.keys(steps).forEach(step => {
+      const measurements = steps[step]?.measurements;
+      if (measurements) {
+        measurements.forEach((item: [any, any]) => {
+          const [name, measurement] = item;
+          ingredientsArray.push(`("${name}", "${measurement}")`);
+        });
+      }
+    });
+  
+    if (ingredientsArray.length === 0) {
+      return JSON.stringify({"ingredients_string": "No ingredients found"});
+    }
+  
+    const ingredientsStringFormatted = `ingredients: ${ingredientsArray.join(', ')}`;
+  
+    // Constructing the desired JSON format
+    const result = {
+      "ingredients_string": ingredientsStringFormatted
+    };
+  
+    return result;
+  }
 
   useEffect(() => {
     if (!isOpen || cachedData) return
@@ -53,14 +93,33 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
       setLoading(true)
       setError(null)
       try {
-        const payload = { ingredients_string: ingredientsString }
-        const resp = await axios.post<NutritionResponse>(
-          "https://gem-api-adv.vercel.app/get_nutri",
-          payload,
-          { headers: { "Content-Type": "application/json" } }
-        )
-        setData(resp.data)
-        saveData(ingredientsString, resp.data) // cache it
+        // console.log(ingredientsString);
+
+    const payload = convertToJSON(ingredientsString);
+    // console.log(payload);
+
+try {
+  // const resp = await axios.post<NutritionResponse>(
+  //   'https://gem-api-adv.vercel.app/get_nutri',
+  //   payload,
+  //   { headers: { 'Content-Type': 'application/json' } }
+  // );
+  const resp = await fetch('https://gem-api-adv.vercel.app/get_nutri', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+  const data = await resp.json();
+  setData(data);
+  const cacheKey = 'nutrition_data_';
+  saveData(cacheKey, data);
+} catch (error) {
+  console.error('Error fetching nutrition data:', error);
+}
+
+
       } catch (err: any) {
         console.error(err)
         setError("Failed to load nutrition data.")
@@ -70,7 +129,7 @@ export const NutritionProfile: React.FC<NutritionProfileProps> = ({
     }
 
     fetchNutrition()
-  }, [ingredientsString, isOpen, cachedData, saveData])
+  }, [ingredientsString])
 
   useEffect(() => {
     if (!data) return
