@@ -113,6 +113,7 @@ const Dashboard = () => {
           console.log("Recipe data:", data)
           setRecipeName(recipeName)
           // setRecipeName(recipeText)
+          // console.log(data);
           setRecipe(data)
           // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
 
@@ -195,6 +196,23 @@ const Dashboard = () => {
 
   const handleSaveNutritionData = (key: string, data: NutritionResponse) => {
     setNutritionDataCache((prev) => ({ ...prev, [key]: data }))
+  }
+
+  const anyStep = (step:any) => {
+    window.speechSynthesis.cancel() // Stop any ongoing speech synthesis
+    const stepNum = step.split("step")[1];
+    if (!recipe) return
+
+    const steps = Object.keys(recipe)
+
+    if (Number(stepNum-1) < steps.length) {
+      // console.log("something")
+      setCurrentStep(Number(stepNum-1))
+      const stepData = recipe[steps[stepNum-1]]
+      // console.log("stepData", stepData)
+      const speech = new SpeechSynthesisUtterance(stepData.procedure)
+      window.speechSynthesis.speak(speech)
+    }
   }
 
   const handleNextStep = () => {
@@ -404,6 +422,7 @@ const Dashboard = () => {
                 onNextStep={handleNextStep}
                 currentStep={currentStep}
                 darkMode={darkMode}
+                anyStep={anyStep}
               />
             )}
           </div>

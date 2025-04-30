@@ -266,6 +266,17 @@ const Index = () => {
     })
   }
 
+  const anyStep = (step:any) => {
+    if (!recipe) return
+
+    const steps = Object.keys(recipe)
+    if (step < steps.length) {
+      const stepData = recipe[steps[step]]
+      const speech = new SpeechSynthesisUtterance(stepData.procedure)
+      window.speechSynthesis.speak(speech)
+    }
+  }
+  
   const handlePost = () => {
     if (!recipe) return
 
@@ -388,6 +399,7 @@ const Index = () => {
                 onNextStep={handleNextStep}
                 currentStep={currentStep}
                 darkMode={darkMode}
+                anyStep={anyStep}
               />
             )}
           </div>
