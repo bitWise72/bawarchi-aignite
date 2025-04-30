@@ -85,78 +85,6 @@ const Dashboard = () => {
   //   console.log("Image URL:", imageUrl)
   //   console.log("Mode:", modeParam)
 
-<<<<<<< HEAD
-    // Extract recipe name from recipeText if available
-    // if (recipeText && recipeText.includes("RecipeName:")) {
-    //   const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
-    //   if (nameMatch && nameMatch[1]) {
-    //     setRecipeName(nameMatch[1].trim())
-    //   } else {
-    //     setRecipeName("Untitled Recipe")
-    //   }
-    // }
-    // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
-    const processData = async () => {
-      setLoading(true)
-      try {
-        console.log("😁😁😁 Starting processData")
-
-        // Priority 1: Recipe details (full text)
-        if (recipeText) {
-          console.log("Processing recipe details")
-          const data = await fetchRecipe("user_prompt", recipeText)
-          console.log("Recipe data:", data)
-
-          setRecipe(data)
-
-          if (data) {
-            const stepKeys = Object.keys(data)
-            for (const key of stepKeys) {
-              const step = data[key]
-              if (step.name) {
-                setRecipeName(step.name)
-                break // Set it once from the first available step
-              }
-            }
-          }
-
-          console.log("😁😁😁 Finished processing recipe text")
-          toast.success("Recipe processed successfully!")
-        }
-        // Priority 2: Image
-        else if (imageUrl) {
-          console.log("Processing image")
-          const data = await fetchRecipe("image_url", imageUrl)
-          console.log("Recipe data:", data)
-
-          setRecipe(data)
-
-          if (data) {
-            const stepKeys = Object.keys(data)
-            for (const key of stepKeys) {
-              const step = data[key]
-              if (step.name) {
-                setRecipeName(step.name)
-                break
-              }
-            }
-          } else {
-            setRecipeName("Untitled Recipe")
-          }
-
-          toast.success("Recipe extracted from image successfully!")
-        }
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : "An unexpected error occurred"
-        console.error("Error processing recipe data:", error)
-        setError(errorMessage)
-        toast.error(`Failed to process recipe: ${errorMessage}`)
-      } finally {
-        setLoading(false)
-=======
   //   // Extract recipe name from recipeText if available
   //   if (recipeText && recipeText.includes("RecipeName:")) {
   //     const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
@@ -257,17 +185,10 @@ useEffect(() => {
         setUser(JSON.parse(storedUser));
       } catch (e) {
         console.error("Failed to parse stored user", e);
->>>>>>> 933c9516d51a7c42e802d4185bc39491106343ec
       }
     }
   }
 
-<<<<<<< HEAD
-
-    // Process data if any recipe-related param exists
-    if (recipeText || imageUrl) {
-      processData()
-=======
   const recipeText = params.get("recipeText")
     ? decodeURIComponent(params.get("recipeText"))
     : null;
@@ -342,7 +263,6 @@ useEffect(() => {
       toast.error(`Failed to process recipe: ${errorMessage}`);
     } finally {
       setLoading(false);
->>>>>>> 933c9516d51a7c42e802d4185bc39491106343ec
     }
   };
 
