@@ -104,7 +104,7 @@ try {
   //   payload,
   //   { headers: { 'Content-Type': 'application/json' } }
   // );
-  const resp = await fetch('http://get-nutri.vercel.app/get_nutri', {
+  const resp = await fetch('https://get-nutri.vercel.app/get_nutri', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -240,7 +240,8 @@ try {
                   const lowerNutrient = nutrient.trim().toLowerCase()
                   if (
                     lowerNutrient === "error" ||
-                    lowerNutrient === "quantity"
+                    lowerNutrient === "quantity" ||
+                    lowerNutrient === "Quantity"
                   ) {
                     return false
                   }
