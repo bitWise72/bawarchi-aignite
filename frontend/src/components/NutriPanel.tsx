@@ -104,7 +104,7 @@ try {
   //   payload,
   //   { headers: { 'Content-Type': 'application/json' } }
   // );
-  const resp = await fetch('https://gem-api-adv.vercel.app/get_nutri', {
+  const resp = await fetch('http://get-nutri.vercel.app/get_nutri', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
