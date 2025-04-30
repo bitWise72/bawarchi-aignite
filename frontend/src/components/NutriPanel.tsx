@@ -205,15 +205,17 @@ try {
             <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
               {Object.entries(totals).map(([nutrient, value]) => {
                 return (
-                  <React.Fragment key={nutrient}>
-                    <dt className="font-medium capitalize">
-                      {nutrient.replace(/_/g, " ")}
-                    </dt>
-                    <dd>
-                      {value.toFixed(2)} {unitMap[nutrient] || ""}
-                    </dd>
-                    {/* Removed pb-5 */}
-                  </React.Fragment>
+                    nutrient.toLowerCase()!=="quantity"   && (
+                      <React.Fragment key={nutrient}>
+                      <dt className="font-medium capitalize">
+                        {nutrient.replace(/_/g, " ")}
+                      </dt>
+                      <dd>
+                        {value.toFixed(2)} {unitMap[nutrient] || ""}
+                      </dd>
+                      {/* Removed pb-5 */}
+                    </React.Fragment>
+                    )
                 )
               })}
             </dl>
@@ -240,8 +242,7 @@ try {
                   const lowerNutrient = nutrient.trim().toLowerCase()
                   if (
                     lowerNutrient === "error" ||
-                    lowerNutrient === "quantity" ||
-                    lowerNutrient === "Quantity"
+                    lowerNutrient === "quantity"
                   ) {
                     return false
                   }
