@@ -22,7 +22,7 @@ const AuthCallback = () => {
         if (existingToken && existingUser) {
           console.log("Using existing auth data");
           setUser(JSON.parse(existingUser));
-          navigate("/home");
+          navigate("/choice");
           return;
         }
 
@@ -58,7 +58,7 @@ const AuthCallback = () => {
         // Update context and redirect
         setUser(userData);
         window.history.replaceState({}, "", "/"); // Clean URL
-        navigate("/home");
+        navigate("/choice");
 
       } catch (error) {
         console.error("Auth processing failed:", error);

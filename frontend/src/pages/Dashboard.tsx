@@ -14,8 +14,10 @@ import ingredient_data from "./ingredient_brands_and_costs.json"
 import { NutritionProfile, NutritionResponse } from "@/components/NutriPanel"
 const STORAGE_KEY = "saved_recipes"
 import axios from "axios"
+import { useQueryClient } from "@tanstack/react-query"
 
 const Dashboard = () => {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState(null)
   const { darkMode, setDarkMode } = useDarkMode()
   const [recipe, setRecipe] = useState<Recipe | null>(null)
@@ -40,48 +42,50 @@ const Dashboard = () => {
     dark?: boolean // <-- Optional dark mode flag
   }
 
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark-mode")
-    } else {
-      document.body.classList.remove("dark-mode")
-    }
+  // useEffect(() => {
+  //   // window.speechSynthesis.cancel()
+  //   if (darkMode) {
+  //     document.body.classList.add("dark-mode")
+  //   } else {
+  //     document.body.classList.remove("dark-mode")
+  //   }
 
-    const params = new URLSearchParams(window.location.search)
+  //   const params = new URLSearchParams(window.location.search)
 
-    // User info handling
-    const name = params.get("name")
-    const email = params.get("email")
-    const image = params.get("image")
-    const id = params.get("id")
+  //   // User info handling
+  //   const name = params.get("name")
+  //   const email = params.get("email")
+  //   const image = params.get("image")
+  //   const id = params.get("id")
 
-    if (name && email && image && id) {
-      const userData = { name, email, image, id }
-      localStorage.setItem("user", JSON.stringify(userData))
-      setUser(userData)
-    } else {
-      const storedUser = localStorage.getItem("user")
-      if (storedUser) {
-        try {
-          setUser(JSON.parse(storedUser))
-        } catch (e) {
-          console.error("Failed to parse stored user", e)
-        }
-      }
-    }
+  //   if (name && email && image && id) {
+  //     const userData = { name, email, image, id }
+  //     localStorage.setItem("user", JSON.stringify(userData))
+  //     setUser(userData)
+  //   } else {
+  //     const storedUser = localStorage.getItem("user")
+  //     if (storedUser) {
+  //       try {
+  //         setUser(JSON.parse(storedUser))
+  //       } catch (e) {
+  //         console.error("Failed to parse stored user", e)
+  //       }
+  //     }
+  //   }
 
-    const recipeText = params.get("recipeText")
-      ? decodeURIComponent(params.get("recipeText"))
-      : null
-    const imageUrl = params.get("imageUrl")
-      ? decodeURIComponent(params.get("imageUrl"))
-      : null
-    const modeParam = params.get("mode") || "normal"
+  //   const recipeText = params.get("recipeText")
+  //     ? decodeURIComponent(params.get("recipeText"))
+  //     : null
+  //   const imageUrl = params.get("imageUrl")
+  //     ? decodeURIComponent(params.get("imageUrl"))
+  //     : null
+  //   const modeParam = params.get("mode") || "normal"
 
-    console.log("Recipe Text:", recipeText)
-    console.log("Image URL:", imageUrl)
-    console.log("Mode:", modeParam)
+  //   console.log("Recipe Text:", recipeText)
+  //   console.log("Image URL:", imageUrl)
+  //   console.log("Mode:", modeParam)
 
+<<<<<<< HEAD
     // Extract recipe name from recipeText if available
     // if (recipeText && recipeText.includes("RecipeName:")) {
     //   const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
@@ -152,21 +156,212 @@ const Dashboard = () => {
         toast.error(`Failed to process recipe: ${errorMessage}`)
       } finally {
         setLoading(false)
+=======
+  //   // Extract recipe name from recipeText if available
+  //   if (recipeText && recipeText.includes("RecipeName:")) {
+  //     const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
+  //     if (nameMatch && nameMatch[1]) {
+  //       setRecipeName(nameMatch[1].trim())
+  //     } else {
+  //       setRecipeName("Untitled Recipe")
+  //     }
+  //   }
+  //   // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
+  //   const processData = async () => {
+  //     setLoading(true)
+  //     try {
+  //       // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
+
+  //       // Priority 1: Recipe details (full text)
+  //       if (recipeText) {
+  //         console.log("Processing recipe details")
+  //         let recipeName
+  //         if (recipeText.includes("RecipeName:")) {
+  //           console.log("RecipeName found in recipeText")
+
+  //           recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0]
+  //         } else {
+  //           recipeName = recipeText
+  //         }
+  //         const data = await fetchRecipe("user_prompt", recipeText)
+  //         console.log("Recipe data:", data)
+  //         setRecipeName(recipeName)
+  //         // setRecipeName(recipeText)
+  //         // console.log(data);
+  //         setRecipe(data)
+  //         // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
+
+  //         toast.success("Recipe processed successfully!")
+  //       }
+  //       // Priority 2: Image
+  //       else if (imageUrl) {
+  //         console.log("Processing image")
+  //         setRecipeName("Untitled Recipe")
+  //         const data = await fetchRecipe("image_url", imageUrl)
+  //         console.log("Recipe data:", data)
+
+  //         setRecipe(data)
+  //         toast.success("Recipe extracted from image successfully!")
+  //       }
+  //     } catch (error) {
+  //       const errorMessage =
+  //         error instanceof Error
+  //           ? error.message
+  //           : "An unexpected error occurred"
+  //       console.error("Error processing recipe data:", error)
+  //       setError(errorMessage)
+  //       toast.error(`Failed to process recipe: ${errorMessage}`)
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+
+  //   // Process data if any recipe-related param exists
+  //   if (recipeText || imageUrl) {
+  //     processData()
+  //   }
+
+  //   return () => {
+  //     window.speechSynthesis.cancel() // Cleanup speech synthesis on unmount
+  //   }
+  // }, [darkMode])
+
+  // Handle dark mode changes separately
+useEffect(() => {
+  if (darkMode) {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+}, [darkMode]);
+
+// Handle user data and recipe processing
+useEffect(() => {
+  // window.speechSynthesis.cancel()
+  const params = new URLSearchParams(window.location.search);
+
+  // User info handling
+  const name = params.get("name");
+  const email = params.get("email");
+  const image = params.get("image");
+  const id = params.get("id");
+
+  if (name && email && image && id) {
+    const userData = { name, email, image, id };
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+  } else {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Failed to parse stored user", e);
+>>>>>>> 933c9516d51a7c42e802d4185bc39491106343ec
       }
     }
+  }
 
+<<<<<<< HEAD
 
     // Process data if any recipe-related param exists
     if (recipeText || imageUrl) {
       processData()
+=======
+  const recipeText = params.get("recipeText")
+    ? decodeURIComponent(params.get("recipeText"))
+    : null;
+  const imageUrl = params.get("imageUrl")
+    ? decodeURIComponent(params.get("imageUrl"))
+    : null;
+  const modeParam = params.get("mode") || "normal";
+
+  console.log("Recipe Text:", recipeText);
+  console.log("Image URL:", imageUrl);
+  console.log("Mode:", modeParam);
+
+  // Extract recipe name from recipeText if available
+  if (recipeText && recipeText.includes("RecipeName:")) {
+    const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/);
+    if (nameMatch && nameMatch[1]) {
+      setRecipeName(nameMatch[1].trim());
+    } 
+    // else {
+    //   setRecipeName("Untitled Recipe");
+    // }
+  }
+
+  // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
+  const processData = async () => {
+    setLoading(true);
+    try {
+      // Priority 1: Recipe details (full text)
+      // if(recipeText && imageUrl) {
+      //   let recipeName;
+      //   if (recipeText.includes("RecipeName:")) {
+      //     console.log("RecipeName found in recipeText");
+      //     recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0];
+      //   } else {
+      //     recipeName = recipeText;
+      //   }
+      //   const data = await fetchRecipe({ "user_prompt": recipeText, "image_url": imageUrl });
+      // }
+       if (recipeText) {
+        // console.log("Processing recipe details");
+        let recipeName;
+        if (recipeText.includes("RecipeName:")) {
+          console.log("RecipeName found in recipeText");
+          recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0];
+        } else {
+          recipeName = recipeText;
+        }
+        const data = await fetchRecipe("user_prompt", recipeText);
+        // console.log("Recipe data:", data);
+        setRecipeName(recipeName);
+        setRecipe(data);
+        toast.success("Recipe processed successfully!");
+      }
+      // Priority 2: Image
+      else if (imageUrl) {
+        // console.log("Processing image");
+        setRecipeName("Recipe");
+        const data = await fetchRecipe("image_url", imageUrl);
+        // console.log("name",data['step 1'])
+        setRecipeName(String(data['step 1'].name || 'ABC'));
+        console.log("Recipe data:", data);
+        setRecipe(data);
+        toast.success("Recipe extracted from image successfully!");
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred";
+      console.error("Error processing recipe data:", error);
+      setError(errorMessage);
+      toast.error(`Failed to process recipe: ${errorMessage}`);
+    } finally {
+      setLoading(false);
+>>>>>>> 933c9516d51a7c42e802d4185bc39491106343ec
     }
-  }, [darkMode])
+  };
+
+  // Process data if any recipe-related param exists
+  if (recipeText || imageUrl) {
+    processData();
+  }
+
+  return () => {
+    window.speechSynthesis.cancel(); // Cleanup speech synthesis on unmount
+  };
+}, []); // Empty dependency array means this runs only once on mount
 
   const handleSearch = async (query: string) => {
     setLoading(true)
     setError(null)
     setCurrentStep(0)
     setRecipeName(query)
+    window.speechSynthesis.cancel() // Stop any ongoing speech synthesis
     try {
       const data = await fetchRecipe("user_prompt", query)
       const dataArray = Object.values(data) // Convert object to array
@@ -184,6 +379,10 @@ const Dashboard = () => {
         const firstStep = data[Object.keys(data)[0]]
         const speech = new SpeechSynthesisUtterance(firstStep.procedure)
         window.speechSynthesis.speak(speech)
+        const url = new URL(window.location.href);
+        url.searchParams.delete('imageUrl');
+        url.searchParams.set("recipeText", query);
+        window.history.pushState({}, '', url);
       }
 
       toast.success("Recipe found successfully!")
@@ -207,11 +406,29 @@ const Dashboard = () => {
     setNutritionDataCache((prev) => ({ ...prev, [key]: data }))
   }
 
+  const anyStep = (step:any) => {
+    window.speechSynthesis.cancel() // Stop any ongoing speech synthesis
+    const stepNum = step.split("step")[1];
+    if (!recipe) return
+
+    const steps = Object.keys(recipe)
+
+    if (Number(stepNum-1) < steps.length) {
+      // console.log("something")
+      setCurrentStep(Number(stepNum-1))
+      const stepData = recipe[steps[stepNum-1]]
+      // console.log("stepData", stepData)
+      const speech = new SpeechSynthesisUtterance(stepData.procedure)
+      window.speechSynthesis.speak(speech)
+    }
+  }
+
   const handleNextStep = () => {
     if (!recipe) return
 
     const steps = Object.keys(recipe)
     if (currentStep < steps.length - 1) {
+      window.speechSynthesis.cancel()
       const nextStep = currentStep + 1
       setCurrentStep(nextStep)
 
@@ -413,6 +630,7 @@ const Dashboard = () => {
                 onNextStep={handleNextStep}
                 currentStep={currentStep}
                 darkMode={darkMode}
+                anyStep={anyStep}
               />
             )}
           </div>

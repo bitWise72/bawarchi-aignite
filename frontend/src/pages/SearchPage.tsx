@@ -495,7 +495,7 @@ function SearchPage({ mode, setMode }: SearchPageProps) {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="text-sm font-medium">Image uploaded</span>
+                  <span className="text-sm font-medium">Image Uploading...</span>
                   <X
                     size={16}
                     onClick={(e) => {

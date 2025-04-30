@@ -8,6 +8,7 @@ interface RecipeTimelineProps {
   onNextStep: () => void
   currentStep: number
   darkMode: boolean
+  anyStep: (stepKey) => void
 }
 
 const RecipeTimeline: React.FC<RecipeTimelineProps> = ({
@@ -15,6 +16,7 @@ const RecipeTimeline: React.FC<RecipeTimelineProps> = ({
   onNextStep,
   currentStep,
   darkMode,
+  anyStep
 }) => {
   const steps = Object.keys(recipe)
   const totalSteps = steps.length
@@ -105,6 +107,11 @@ const RecipeTimeline: React.FC<RecipeTimelineProps> = ({
           return (
             <div
               key={stepKey}
+              onClick={() => {
+                if (!isActive) {
+                  anyStep(stepKey)
+                }
+              }}
               className={`border rounded-lg transition-all duration-300 ${
                 isActive
                   ? `border-primary ${

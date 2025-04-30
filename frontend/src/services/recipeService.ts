@@ -5,6 +5,7 @@ interface RecipeMeasurement {
 }
 
 interface RecipeStep {
+  name(name: any): unknown;
   procedure: string;
   measurements: [string, string][];
   time: [number | null, number | null];
