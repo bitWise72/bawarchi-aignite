@@ -40,117 +40,226 @@ const Dashboard = () => {
     dark?: boolean // <-- Optional dark mode flag
   }
 
-  useEffect(() => {
-    // window.speechSynthesis.cancel()
-    if (darkMode) {
-      document.body.classList.add("dark-mode")
-    } else {
-      document.body.classList.remove("dark-mode")
-    }
+  // useEffect(() => {
+  //   // window.speechSynthesis.cancel()
+  //   if (darkMode) {
+  //     document.body.classList.add("dark-mode")
+  //   } else {
+  //     document.body.classList.remove("dark-mode")
+  //   }
 
-    const params = new URLSearchParams(window.location.search)
+  //   const params = new URLSearchParams(window.location.search)
 
-    // User info handling
-    const name = params.get("name")
-    const email = params.get("email")
-    const image = params.get("image")
-    const id = params.get("id")
+  //   // User info handling
+  //   const name = params.get("name")
+  //   const email = params.get("email")
+  //   const image = params.get("image")
+  //   const id = params.get("id")
 
-    if (name && email && image && id) {
-      const userData = { name, email, image, id }
-      localStorage.setItem("user", JSON.stringify(userData))
-      setUser(userData)
-    } else {
-      const storedUser = localStorage.getItem("user")
-      if (storedUser) {
-        try {
-          setUser(JSON.parse(storedUser))
-        } catch (e) {
-          console.error("Failed to parse stored user", e)
-        }
-      }
-    }
+  //   if (name && email && image && id) {
+  //     const userData = { name, email, image, id }
+  //     localStorage.setItem("user", JSON.stringify(userData))
+  //     setUser(userData)
+  //   } else {
+  //     const storedUser = localStorage.getItem("user")
+  //     if (storedUser) {
+  //       try {
+  //         setUser(JSON.parse(storedUser))
+  //       } catch (e) {
+  //         console.error("Failed to parse stored user", e)
+  //       }
+  //     }
+  //   }
 
-    const recipeText = params.get("recipeText")
-      ? decodeURIComponent(params.get("recipeText"))
-      : null
-    const imageUrl = params.get("imageUrl")
-      ? decodeURIComponent(params.get("imageUrl"))
-      : null
-    const modeParam = params.get("mode") || "normal"
+  //   const recipeText = params.get("recipeText")
+  //     ? decodeURIComponent(params.get("recipeText"))
+  //     : null
+  //   const imageUrl = params.get("imageUrl")
+  //     ? decodeURIComponent(params.get("imageUrl"))
+  //     : null
+  //   const modeParam = params.get("mode") || "normal"
 
-    console.log("Recipe Text:", recipeText)
-    console.log("Image URL:", imageUrl)
-    console.log("Mode:", modeParam)
+  //   console.log("Recipe Text:", recipeText)
+  //   console.log("Image URL:", imageUrl)
+  //   console.log("Mode:", modeParam)
 
-    // Extract recipe name from recipeText if available
-    if (recipeText && recipeText.includes("RecipeName:")) {
-      const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
-      if (nameMatch && nameMatch[1]) {
-        setRecipeName(nameMatch[1].trim())
-      } else {
-        setRecipeName("Untitled Recipe")
-      }
-    }
-    // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
-    const processData = async () => {
-      setLoading(true)
+  //   // Extract recipe name from recipeText if available
+  //   if (recipeText && recipeText.includes("RecipeName:")) {
+  //     const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/)
+  //     if (nameMatch && nameMatch[1]) {
+  //       setRecipeName(nameMatch[1].trim())
+  //     } else {
+  //       setRecipeName("Untitled Recipe")
+  //     }
+  //   }
+  //   // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
+  //   const processData = async () => {
+  //     setLoading(true)
+  //     try {
+  //       // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
+
+  //       // Priority 1: Recipe details (full text)
+  //       if (recipeText) {
+  //         console.log("Processing recipe details")
+  //         let recipeName
+  //         if (recipeText.includes("RecipeName:")) {
+  //           console.log("RecipeName found in recipeText")
+
+  //           recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0]
+  //         } else {
+  //           recipeName = recipeText
+  //         }
+  //         const data = await fetchRecipe("user_prompt", recipeText)
+  //         console.log("Recipe data:", data)
+  //         setRecipeName(recipeName)
+  //         // setRecipeName(recipeText)
+  //         // console.log(data);
+  //         setRecipe(data)
+  //         // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
+
+  //         toast.success("Recipe processed successfully!")
+  //       }
+  //       // Priority 2: Image
+  //       else if (imageUrl) {
+  //         console.log("Processing image")
+  //         setRecipeName("Untitled Recipe")
+  //         const data = await fetchRecipe("image_url", imageUrl)
+  //         console.log("Recipe data:", data)
+
+  //         setRecipe(data)
+  //         toast.success("Recipe extracted from image successfully!")
+  //       }
+  //     } catch (error) {
+  //       const errorMessage =
+  //         error instanceof Error
+  //           ? error.message
+  //           : "An unexpected error occurred"
+  //       console.error("Error processing recipe data:", error)
+  //       setError(errorMessage)
+  //       toast.error(`Failed to process recipe: ${errorMessage}`)
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+
+  //   // Process data if any recipe-related param exists
+  //   if (recipeText || imageUrl) {
+  //     processData()
+  //   }
+
+  //   return () => {
+  //     window.speechSynthesis.cancel() // Cleanup speech synthesis on unmount
+  //   }
+  // }, [darkMode])
+
+  // Handle dark mode changes separately
+useEffect(() => {
+  if (darkMode) {
+    document.body.classList.add("dark-mode");
+  } else {
+    document.body.classList.remove("dark-mode");
+  }
+}, [darkMode]);
+
+// Handle user data and recipe processing
+useEffect(() => {
+  // window.speechSynthesis.cancel()
+  const params = new URLSearchParams(window.location.search);
+
+  // User info handling
+  const name = params.get("name");
+  const email = params.get("email");
+  const image = params.get("image");
+  const id = params.get("id");
+
+  if (name && email && image && id) {
+    const userData = { name, email, image, id };
+    localStorage.setItem("user", JSON.stringify(userData));
+    setUser(userData);
+  } else {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
       try {
-        // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
-
-        // Priority 1: Recipe details (full text)
-        if (recipeText) {
-          console.log("Processing recipe details")
-          let recipeName
-          if (recipeText.includes("RecipeName:")) {
-            console.log("RecipeName found in recipeText")
-
-            recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0]
-          } else {
-            recipeName = recipeText
-          }
-          const data = await fetchRecipe("user_prompt", recipeText)
-          console.log("Recipe data:", data)
-          setRecipeName(recipeName)
-          // setRecipeName(recipeText)
-          // console.log(data);
-          setRecipe(data)
-          // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
-
-          toast.success("Recipe processed successfully!")
-        }
-        // Priority 2: Image
-        else if (imageUrl) {
-          console.log("Processing image")
-          setRecipeName("Untitled Recipe")
-          const data = await fetchRecipe("image_url", imageUrl)
-          console.log("Recipe data:", data)
-
-          setRecipe(data)
-          toast.success("Recipe extracted from image successfully!")
-        }
-      } catch (error) {
-        const errorMessage =
-          error instanceof Error
-            ? error.message
-            : "An unexpected error occurred"
-        console.error("Error processing recipe data:", error)
-        setError(errorMessage)
-        toast.error(`Failed to process recipe: ${errorMessage}`)
-      } finally {
-        setLoading(false)
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error("Failed to parse stored user", e);
       }
     }
+  }
 
-    // Process data if any recipe-related param exists
-    if (recipeText || imageUrl) {
-      processData()
-    }
+  const recipeText = params.get("recipeText")
+    ? decodeURIComponent(params.get("recipeText"))
+    : null;
+  const imageUrl = params.get("imageUrl")
+    ? decodeURIComponent(params.get("imageUrl"))
+    : null;
+  const modeParam = params.get("mode") || "normal";
 
-    return () => {
-      window.speechSynthesis.cancel() // Cleanup speech synthesis on unmount
+  console.log("Recipe Text:", recipeText);
+  console.log("Image URL:", imageUrl);
+  console.log("Mode:", modeParam);
+
+  // Extract recipe name from recipeText if available
+  if (recipeText && recipeText.includes("RecipeName:")) {
+    const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/);
+    if (nameMatch && nameMatch[1]) {
+      setRecipeName(nameMatch[1].trim());
+    } else {
+      setRecipeName("Untitled Recipe");
     }
-  }, [])
+  }
+
+  // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
+  const processData = async () => {
+    setLoading(true);
+    try {
+      // Priority 1: Recipe details (full text)
+      if (recipeText) {
+        console.log("Processing recipe details");
+        let recipeName;
+        if (recipeText.includes("RecipeName:")) {
+          console.log("RecipeName found in recipeText");
+          recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0];
+        } else {
+          recipeName = recipeText;
+        }
+        const data = await fetchRecipe("user_prompt", recipeText);
+        console.log("Recipe data:", data);
+        setRecipeName(recipeName);
+        setRecipe(data);
+        toast.success("Recipe processed successfully!");
+      }
+      // Priority 2: Image
+      else if (imageUrl) {
+        console.log("Processing image");
+        setRecipeName("Untitled Recipe");
+        const data = await fetchRecipe("image_url", imageUrl);
+        console.log("Recipe data:", data);
+        setRecipe(data);
+        toast.success("Recipe extracted from image successfully!");
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "An unexpected error occurred";
+      console.error("Error processing recipe data:", error);
+      setError(errorMessage);
+      toast.error(`Failed to process recipe: ${errorMessage}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Process data if any recipe-related param exists
+  if (recipeText || imageUrl) {
+    processData();
+  }
+
+  return () => {
+    window.speechSynthesis.cancel(); // Cleanup speech synthesis on unmount
+  };
+}, []); // Empty dependency array means this runs only once on mount
 
   const handleSearch = async (query: string) => {
     setLoading(true)
