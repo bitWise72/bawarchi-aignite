@@ -206,9 +206,10 @@ useEffect(() => {
     const nameMatch = recipeText.match(/RecipeName:(.*?)(?:\n|$)/);
     if (nameMatch && nameMatch[1]) {
       setRecipeName(nameMatch[1].trim());
-    } else {
-      setRecipeName("Untitled Recipe");
-    }
+    } 
+    // else {
+    //   setRecipeName("Untitled Recipe");
+    // }
   }
 
   // Process data based on priority: 1) recipe details, 2) recipe name, 3) food image, 4) recipe image
@@ -216,8 +217,18 @@ useEffect(() => {
     setLoading(true);
     try {
       // Priority 1: Recipe details (full text)
-      if (recipeText) {
-        console.log("Processing recipe details");
+      // if(recipeText && imageUrl) {
+      //   let recipeName;
+      //   if (recipeText.includes("RecipeName:")) {
+      //     console.log("RecipeName found in recipeText");
+      //     recipeName = recipeText.split("RecipeName:")[1].split("&&&")[0];
+      //   } else {
+      //     recipeName = recipeText;
+      //   }
+      //   const data = await fetchRecipe({ "user_prompt": recipeText, "image_url": imageUrl });
+      // }
+       if (recipeText) {
+        // console.log("Processing recipe details");
         let recipeName;
         if (recipeText.includes("RecipeName:")) {
           console.log("RecipeName found in recipeText");
@@ -226,16 +237,18 @@ useEffect(() => {
           recipeName = recipeText;
         }
         const data = await fetchRecipe("user_prompt", recipeText);
-        console.log("Recipe data:", data);
+        // console.log("Recipe data:", data);
         setRecipeName(recipeName);
         setRecipe(data);
         toast.success("Recipe processed successfully!");
       }
       // Priority 2: Image
       else if (imageUrl) {
-        console.log("Processing image");
-        setRecipeName("Untitled Recipe");
+        // console.log("Processing image");
+        setRecipeName("Recipe");
         const data = await fetchRecipe("image_url", imageUrl);
+        // console.log("name",data['step 1'])
+        setRecipeName(String(data['step 1'].name || 'ABC'));
         console.log("Recipe data:", data);
         setRecipe(data);
         toast.success("Recipe extracted from image successfully!");
