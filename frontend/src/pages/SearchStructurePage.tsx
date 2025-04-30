@@ -1,6 +1,13 @@
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useDarkMode } from "@/contexts/DarkModeContext"
+
+declare global {
+  interface Window {
+    webkitSpeechRecognition: any;
+    SpeechRecognition: any;
+  }
+}
 import { PlusCircle, X, Image as ImageIcon, Mic } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"

@@ -300,6 +300,7 @@ useEffect(() => {
         const speech = new SpeechSynthesisUtterance(firstStep.procedure)
         window.speechSynthesis.speak(speech)
         const url = new URL(window.location.href);
+        url.searchParams.delete('imageUrl');
         url.searchParams.set("recipeText", query);
         window.history.pushState({}, '', url);
       }
