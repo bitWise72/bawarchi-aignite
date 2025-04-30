@@ -14,8 +14,10 @@ import ingredient_data from "./ingredient_brands_and_costs.json"
 import { NutritionProfile, NutritionResponse } from "@/components/NutriPanel"
 const STORAGE_KEY = "saved_recipes"
 import axios from "axios"
+import { useQueryClient } from "@tanstack/react-query"
 
 const Dashboard = () => {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState(null)
   const { darkMode, setDarkMode } = useDarkMode()
   const [recipe, setRecipe] = useState<Recipe | null>(null)
@@ -284,6 +286,9 @@ useEffect(() => {
         const firstStep = data[Object.keys(data)[0]]
         const speech = new SpeechSynthesisUtterance(firstStep.procedure)
         window.speechSynthesis.speak(speech)
+        const url = new URL(window.location.href);
+        url.searchParams.set("recipeText", query);
+        window.history.pushState({}, '', url);
       }
 
       toast.success("Recipe found successfully!")
