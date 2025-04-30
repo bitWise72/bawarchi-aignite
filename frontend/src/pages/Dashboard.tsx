@@ -41,6 +41,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    // window.speechSynthesis.cancel()
     if (darkMode) {
       document.body.classList.add("dark-mode")
     } else {
@@ -95,7 +96,7 @@ const Dashboard = () => {
     const processData = async () => {
       setLoading(true)
       try {
-        console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
+        // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
 
         // Priority 1: Recipe details (full text)
         if (recipeText) {
@@ -113,7 +114,7 @@ const Dashboard = () => {
           setRecipeName(recipeName)
           // setRecipeName(recipeText)
           setRecipe(data)
-          console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
+          // console.log("😁😁😁😁😁😁😁😁😁😁😁😁😁")
 
           toast.success("Recipe processed successfully!")
         }
@@ -144,13 +145,18 @@ const Dashboard = () => {
     if (recipeText || imageUrl) {
       processData()
     }
-  }, [darkMode])
+
+    return () => {
+      window.speechSynthesis.cancel() // Cleanup speech synthesis on unmount
+    }
+  }, [])
 
   const handleSearch = async (query: string) => {
     setLoading(true)
     setError(null)
     setCurrentStep(0)
     setRecipeName(query)
+    window.speechSynthesis.cancel() // Stop any ongoing speech synthesis
     try {
       const data = await fetchRecipe("user_prompt", query)
       const dataArray = Object.values(data) // Convert object to array
@@ -196,6 +202,7 @@ const Dashboard = () => {
 
     const steps = Object.keys(recipe)
     if (currentStep < steps.length - 1) {
+      window.speechSynthesis.cancel()
       const nextStep = currentStep + 1
       setCurrentStep(nextStep)
 
