@@ -1,545 +1,646 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiUser, FiHeart, FiLock, FiMail, FiEdit, FiSave, FiPlus, FiX } from 'react-icons/fi';
+import React, { useState, useEffect } from "react" // Import useEffect
+import { motion, AnimatePresence } from "framer-motion"
+// Assuming Framer Motion is installed: npm install framer-motion
+// Heroicons for menu icon: npm install @heroicons/react
 
-const ProfileDashboard = () => {
-  const storedUser = localStorage.getItem("user");
-  const [activeTab, setActiveTab] = useState('user');
-  const [editMode, setEditMode] = useState(false);
-  const [userData, setUserData] = useState({
-    name: `${storedUser ? JSON.parse(storedUser).name : ''}`,
-    email: `${storedUser ? JSON.parse(storedUser).email : ''}`,
-    password: ''
-  });
-  const [healthData, setHealthData] = useState({
-    allergies: [],
-    intolerances: [],
-    conditions: [],
-    diet: '',
-    weightGoal: '',
-    deficiencies: [],
-    aversions: [],
-    age: 0,
-    sex: '',
-    activity: '',
-    preferences: []
-  });
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline" // Using heroicons for menu/close icons
+import Navbar from "@/components/Navbar"
 
-  const handleInputChange = (e, section, field) => {
-    if (section === 'user') {
-      setUserData({ ...userData, [field]: e.target.value });
-    } else {
-      if (field === 'macros') {
-        setHealthData({
-          ...healthData,
-          // macros: { ...healthData.macros, [e.target.name]: parseInt(e.target.value) || 0 }
-        });
+// Placeholder data structure for user profile
+const initialProfileData = {
+  profilePicture: "https://placehold.co/150x150/E2E8F0/000000?text=Profile", // Placeholder image
+  firstName: "John",
+  lastName: "Doe",
+  email: "john.doe@example.com",
+  dateOfBirth: "1990-01-01",
+  biologicalSex: "Male",
+  height: 175, // in cm
+  currentWeight: 70, // in kg
+  goalWeight: 68, // in kg
+  activityLevel: "Moderately Active",
+  dietaryStyle: ["Vegetarian"],
+  allergies: ["Peanuts"],
+  dislikes: ["Mushrooms"],
+  calorieTarget: 2000,
+  proteinGoal: 100, // in grams
+  carbGoal: 250, // in grams
+  fatGoal: 60, // in grams
+  fiberGoal: 30, // in grams
+  healthConditions: ["None"],
+  fitnessGoals: ["Weight Maintenance"],
+  streak: 5, // Days streak
+  mealsLoggedThisWeek: 14,
+}
+
+// Sidebar navigation links
+const sidebarLinks = [
+  { name: "Food Logging", href: "#food-logging" },
+  { name: "Profile (Biodata + Medical)", href: "#profile" },
+  { name: "User Recipe History", href: "#recipe-history" },
+]
+
+// Framer Motion variants for section animation
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
+
+// Framer Motion variants for sidebar animation
+const sidebarVariants = {
+  hidden: { x: "-100%" },
+  visible: { x: "0%" },
+  exit: { x: "-100%" },
+}
+
+// Main Profile Page Component
+const ProfilePage = () => {
+  const user = JSON.parse(localStorage.getItem("user") || null)
+  console.log("User Data:", user)
+  const [profileData, setProfileData] = useState(initialProfileData)
+  const [activeSection, setActiveSection] = useState("#profile") // State to manage active section in sidebar
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false) // State to control sidebar visibility on mobile
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768) // State to track if it's a mobile view
+
+  // Effect to update isMobile state on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+      // If resizing from mobile to desktop, ensure sidebar is visible
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(true)
       } else {
-        setHealthData({ ...healthData, [field]: e.target.value });
+        // If resizing from desktop to mobile, ensure sidebar is closed initially
+        setIsSidebarOpen(false)
       }
     }
-  };
 
-  const handleArrayInput = (e, field) => {
-    const value = e.target.value;
-    if (e.key === 'Enter' && value.trim()) {
-      setHealthData({
-        ...healthData,
-        [field]: [...healthData[field], value.trim()]
-      });
-      e.target.value = '';
+    window.addEventListener("resize", handleResize)
+
+    // Initial check on mount
+    setIsSidebarOpen(window.innerWidth >= 768)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
     }
-  };
+  }, []) // Empty dependency array means this effect runs once on mount and cleans up on unmount
 
-  const removeItem = (field, index) => {
-    setHealthData({
-      ...healthData,
-      [field]: healthData[field].filter((_, i) => i !== index)
-    });
-  };
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setProfileData({ ...profileData, [name]: value })
+  }
 
-  const saveData = () => {
-    setEditMode(false);
-    console.log('Data saved:', { userData, healthData });
-  };
+  // Handle array input changes (e.g., allergies, dietary style)
+  const handleArrayInputChange = (name, value) => {
+    // Simple implementation: replace the array with a new one from comma-separated string
+    setProfileData({
+      ...profileData,
+      [name]: value
+        .split(",")
+        .map((item) => item.trim())
+        .filter((item) => item !== ""),
+    }) // Filter empty strings
+  }
+
+  // Handle Save Changes
+  const handleSaveChanges = () => {
+    console.log("Saving changes:", profileData)
+    // Implement actual save logic here (e.g., API call)
+    // Replace alert with a proper message box or notification
+    alert("Profile changes saved (simulated)!")
+  }
+
+  // Handle Cancel
+  const handleCancel = () => {
+    setProfileData(initialProfileData) // Reset to initial data
+    // Replace alert with a proper message box or notification
+    alert("Changes cancelled!")
+  }
+
+  // Toggle sidebar visibility
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
+  // Handle sidebar link click (closes sidebar on mobile)
+  const handleLinkClick = (href) => {
+    setActiveSection(href)
+    if (isMobile) {
+      // Check if it's mobile view
+      setIsSidebarOpen(false) // Close sidebar on mobile
+    }
+    // In a real app with routing, you would navigate here
+  }
 
   return (
-    <div className="flex h-screen bg-gray-50 text-gray-800 overflow-hidden font-sans">
-    {/* Sidebar */}
-    <motion.div 
-      initial={{ x: -100 }}
-      animate={{ x: 0 }}
-      transition={{ duration: 0.5 }}
-      className="w-64 bg-indigo-700 text-white shadow-lg hidden md:block"
-    >
-      <div className="p-6">
-        <h1 className="text-2xl font-bold font-serif">Health Profile</h1>
-        <div className="mt-10 space-y-2">
+    <div className="flex flex-col min-h-screen bg-gray-100 font-sans">
+      {/* Navbar */}
+      <Navbar />
+      {/* Mobile Sidebar Toggle Button */}
+      {isMobile && ( // Only show toggle button on mobile
+        <div className="flex items-center justify-between p-4 bg-gray-800 text-white">
+          <span className="text-xl font-bold">Nutrition App</span>
           <button
-            onClick={() => setActiveTab('user')}
-            className={`flex items-center w-full p-3 rounded-lg transition-all ${activeTab === 'user' ? 'bg-indigo-900 font-medium' : 'hover:bg-indigo-800'}`}
+            onClick={toggleSidebar}
+            className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
           >
-            <FiUser className="mr-3" />
-            User Details
-          </button>
-          <button
-            onClick={() => setActiveTab('health')}
-            className={`flex items-center w-full p-3 rounded-lg transition-all ${activeTab === 'health' ? 'bg-indigo-900 font-medium' : 'hover:bg-indigo-800'}`}
-          >
-            <FiHeart className="mr-3" />
-            Health Details
+            {isSidebarOpen ? (
+              <XMarkIcon className="w-6 h-6" />
+            ) : (
+              <Bars3Icon className="w-6 h-6" />
+            )}
           </button>
         </div>
-      </div>
-    </motion.div>
-
-    {/* Mobile Sidebar Toggle */}
-    <div className="md:hidden fixed bottom-4 right-4 z-50">
-      <button
-        onClick={() => setActiveTab(prev => prev === 'user' ? 'health' : 'user')}
-        className="bg-indigo-600 text-white p-3 rounded-full shadow-lg"
-      >
-        {activeTab === 'user' ? <FiHeart size={24} /> : <FiUser size={24} />}
-      </button>
-    </div>
-
-    {/* Main Content */}
-    <div className="flex-1 overflow-y-auto p-4 md:p-6">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-          className="bg-white rounded-xl shadow-md p-4 md:p-6"
+      )}
+      {/* Main content area including sidebar and main content */}
+      <div className="flex flex-1">
+        {" "}
+        {/* Use flex-1 to take up remaining vertical space */}
+        {/* Sidebar */}
+        <AnimatePresence>
+          {" "}
+          {/* Use AnimatePresence for exit animations */}
+          {(isSidebarOpen || !isMobile) && ( // Show sidebar if open on mobile or always on desktop
+            <motion.div
+              key="sidebar" // Key is important for AnimatePresence
+              className="w-64 bg-gray-800 text-white p-6 space-y-6 flex-shrink-0
+                             fixed inset-y-0 left-0 transform md:relative md:translate-x-0 z-40 md:z-auto" // Fixed for mobile, relative for desktop, z-index adjustment
+              variants={sidebarVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit" // Add exit variant
+              transition={{ duration: 0.3 }}
+            >
+              <div className="text-2xl font-bold mb-8 md:block hidden">
+                Nutrition App
+              </div>{" "}
+              {/* App Title/Logo - Hide on mobile toggle view */}
+              <div className="text-lg font-semibold mb-4 mt-10 md:mt-0">
+                Profile Navigation
+              </div>{" "}
+              {/* Adjust margin for mobile */}
+              <nav>
+                <ul className="space-y-2">
+                  {sidebarLinks.map((link) => (
+                    <li key={link.name}>
+                      <a
+                        href={link.href}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleLinkClick(link.href)
+                        }}
+                        className={`block py-2 px-4 rounded transition duration-200
+                              ${
+                                activeSection === link.href
+                                  ? "bg-gray-700 text-teal-400"
+                                  : "hover:bg-gray-700 hover:text-teal-400"
+                              }
+                            `}
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Overlay when sidebar is open on mobile */}
+        <AnimatePresence>
+          {isSidebarOpen &&
+            isMobile && ( // Only show overlay on mobile when sidebar is open
+              <motion.div
+                key="sidebar-overlay"
+                className="fixed inset-0 bg-black bg-opacity-50 z-30" // Adjusted z-index
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={toggleSidebar} // Close sidebar when clicking overlay
+              />
+            )}
+        </AnimatePresence>
+        {/* Main Content Area */}
+        {/* Added ml-64 on md and up to push content when sidebar is visible */}
+        <div
+          className={`flex-1 p-4 md:p-8 overflow-y-auto ${
+            !isMobile ? "md:ml-10" : ""
+          }`}
         >
-          {activeTab === 'user' ? (
-            <div>
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl md:text-2xl font-semibold font-serif">User Details</h2>
-                {editMode ? (
-                  <button
-                    onClick={saveData}
-                    className="flex items-center bg-green-600 text-white px-3 py-1 md:px-4 md:py-2 rounded-lg hover:bg-green-700 transition-colors text-sm md:text-base"
-                  >
-                    <FiSave className="mr-2" />
-                    Save
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setEditMode(true)}
-                    className="flex items-center bg-indigo-600 text-white px-3 py-1 md:px-4 md:py-2 rounded-lg hover:bg-indigo-700 transition-colors text-sm md:text-base"
-                  >
-                    <FiEdit className="mr-2" />
-                    Edit
-                  </button>
-                )}
-              </div>
+          <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-gray-800">
+            {/* Dynamically change title based on active section */}
+            {sidebarLinks
+              .find((link) => link.href === activeSection)
+              ?.name.replace(" (Biodata + Medical)", "") || "Profile"}
+          </h1>
 
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <FiUser className="text-gray-500 mr-3 text-lg md:text-xl" />
-                  <div className="flex-1">
-                    <label className="block text-xs md:text-sm text-gray-500">Full Name</label>
-                    {editMode ? (
-                      <input
-                        type="text"
-                        value={userData.name}
-                        onChange={(e) => handleInputChange(e, 'user', 'name')}
-                        className="w-full p-2 border-b-2 border-indigo-200 focus:border-indigo-500 outline-none text-base md:text-lg"
-                      />
-                    ) : (
-                      <p className="text-base md:text-lg">{userData.name || <span className="text-gray-400">Not provided</span>}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center">
-                  <FiMail className="text-gray-500 mr-3 text-lg md:text-xl" />
-                  <div className="flex-1">
-                    <label className="block text-xs md:text-sm text-gray-500">Email</label>
-                    {editMode ? (
-                      <input
-                        type="email"
-                        value={userData.email}
-                        onChange={(e) => handleInputChange(e, 'user', 'email')}
-                        className="w-full p-2 border-b-2 border-indigo-200 focus:border-indigo-500 outline-none text-base md:text-lg"
-                      />
-                    ) : (
-                      <p className="text-base md:text-lg">{userData.email || <span className="text-gray-400">Not provided</span>}</p>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flex items-center">
-                  <FiLock className="text-gray-500 mr-3 text-lg md:text-xl" />
-                  <div className="flex-1">
-                    <label className="block text-xs md:text-sm text-gray-500">Password</label>
-                    {editMode ? (
-                      <input
-                        type="password"
-                        value={userData.password}
-                        onChange={(e) => handleInputChange(e, 'user', 'password')}
-                        className="w-full p-2 border-b-2 border-indigo-200 focus:border-indigo-500 outline-none text-base md:text-lg"
-                      />
-                    ) : (
-                      <p className="text-base md:text-lg">{userData.password || <span className="text-gray-400">Not provided</span>}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl md:text-2xl font-semibold font-serif">Health Details</h2>
-                <button
-                  onClick={() => setEditMode(!editMode)}
-                  className={`flex items-center ${editMode ? 'bg-green-600' : 'bg-indigo-600'} text-white px-3 py-1 md:px-4 md:py-2 rounded-lg hover:opacity-90 transition-opacity text-sm md:text-base`}
-                >
-                  {editMode ? (
-                    <>
-                      <FiSave className="mr-2" />
-                      Save
-                    </>
-                  ) : (
-                    <>
-                      <FiEdit className="mr-2" />
-                      Edit
-                    </>
-                  )}
+          {/* Profile Section Content - Conditional Rendering based on activeSection */}
+          {activeSection === "#profile" && (
+            <motion.div
+              id="profile-content" // Changed ID to avoid conflict with section div
+              className="bg-white p-4 md:p-6 rounded-lg shadow-md space-y-6"
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {/* Profile Picture Section */}
+              <motion.div
+                className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+              >
+                <img
+                  src={user.picture || ""}
+                  alt="Profile"
+                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-teal-400"
+                />
+                <button className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition duration-200 text-sm sm:text-base">
+                  Change Profile Picture
                 </button>
-              </div>
+              </motion.div>
 
-              <div className="space-y-4 md:space-y-6">
-                {/* Allergies */}
-                <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Allergies</h3>
-                  {healthData.allergies.length > 0 || editMode ? (
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {healthData.allergies.map((item, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ scale: 0.9 }}
-                          animate={{ scale: 1 }}
-                          className="bg-red-100 text-red-800 px-2 py-1 md:px-3 md:py-1 rounded-full flex items-center text-sm md:text-base"
-                        >
-                          {item}
-                          {editMode && (
-                            <button
-                              onClick={() => removeItem('allergies', index)}
-                              className="ml-1 md:ml-2 text-red-600 hover:text-red-900"
-                            >
-                              <FiX size={12} className="md:size-[14px]" />
-                            </button>
-                          )}
-                        </motion.div>
-                      ))}
-                      {editMode && (
-                        <div className="relative w-full md:w-auto">
-                          <input
-                            type="text"
-                            onKeyDown={(e) => handleArrayInput(e, 'allergies')}
-                            placeholder="Add allergy"
-                            className="pl-3 pr-8 py-1 border-2 border-gray-200 rounded-full focus:border-indigo-500 outline-none text-sm w-full"
-                          />
-                          <FiPlus className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 italic text-sm md:text-base">No allergies recorded</p>
-                  )}
-                </div>
-
-                {/* Intolerances */}
-                <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Intolerances</h3>
-                  {healthData.intolerances.length > 0 || editMode ? (
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {healthData.intolerances.map((item, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ scale: 0.9 }}
-                          animate={{ scale: 1 }}
-                          className="bg-amber-100 text-amber-800 px-2 py-1 md:px-3 md:py-1 rounded-full flex items-center text-sm md:text-base"
-                        >
-                          {item}
-                          {editMode && (
-                            <button
-                              onClick={() => removeItem('intolerances', index)}
-                              className="ml-1 md:ml-2 text-amber-600 hover:text-amber-900"
-                            >
-                              <FiX size={12} className="md:size-[14px]" />
-                            </button>
-                          )}
-                        </motion.div>
-                      ))}
-                      {editMode && (
-                        <div className="relative w-full md:w-auto">
-                          <input
-                            type="text"
-                            onKeyDown={(e) => handleArrayInput(e, 'intolerances')}
-                            placeholder="Add intolerance"
-                            className="pl-3 pr-8 py-1 border-2 border-gray-200 rounded-full focus:border-indigo-500 outline-none text-sm w-full"
-                          />
-                          <FiPlus className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 italic text-sm md:text-base">No intolerances recorded</p>
-                  )}
-                </div>
-
-                {/* Diet */}
-                <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Diet</h3>
-                  {editMode ? (
-                    <select
-                      value={healthData.diet}
-                      onChange={(e) => handleInputChange(e, 'health', 'diet')}
-                      className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none text-sm md:text-base"
-                    >
-                      <option value="">Select diet</option>
-                      <option value="Vegetarian">Vegetarian</option>
-                      <option value="Vegan">Vegan</option>
-                      <option value="Paleo">Paleo</option>
-                      <option value="Keto">Keto</option>
-                      <option value="Mediterranean">Mediterranean</option>
-                    </select>
-                  ) : (
-                    <p className="text-base md:text-lg">{healthData.diet || <span className="text-gray-400">Not specified</span>}</p>
-                  )}
-                </div>
-
-                {/* Weight Goal */}
-                <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Weight Goal</h3>
-                  {editMode ? (
-                    <select
-                      value={healthData.weightGoal}
-                      onChange={(e) => handleInputChange(e, 'health', 'weightGoal')}
-                      className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none text-sm md:text-base"
-                    >
-                      <option value="">Select weight goal</option>
-                      <option value="Lose weight">Lose weight</option>
-                      <option value="Gain weight">Gain weight</option>
-                      <option value="Maintain weight">Maintain weight</option>
-                    </select>
-                  ) : (
-                    <p className="text-base md:text-lg">{healthData.weightGoal || <span className="text-gray-400">Not specified</span>}</p>
-                  )}
-                </div>
-
-                {/* Macros */}
-                {/* <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Macronutrients (g/day)</h3>
-                  <div className="grid grid-cols-3 gap-2 md:gap-4">
-                    {['protein', 'carbs', 'fat'].map((macro) => (
-                      <div key={macro}>
-                        <label className="block text-xs md:text-sm font-medium text-gray-500 mb-1 capitalize">{macro}</label>
-                        {editMode ? (
-                          <input
-                            type="number"
-                            name={macro}
-                            value={healthData.macros[macro]}
-                            onChange={(e) => handleInputChange(e, 'health', 'macros')}
-                            className="w-full p-1 md:p-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none text-sm md:text-base"
-                          />
-                        ) : (
-                          <p className="text-base md:text-lg">
-                            {healthData.macros[macro] > 0 ? healthData.macros[macro] : <span className="text-gray-400">Not set</span>}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div> */}
-
-                {/* Deficiencies */}
-                <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Nutrient Deficiencies</h3>
-                  {healthData.deficiencies.length > 0 || editMode ? (
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {healthData.deficiencies.map((item, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ scale: 0.9 }}
-                          animate={{ scale: 1 }}
-                          className="bg-blue-100 text-blue-800 px-2 py-1 md:px-3 md:py-1 rounded-full flex items-center text-sm md:text-base"
-                        >
-                          {item}
-                          {editMode && (
-                            <button
-                              onClick={() => removeItem('deficiencies', index)}
-                              className="ml-1 md:ml-2 text-blue-600 hover:text-blue-900"
-                            >
-                              <FiX size={12} className="md:size-[14px]" />
-                            </button>
-                          )}
-                        </motion.div>
-                      ))}
-                      {editMode && (
-                        <div className="relative w-full md:w-auto">
-                          <input
-                            type="text"
-                            onKeyDown={(e) => handleArrayInput(e, 'deficiencies')}
-                            placeholder="Add deficiency"
-                            className="pl-3 pr-8 py-1 border-2 border-gray-200 rounded-full focus:border-indigo-500 outline-none text-sm w-full"
-                          />
-                          <FiPlus className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 italic text-sm md:text-base">No deficiencies recorded</p>
-                  )}
-                </div>
-
-                {/* Aversions */}
-                {/* <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Food Aversions</h3>
-                  {healthData.aversions.length > 0 || editMode ? (
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {healthData.aversions.map((item, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ scale: 0.9 }}
-                          animate={{ scale: 1 }}
-                          className="bg-gray-100 text-gray-800 px-2 py-1 md:px-3 md:py-1 rounded-full flex items-center text-sm md:text-base"
-                        >
-                          {item}
-                          {editMode && (
-                            <button
-                              onClick={() => removeItem('aversions', index)}
-                              className="ml-1 md:ml-2 text-gray-600 hover:text-gray-900"
-                            >
-                              <FiX size={12} className="md:size-[14px]" />
-                            </button>
-                          )}
-                        </motion.div>
-                      ))}
-                      {editMode && (
-                        <div className="relative w-full md:w-auto">
-                          <input
-                            type="text"
-                            onKeyDown={(e) => handleArrayInput(e, 'aversions')}
-                            placeholder="Add aversion"
-                            className="pl-3 pr-8 py-1 border-2 border-gray-200 rounded-full focus:border-indigo-500 outline-none text-sm w-full"
-                          />
-                          <FiPlus className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 italic text-sm md:text-base">No food aversions recorded</p>
-                  )}
-                </div> */}
-
-                {/* Preferences */}
-                {/* <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Food Preferences</h3>
-                  {healthData.preferences.length > 0 || editMode ? (
-                    <div className="flex flex-wrap gap-2 mb-2">
-                      {healthData.preferences.map((item, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ scale: 0.9 }}
-                          animate={{ scale: 1 }}
-                          className="bg-green-100 text-green-800 px-2 py-1 md:px-3 md:py-1 rounded-full flex items-center text-sm md:text-base"
-                        >
-                          {item}
-                          {editMode && (
-                            <button
-                              onClick={() => removeItem('preferences', index)}
-                              className="ml-1 md:ml-2 text-green-600 hover:text-green-900"
-                            >
-                              <FiX size={12} className="md:size-[14px]" />
-                            </button>
-                          )}
-                        </motion.div>
-                      ))}
-                      {editMode && (
-                        <div className="relative w-full md:w-auto">
-                          <input
-                            type="text"
-                            onKeyDown={(e) => handleArrayInput(e, 'preferences')}
-                            placeholder="Add preference"
-                            className="pl-3 pr-8 py-1 border-2 border-gray-200 rounded-full focus:border-indigo-500 outline-none text-sm w-full"
-                          />
-                          <FiPlus className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500 italic text-sm md:text-base">No food preferences recorded</p>
-                  )}
-                </div> */}
-
-                {/* Age */}
-                <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Age</h3>
-                  {editMode ? (
+              {/* Personal Information & Health Metrics */}
+              <motion.div
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                  Personal Information & Health Metrics
+                </h2>
+                {/* Adjusted grid for mobile: 1 column on small, 2 on medium and up */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      First Name
+                    </label>
                     <input
-                      type="number"
-                      value={healthData.age}
-                      onChange={(e) => handleInputChange(e, 'health', 'age')}
-                      className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none text-sm md:text-base"
+                      type="text"
+                      name="firstName"
+                      value={profileData.firstName}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
                     />
-                  ) : (
-                    <p className="text-base md:text-lg">{healthData.age || <span className="text-gray-400">Not specified</span>}</p>
-                  )}
-                </div>
-
-                {/* Sex */}
-                {/* <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Sex</h3>
-                  {editMode ? (
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      name="lastName"
+                      value={profileData.lastName}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={profileData.email}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Date of Birth
+                    </label>
+                    <input
+                      type="date"
+                      name="dateOfBirth"
+                      value={profileData.dateOfBirth}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Biological Sex
+                    </label>
                     <select
-                      value={healthData.sex}
-                      onChange={(e) => handleInputChange(e, 'health', 'sex')}
-                      className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none text-sm md:text-base"
+                      name="biologicalSex"
+                      value={profileData.biologicalSex}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
                     >
-                      <option value="">Select sex</option>
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
                       <option value="Other">Other</option>
                     </select>
-                  ) : (
-                    <p className="text-base md:text-lg">{healthData.sex || <span className="text-gray-400">Not specified</span>}</p>
-                  )}
-                </div> */}
-
-                {/* Activity Level */}
-                <div>
-                  <h3 className="text-base md:text-lg font-medium text-gray-700 mb-2">Activity Level</h3>
-                  {editMode ? (
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Height (cm)
+                    </label>
+                    <input
+                      type="number"
+                      name="height"
+                      value={profileData.height}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Current Weight (kg)
+                    </label>
+                    <input
+                      type="number"
+                      name="currentWeight"
+                      value={profileData.currentWeight}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Goal Weight (kg)
+                    </label>
+                    <input
+                      type="number"
+                      name="goalWeight"
+                      value={profileData.goalWeight}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Activity Level
+                    </label>
                     <select
-                      value={healthData.activity}
-                      onChange={(e) => handleInputChange(e, 'health', 'activity')}
-                      className="w-full p-2 border-2 border-gray-200 rounded-lg focus:border-indigo-500 outline-none text-sm md:text-base"
+                      name="activityLevel"
+                      value={profileData.activityLevel}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
                     >
-                      <option value="">Select activity level</option>
                       <option value="Sedentary">Sedentary</option>
-                      <option value="Light">Light</option>
-                      <option value="Moderate">Moderate</option>
-                      <option value="Active">Active</option>
+                      <option value="Lightly Active">Lightly Active</option>
+                      <option value="Moderately Active">
+                        Moderately Active
+                      </option>
                       <option value="Very Active">Very Active</option>
                     </select>
-                  ) : (
-                    <p className="text-base md:text-lg">{healthData.activity || <span className="text-gray-400">Not specified</span>}</p>
-                  )}
+                  </div>
                 </div>
-              </div>
-            </div>
-          )}
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  </div>
-  );
-};
+              </motion.div>
 
-export default ProfileDashboard;
+              {/* Dietary Preferences & Goals */}
+              <motion.div
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                  Dietary Preferences & Goals
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Dietary Style (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="dietaryStyle"
+                      value={profileData.dietaryStyle.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("dietaryStyle", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Allergies (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="allergies"
+                      value={profileData.allergies.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("allergies", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Food Dislikes (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="dislikes"
+                      value={profileData.dislikes.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("dislikes", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Calorie Target
+                    </label>
+                    <input
+                      type="number"
+                      name="calorieTarget"
+                      value={profileData.calorieTarget}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Protein Goal (g)
+                    </label>
+                    <input
+                      type="number"
+                      name="proteinGoal"
+                      value={profileData.proteinGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Carbohydrate Goal (g)
+                    </label>
+                    <input
+                      type="number"
+                      name="carbGoal"
+                      value={profileData.carbGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Fat Goal (g)
+                    </label>
+                    <input
+                      type="number"
+                      name="fatGoal"
+                      value={profileData.fatGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Fiber Goal (g)
+                    </label>
+                    <input
+                      type="number"
+                      name="fiberGoal"
+                      value={profileData.fiberGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Health Conditions & App Progress */}
+              <motion.div
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                  Health Conditions & App Progress
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Health Conditions (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="healthConditions"
+                      value={profileData.healthConditions.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange(
+                          "healthConditions",
+                          e.target.value
+                        )
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Fitness Goals (comma-separated)
+                    </label>
+                    <input
+                      type="text"
+                      name="fitnessGoals"
+                      value={profileData.fitnessGoals.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("fitnessGoals", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Logging Streak (Days)
+                    </label>
+                    <input
+                      type="number"
+                      name="streak"
+                      value={profileData.streak}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      readOnly // Streak is typically calculated, not edited directly
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Meals Logged This Week
+                    </label>
+                    <input
+                      type="number"
+                      name="mealsLoggedThisWeek"
+                      value={profileData.mealsLoggedThisWeek}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      readOnly // This is also typically calculated
+                    />
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Action Buttons */}
+              <motion.div
+                className="flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 mt-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+              >
+                <button
+                  onClick={handleSaveChanges}
+                  className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200 text-sm md:text-base"
+                >
+                  Save Changes
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition duration-200 text-sm md:text-base"
+                >
+                  Cancel
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Placeholder content for other sections */}
+          {activeSection === "#food-logging" && (
+            <motion.div
+              id="food-logging-content" // Changed ID
+              className="bg-white p-4 md:p-6 rounded-lg shadow-md"
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <h2 className="text-lg md:text-xl font-semibold text-gray-700">
+                Food Logging Content Goes Here
+              </h2>
+              <p className="mt-4 text-gray-600 text-sm md:text-base">
+                This section would contain the interface for logging meals,
+                snacks, and drinks.
+              </p>
+            </motion.div>
+          )}
+
+          {activeSection === "#recipe-history" && (
+            <motion.div
+              id="recipe-history-content" // Changed ID
+              className="bg-white p-4 md:p-6 rounded-lg shadow-md"
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <h2 className="text-lg md:text-xl font-semibold text-gray-700">
+                User Recipe History Content Goes Here
+              </h2>
+              <p className="mt-4 text-gray-600 text-sm md:text-base">
+                This section would display the recipes the user has created or
+                saved.
+              </p>
+            </motion.div>
+          )}
+        </div>
+      </div>{" "}
+      {/* End of flex-1 container */}
+    </div>
+  )
+}
+
+export default ProfilePage

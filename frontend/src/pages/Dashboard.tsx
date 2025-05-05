@@ -326,17 +326,17 @@ useEffect(() => {
     setNutritionDataCache((prev) => ({ ...prev, [key]: data }))
   }
 
-  const anyStep = (step:any) => {
+  const anyStep = (step: string) => {
     window.speechSynthesis.cancel() // Stop any ongoing speech synthesis
     const stepNum = step.split("step")[1];
     if (!recipe) return
 
     const steps = Object.keys(recipe)
 
-    if (Number(stepNum-1) < steps.length) {
+    if (Number(stepNum) - 1 < steps.length) {
       // console.log("something")
-      setCurrentStep(Number(stepNum-1))
-      const stepData = recipe[steps[stepNum-1]]
+      setCurrentStep(Number(stepNum) - 1)
+      const stepData = recipe[steps[Number(stepNum) - 1]]
       // console.log("stepData", stepData)
       const speech = new SpeechSynthesisUtterance(stepData.procedure)
       window.speechSynthesis.speak(speech)

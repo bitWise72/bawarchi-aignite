@@ -173,7 +173,7 @@ const SearchStructurePage: React.FC<SearchStructurePageProps> = ({
       let combinedText = ""
 
       if (recipeName) {
-        combinedText += `RecipeName:${recipeName}&&&\n\n`
+        combinedText += `RecipeName:${recipeName}\n\n`
       }
 
       if (recipeDescription) {
