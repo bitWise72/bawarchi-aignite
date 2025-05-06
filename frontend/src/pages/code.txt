@@ -1,327 +1,827 @@
-  const user = JSON.parse(localStorage.getItem("user") || null)
-  console.log("User Data:", user)
+import React, { useState, useEffect } from "react" // Import useEffect
+import { motion, AnimatePresence } from "framer-motion"
+// Assuming Framer Motion is installed: npm install framer-motion
+// Heroicons for menu icon: npm install @heroicons/react
 
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline" // Using heroicons for menu/close icons
+import Navbar from "@/components/Navbar"
 
-
-import React from "react"
-
-// Define the main ProfileDashboard component
-const ProfileDashboard: React.FC = () => {
-  return (
-    // Main container with a simple background and padding
-    <div className="min-h-screen bg-gray-100 p-4">
-      {/* Flex container for the sidebar and main content */}
-      <div className="flex">
-        {/* Sidebar - styled to match the image */}
-        <div className="w-16 bg-gray-800 text-white flex flex-col items-center py-6 rounded-lg shadow-lg mr-4">
-          {/* HR Logo placeholder */}
-          <div className="mb-8 text-xl font-bold">HR</div>
-          {/* Navigation Icons - using placeholder divs */}
-          <div className="flex flex-col items-center space-y-6">
-            <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-            <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-          </div>
-          {/* User Avatar placeholder at the bottom */}
-          <div className="mt-auto w-10 h-10 bg-gray-500 rounded-full"></div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="flex-1 bg-white p-8 rounded-lg shadow-lg">
-          {/* Header Section */}
-          <div className="flex items-center justify-between border-b pb-4 mb-6">
-            {/* Back arrow and User Name */}
-            <div className="flex items-center space-x-4">
-              {/* Back Arrow placeholder */}
-              <div className="text-gray-500 text-xl">←</div>
-              {/* User Avatar */}
-              <img
-                src="https://placehold.co/40x40/cccccc/ffffff?text=JS" // Placeholder image
-                alt="Profile"
-                className="w-10 h-10 rounded-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.src =
-                    "https://placehold.co/40x40/cccccc/ffffff?text=JS"
-                }} // Fallback
-              />
-              {/* User Name */}
-              <h1 className="text-2xl font-semibold text-gray-800">
-                Russel Sims
-              </h1>
-            </div>
-            {/* Added date and Delete button */}
-            <div className="flex items-center space-x-4 text-sm text-gray-500">
-              <span>Added on 21/04/2022</span>
-              {/* Delete Button */}
-              <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">
-                Delete
-              </button>
-            </div>
-          </div>
-
-          {/* Content Grid - using grid for layout */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Left Column: Profile Image and Employee Details */}
-            <div className="col-span-1">
-              {/* Profile Image Section */}
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                  PROFILE IMAGE
-                </h2>
-                {/* Profile Image Placeholder */}
-                <img
-                  src="https://placehold.co/300x400/e0e0e0/333333?text=Profile+Image" // Placeholder image
-                  alt="Profile"
-                  className="w-full h-auto object-cover rounded-md mb-4"
-                  onError={(e) => {
-                    e.currentTarget.src =
-                      "https://placehold.co/300x400/e0e0e0/333333?text=Profile+Image"
-                  }} // Fallback
-                />
-                {/* Change Profile Image Button */}
-                <button className="w-full bg-gray-200 text-gray-700 py-2 rounded-md hover:bg-gray-300">
-                  Change Profile Image
-                </button>
-              </div>
-
-              {/* Employee Details Section */}
-              <div>
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                  EMPLOYEE DETAILS
-                </h2>
-                {/* Detail Item */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-500">
-                    First Name
-                  </label>
-                  <input
-                    type="text"
-                    value="Russel"
-                    readOnly
-                    className="mt-1 block w-full border-b border-gray-300 py-2 focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-                {/* Detail Item */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-500">
-                    Last Name
-                  </label>
-                  <input
-                    type="text"
-                    value="Sims"
-                    readOnly
-                    className="mt-1 block w-full border-b border-gray-300 py-2 focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-                {/* Detail Item */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-500">
-                    Email Address
-                  </label>
-                  <input
-                    type="text"
-                    value="russel@mycompany.com"
-                    readOnly
-                    className="mt-1 block w-full border-b border-gray-300 py-2 focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-                {/* Detail Item */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-500">
-                    Phone Number
-                  </label>
-                  <input
-                    type="text"
-                    value="+1255 29345690"
-                    readOnly
-                    className="mt-1 block w-full border-b border-gray-300 py-2 focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-                {/* Detail Item */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-500">
-                    Position
-                  </label>
-                  <input
-                    type="text"
-                    value="IOS Developer"
-                    readOnly
-                    className="mt-1 block w-full border-b border-gray-300 py-2 focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Role, Team, and Onboarding */}
-            <div className="col-span-2">
-              {/* Role Section */}
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                  ROLE
-                </h2>
-                {/* Role Dropdown Placeholder */}
-                <select className="mt-1 block w-full border border-gray-300 py-2 px-3 rounded-md focus:outline-none focus:border-blue-500">
-                  <option>Employee</option>
-                </select>
-              </div>
-
-              {/* Team Section */}
-              <div className="mb-6">
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                  TEAM
-                </h2>
-                {/* Team Member Placeholder */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Kate Middleton</span>
-                  {/* Dropdown Icon Placeholder */}
-                  <div className="text-gray-500">▼</div>
-                </div>
-                {/* Team Member Placeholder */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Kirk Mitrohin</span>
-                  {/* Dropdown Icon Placeholder */}
-                  <div className="text-gray-500">▼</div>
-                </div>
-                {/* Team Member Placeholder */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Eugene Hummell</span>
-                  {/* Dropdown Icon Placeholder */}
-                  <div className="text-gray-500">▼</div>
-                </div>
-              </div>
-
-              {/* Onboarding Section */}
-              <div>
-                <h2 className="text-lg font-semibold text-gray-700 mb-4">
-                  ONBOARDING
-                </h2>
-                {/* Starts On Date */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-500">
-                    Starts on
-                  </label>
-                  <input
-                    type="text"
-                    value="21.05.2022"
-                    readOnly
-                    className="mt-1 block w-full border-b border-gray-300 py-2 focus:outline-none focus:border-blue-500"
-                  />
-                </div>
-                {/* Onboarding Required Toggle */}
-                <div className="flex items-center justify-between mb-4">
-                  <span>Onboarding required</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1 flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                </div>
-                {/* Current Status */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-gray-500">
-                    Current Status
-                  </label>
-                  {/* Progress Bar Placeholder */}
-                  <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                    <div
-                      className="bg-blue-600 h-2.5 rounded-full"
-                      style={{ width: "35%" }}
-                    ></div>
-                  </div>
-                  <span className="text-sm text-gray-500">Onboarding 35%</span>
-                </div>
-                {/* View Answers Button */}
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 mb-6">
-                  View Answers
-                </button>
-
-                {/* Onboarding Scripts */}
-                <h3 className="text-md font-semibold text-gray-700 mb-4">
-                  Onboarding Scripts
-                </h3>
-                {/* Onboarding Script Item */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Office Tour</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-green-500 rounded-full p-1 flex items-center justify-end">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                  <span className="text-sm text-gray-500">100%</span>
-                </div>
-                {/* Onboarding Script Item */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Management Introductory</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1 flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                  <span className="text-sm text-gray-500">0%</span>
-                </div>
-                {/* Onboarding Script Item */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Work Tools</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1 flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                  <span className="text-sm text-gray-500">20%</span>
-                </div>
-                {/* Onboarding Script Item */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Meet Your Colleagues</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1 flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                  <span className="text-sm text-gray-500">0%</span>
-                </div>
-                {/* Onboarding Script Item */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Duties Journal</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1 flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                  <span className="text-sm text-gray-500">0%</span>
-                </div>
-                {/* Onboarding Script Item */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Requests Handling</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1 flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                  <span className="text-sm text-gray-500">0%</span>
-                </div>
-                {/* Onboarding Script Item */}
-                <div className="flex items-center justify-between mb-2">
-                  <span>Activity Tracking</span>
-                  {/* Toggle Placeholder */}
-                  <div className="w-10 h-6 bg-gray-300 rounded-full p-1 flex items-center">
-                    <div className="w-4 h-4 bg-white rounded-full shadow"></div>
-                  </div>
-                  <span className="text-sm text-gray-500">0%</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer Buttons */}
-          <div className="flex justify-end space-x-4 mt-8">
-            {/* Save Changes Button */}
-            <button className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
-              Save Changes
-            </button>
-            {/* Cancel Button */}
-            <button className="bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+// Placeholder data structure for user profile
+const initialProfileData = {
+  profilePicture: "[https://placehold.co/150x150/E2E8F0/000000?text=Profile](https://placehold.co/150x150/E2E8F0/000000?text=Profile)", // Placeholder image
+  firstName: "John",
+  lastName: "Doe",
+  email: "[john.doe@example.com](mailto:john.doe@example.com)",
+  dateOfBirth: "1990-01-01",
+  biologicalSex: "Male",
+  height: 175, // in cm
+  currentWeight: 70, // in kg
+  goalWeight: 68, // in kg
+  activityLevel: "Moderately Active",
+  dietaryStyle: \["Vegetarian"],
+  allergies: \["Peanuts"],
+  dislikes: \["Mushrooms"],
+  calorieTarget: 2000,
+  proteinGoal: 100, // in grams
+  carbGoal: 250, // in grams
+  fatGoal: 60, // in grams
+  fiberGoal: 30, // in grams
+  healthConditions: \["None"],
+  fitnessGoals: \["Weight Maintenance"],
+  streak: 5, // Days streak
+  mealsLoggedThisWeek: 14,
 }
 
-export default ProfileDashboard
+// Sidebar navigation links
+const sidebarLinks = \[
+  { name: "Food Logging", href: "#food-logging" },
+  { name: "Profile (Biodata + Medical)", href: "#profile" },
+  { name: "User Recipe History", href: "#recipe-history" },
+]
+
+// Framer Motion variants for section animation
+const sectionVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+}
+
+// Framer Motion variants for sidebar animation
+const sidebarVariants = {
+  hidden: { x: "-100%" },
+  visible: { x: "0%" },
+  exit: { x: "-100%" },
+}
+
+// Main Profile Page Component
+const ProfilePage = () => {
+  const \[darkMode, setDarkMode] = useState(false) // State to manage dark mode
+  const user = JSON.parse(localStorage.getItem("user") || null)
+  console.log("User Data:", user)
+  const \[profileData, setProfileData] = useState(initialProfileData)
+  const \[activeSection, setActiveSection] = useState("#profile") // State to manage active section in sidebar
+  const \[isSidebarOpen, setIsSidebarOpen] = useState(false) // State to control sidebar visibility on mobile
+  const \[isMobile, setIsMobile] = useState(window\.innerWidth < 768) // State to track if it's a mobile view
+
+  // Effect to update isMobile state on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window\.innerWidth < 768)
+      // If resizing from mobile to desktop, ensure sidebar is visible
+      if (window\.innerWidth >= 768) {
+        setIsSidebarOpen(true)
+      } else {
+        // If resizing from desktop to mobile, ensure sidebar is closed initially
+        setIsSidebarOpen(false)
+      }
+    }
+
+    window\.addEventListener("resize", handleResize)
+
+    // Initial check on mount
+    setIsSidebarOpen(window\.innerWidth >= 768)
+
+    return () => {
+      window\.removeEventListener("resize", handleResize)
+    }
+  }, \[]) // Empty dependency array means this effect runs once on mount and cleans up on unmount
+
+  // Handle input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setProfileData({ ...profileData, \[name]: value })
+  }
+
+  // Handle array input changes (e.g., allergies, dietary style)
+  const handleArrayInputChange = (name, value) => {
+    // Simple implementation: replace the array with a new one from comma-separated string
+    setProfileData({
+      ...profileData,
+      \[name]: value
+        .split(",")
+        .map((item) => item.trim())
+        .filter((item) => item !== ""),
+    }) // Filter empty strings
+  }
+
+  // Handle Save Changes
+  const handleSaveChanges = () => {
+    console.log("Saving changes:", profileData)
+    // Implement actual save logic here (e.g., API call)
+    // Replace alert with a proper message box or notification
+    alert("Profile changes saved (simulated)!")
+  }
+
+  // Handle Cancel
+  const handleCancel = () => {
+    setProfileData(initialProfileData) // Reset to initial data
+    // Replace alert with a proper message box or notification
+    alert("Changes cancelled!")
+  }
+
+  // Toggle sidebar visibility
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+  }
+
+  // Handle sidebar link click (closes sidebar on mobile)
+  const handleLinkClick = (href) => {
+    setActiveSection(href)
+    if (isMobile) {
+      // Check if it's mobile view
+      setIsSidebarOpen(false) // Close sidebar on mobile
+    }
+    // In a real app with routing, you would navigate here
+  }
+
+  return (
+    <div className="flex flex-col min-h-screen bg-gray-100 font-sans">
+      {/\* Navbar */}
+       \<Navbar
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        name={user?.name || ""}
+        image={user?.image || ""}
+      />
+      {/* Mobile Sidebar Toggle Button */}
+      {isMobile && ( // Only show toggle button on mobile
+        <div className="flex items-center justify-between p-4 bg-gray-800 text-white">
+          <span className="text-xl font-bold">Nutrition App</span>
+          \<button
+            onClick={toggleSidebar}
+            className="p-2 rounded-md focus\:outline-none focus\:ring-2 focus\:ring-gray-500"
+          >
+            {isSidebarOpen ? (
+              <XMarkIcon className="w-6 h-6" />
+            ) : (
+              <Bars3Icon className="w-6 h-6" />
+            )}
+          </button>
+        </div>
+      )}
+      {/* Main content area including sidebar and main content */}
+      <div className="flex flex-1">
+        {" "}
+        {/* Use flex-1 to take up remaining vertical space */}
+        {/* Sidebar */}
+        <AnimatePresence>
+          {" "}
+          {/* Use AnimatePresence for exit animations */}
+          {(isSidebarOpen || !isMobile) && ( // Show sidebar if open on mobile or always on desktop
+            \<motion.div
+              key="sidebar" // Key is important for AnimatePresence
+              className="w-64 bg-gray-800 text-white p-6 space-y-6 flex-shrink-0
+                             fixed inset-y-0 left-0 transform md\:relative md\:translate-x-0 z-40 md\:z-auto" // Fixed for mobile, relative for desktop, z-index adjustment
+              variants={sidebarVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit" // Add exit variant
+              transition={{ duration: 0.3 }}
+            >
+              <div className="text-2xl font-bold mb-8 md:block hidden">
+                Nutrition App
+              </div>{" "}
+              {/* App Title/Logo - Hide on mobile toggle view */}
+              <div className="text-lg font-semibold mb-4 mt-10 md:mt-0">
+                Profile Navigation
+              </div>{" "}
+              {/* Adjust margin for mobile */}
+              <nav>
+                <ul className="space-y-2">
+                  {sidebarLinks.map((link) => (
+                    <li key={link.name}>
+                      \<a
+                        href={link.href}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleLinkClick(link.href)
+                        }}
+                        className={`block py-2 px-4 rounded transition duration-200
+                              ${
+                                activeSection === link.href
+                                  ? "bg-gray-700 text-teal-400"
+                                  : "hover:bg-gray-700 hover:text-teal-400"
+                              }
+                            `}
+                      >
+                        {link.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            \</motion.div>
+          )}
+        </AnimatePresence>
+        {/* Overlay when sidebar is open on mobile */}
+        <AnimatePresence>
+          {isSidebarOpen &&
+            isMobile && ( // Only show overlay on mobile when sidebar is open
+              \<motion.div
+                key="sidebar-overlay"
+                className="fixed inset-0 bg-black bg-opacity-50 z-30" // Adjusted z-index
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={toggleSidebar} // Close sidebar when clicking overlay
+              />
+            )}
+        </AnimatePresence>
+        {/* Main Content Area */}
+        {/* Added ml-64 on md and up to push content when sidebar is visible */}
+        \<div
+          className={`flex-1 p-4 md:p-8 overflow-y-auto ${
+            !isMobile ? "md:ml-10" : ""
+          }`}
+        >
+          <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-gray-800">
+            {/* Dynamically change title based on active section \*/}
+            {sidebarLinks
+              .find((link) => link.href === activeSection)
+              ?.name.replace(" (Biodata + Medical)", "") || "Profile"}
+          </h1>
+
+          {/\* Profile Section Content - Conditional Rendering based on activeSection */}
+          {activeSection === "#profile" && (
+            \<motion.div
+              id="profile-content" // Changed ID to avoid conflict with section div
+              className="bg-white p-4 md\:p-6 rounded-lg shadow-md space-y-6"
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {/* Profile Picture Section \*/}
+              \<motion.div
+                className="flex flex-col sm\:flex-row items-center space-y-4 sm\:space-y-0 sm\:space-x-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+              >
+                \<img
+                  src={user.picture || ""}
+                  alt="Profile"
+                  className="w-20 h-20 sm\:w-24 sm\:h-24 rounded-full object-cover border-4 border-teal-400"
+                />
+                <button className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition duration-200 text-sm sm:text-base">
+                  Change Profile Picture
+                </button>
+              \</motion.div>
+
+              {/\* Personal Information & Health Metrics */}
+              \<motion.div
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                  Personal Information & Health Metrics
+                </h2>
+                {/* Adjusted grid for mobile: 1 column on small, 2 on medium and up \*/}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      First Name
+                    </label>
+                    \<input
+                      type="text"
+                      name="firstName"
+                      value={profileData.firstName}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Last Name
+                    </label>
+                    \<input
+                      type="text"
+                      name="lastName"
+                      value={profileData.lastName}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Email Address
+                    </label>
+                    \<input
+                      type="email"
+                      name="email"
+                      value={profileData.email}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Date of Birth
+                    </label>
+                    \<input
+                      type="date"
+                      name="dateOfBirth"
+                      value={profileData.dateOfBirth}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Biological Sex
+                    </label>
+                    \<select
+                      name="biologicalSex"
+                      value={profileData.biologicalSex}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Height (cm)
+                    </label>
+                    \<input
+                      type="number"
+                      name="height"
+                      value={profileData.height}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Current Weight (kg)
+                    </label>
+                    \<input
+                      type="number"
+                      name="currentWeight"
+                      value={profileData.currentWeight}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Goal Weight (kg)
+                    </label>
+                    \<input
+                      type="number"
+                      name="goalWeight"
+                      value={profileData.goalWeight}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Activity Level
+                    </label>
+                    \<select
+                      name="activityLevel"
+                      value={profileData.activityLevel}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    >
+                      <option value="Sedentary">Sedentary</option>
+                      <option value="Lightly Active">Lightly Active</option>
+                      <option value="Moderately Active">
+                        Moderately Active
+                      </option>
+                      <option value="Very Active">Very Active</option>
+                    </select>
+                  </div>
+                </div>
+              \</motion.div>
+
+              {/\* Dietary Preferences & Goals \*/}
+              \<motion.div
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                  Dietary Preferences & Goals
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Dietary Style (comma-separated)
+                    </label>
+                    \<input
+                      type="text"
+                      name="dietaryStyle"
+                      value={profileData.dietaryStyle.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("dietaryStyle", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Allergies (comma-separated)
+                    </label>
+                    \<input
+                      type="text"
+                      name="allergies"
+                      value={profileData.allergies.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("allergies", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Food Dislikes (comma-separated)
+                    </label>
+                    \<input
+                      type="text"
+                      name="dislikes"
+                      value={profileData.dislikes.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("dislikes", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Calorie Target
+                    </label>
+                    \<input
+                      type="number"
+                      name="calorieTarget"
+                      value={profileData.calorieTarget}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Protein Goal (g)
+                    </label>
+                    \<input
+                      type="number"
+                      name="proteinGoal"
+                      value={profileData.proteinGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Carbohydrate Goal (g)
+                    </label>
+                    \<input
+                      type="number"
+                      name="carbGoal"
+                      value={profileData.carbGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Fat Goal (g)
+                    </label>
+                    \<input
+                      type="number"
+                      name="fatGoal"
+                      value={profileData.fatGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Fiber Goal (g)
+                    </label>
+                    \<input
+                      type="number"
+                      name="fiberGoal"
+                      value={profileData.fiberGoal}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                </div>
+              \</motion.div>
+
+              {/\* Health Conditions & App Progress \*/}
+              \<motion.div
+                variants={sectionVariants}
+                initial="hidden"
+                animate="visible"
+              >
+                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                  Health Conditions & App Progress
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Health Conditions (comma-separated)
+                    </label>
+                    \<input
+                      type="text"
+                      name="healthConditions"
+                      value={profileData.healthConditions.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange(
+                          "healthConditions",
+                          e.target.value
+                        )
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Fitness Goals (comma-separated)
+                    </label>
+                    \<input
+                      type="text"
+                      name="fitnessGoals"
+                      value={profileData.fitnessGoals.join(", ")}
+                      onChange={(e) =>
+                        handleArrayInputChange("fitnessGoals", e.target.value)
+                      }
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Logging Streak (Days)
+                    </label>
+                    \<input
+                      type="number"
+                      name="streak"
+                      value={profileData.streak}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                      readOnly // Streak is typically calculated, not edited directly
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label className="text-sm font-medium text-gray-600">
+                      Meals Logged This Week
+                    </label>
+                    \<input
+                      type="number"
+                      name="mealsLoggedThisWeek"
+                      value={profileData.mealsLoggedThisWeek}
+                      onChange={handleInputChange}
+                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md\:text-base"
+                      readOnly // This is also typically calculated
+                    />
+                  </div>
+                </div>
+              \</motion.div>
+
+              {/\* Action Buttons \*/}
+              \<motion.div
+                className="flex flex-col sm\:flex-row justify-end space-y-4 sm\:space-y-0 sm\:space-x-4 mt-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+              >
+                \<button
+                  onClick={handleSaveChanges}
+                  className="px-6 py-2 bg-green-600 text-white rounded-md hover\:bg-green-700 transition duration-200 text-sm md\:text-base"
+                >
+                  Save Changes
+                </button>
+                \<button
+                  onClick={handleCancel}
+                  className="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover\:bg-gray-400 transition duration-200 text-sm md\:text-base"
+                >
+                  Cancel
+                </button>
+              \</motion.div>
+            \</motion.div>
+          )}
+
+          {/\* Placeholder content for other sections \*/}
+          {activeSection === "#food-logging" && (
+            \<motion.div
+              id="food-logging-content" // Changed ID
+              className="bg-white p-4 md\:p-6 rounded-lg shadow-md"
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <h2 className="text-lg md:text-xl font-semibold text-gray-700">
+                Food Logging Content Goes Here
+              </h2>
+              <p className="mt-4 text-gray-600 text-sm md:text-base">
+                This section would contain the interface for logging meals,
+                snacks, and drinks.
+              </p>
+            \</motion.div>
+          )}
+
+          {activeSection === "#recipe-history" && (
+            \<motion.div
+              id="recipe-history-content" // Changed ID
+              className="bg-white p-4 md\:p-6 rounded-lg shadow-md"
+              variants={sectionVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <h2 className="text-lg md:text-xl font-semibold text-gray-700">
+                User Recipe History Content Goes Here
+              </h2>
+              <p className="mt-4 text-gray-600 text-sm md:text-base">
+                This section would display the recipes the user has created or
+                saved.
+              </p>
+            \</motion.div>
+          )}
+        </div>
+      </div>{" "}
+      {/\* End of flex-1 container \*/}
+    </div>
+  )
+}
+
+export default ProfilePage
+
+
+ theme: {
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "#6C63FF",
+          hover: "#5A52E0",
+          light: "#E8E7FF",
+        },
+        secondary: {
+          DEFAULT: "#F4F3FF",
+          foreground: "#1A1A1A",
+        },
+
+        // Full palette colors (Light Mode - Palette 3)
+        gunmetal: {
+          DEFAULT: "#223843",
+          100: "#070b0e",
+          200: "#0e171b",
+          300: "#152229",
+          400: "#1b2d36",
+          500: "#223843",
+          600: "#3e667a",
+          700: "#5c92ad",
+          800: "#92b6c8",
+          900: "#c9dbe4",
+        },
+        "anti-flash-white": {
+          DEFAULT: "#eff1f3",
+          100: "#2a3037",
+          200: "#53616e",
+          300: "#8291a1",
+          400: "#b9c2ca",
+          500: "#eff1f3",
+          600: "#f3f5f6",
+          700: "#f6f7f8",
+          800: "#f9fafb",
+          900: "#fcfcfd",
+        },
+        timberwolf: {
+          DEFAULT: "#dbd3d8",
+          100: "#2f272c",
+          200: "#5e4d58",
+          300: "#8d7484",
+          400: "#b4a3ae",
+          500: "#dbd3d8",
+          600: "#e2dbdf",
+          700: "#e9e4e7",
+          800: "#f0edef",
+          900: "#f8f6f7",
+        },
+        amber: {
+          DEFAULT: "#ffc100",
+          100: "#332600",
+          200: "#664d00",
+          300: "#997300",
+          400: "#cc9900",
+          500: "#ffc100",
+          600: "#ffcc33",
+          700: "#ffd966",
+          800: "#ffe699",
+          900: "#fff2cc",
+        },
+        "burnt-sienna": {
+          DEFAULT: "#d77a61",
+          100: "#32150c",
+          200: "#642919",
+          300: "#953e25",
+          400: "#c75232",
+          500: "#d77a61",
+          600: "#df9480",
+          700: "#e7afa0",
+          800: "#efcabf",
+          900: "#f7e4df",
+        },
+
+        // Full palette colors (Dark Mode - Palette 1)
+        snow: {
+          DEFAULT: "#fbf5f3",
+          100: "#4a2519",
+          200: "#944a31",
+          300: "#ca7a5f",
+          400: "#e2b8a9",
+          500: "#fbf5f3",
+          600: "#fcf7f6",
+          700: "#fdf9f8",
+          800: "#fdfbfa",
+          900: "#fefdfd",
+        },
+        "oxford-blue": {
+          DEFAULT: "#000022",
+          100: "#000007",
+          200: "#00000e",
+          300: "#000015",
+          350: "#000019", // New lighter shade for form fields
+          400: "#00001d",
+          500: "#000022",
+          600: "#000083",
+          700: "#0000e1",
+          800: "#4141ff",
+          900: "#a0a0ff",
+        },
+        cardinal: {
+          DEFAULT: "#c42847",
+          100: "#27080e",
+          200: "#4e101c",
+          300: "#75182b",
+          400: "#9c2039",
+          500: "#c42847",
+          600: "#da4865",
+          700: "#e3768c",
+          800: "#eca4b2",
+          900: "#f6d1d9",
+        },
+        "orange-wheel": {
+          DEFAULT: "#ff7d00",
+          100: "#331900",
+          200: "#663100",
+          300: "#994a00",
+          400: "#cc6300",
+          500: "#ff7d00",
+          600: "#ff9633",
+          700: "#ffb066",
+          800: "#ffca99",
+          900: "#ffe5cc",
+        },
+        asparagus: {
+          DEFAULT: "#749c75",
+          100: "#162017",
+          200: "#2d3f2d",
+          300: "#435f44",
+          400: "#5a7f5a",
+          500: "#749c75",
+          600: "#8faf8f",
+          700: "#abc3ab",
+          800: "#c7d7c7",
+          900: "#e3ebe3",
+        },
+        animation: {
+          'fade-in': 'fadeIn 0.5s ease-in-out',
+        },
+      },
+      fontFamily: {
+        sans: \["Inter", "sans-serif"],
+      },
+      animation: {
+        "fade-in": "fadeIn 0.5s ease-out",
+        "slide-in": "slideIn 0.5s ease-out",
+        "scale-in": "scaleIn 0.3s ease-out",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+       
+        slideIn: {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        scaleIn: {
+          "0%": { transform: "scale(0.95)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+      },
+    },
+  },
+
+

@@ -1,41 +1,42 @@
-import React, { useState, useEffect } from "react" // Import useEffect
+import React, { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 // Assuming Framer Motion is installed: npm install framer-motion
 // Heroicons for menu icon: npm install @heroicons/react
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline" // Using heroicons for menu/close icons
-import Navbar from "@/components/Navbar"
+import Navbar from "@/components/Navbar" // Assuming this Navbar component exists and handles dark mode internally or receives the prop
+import { useDarkMode } from "@/contexts/DarkModeContext" // Assuming DarkModeContext is set up
 
 // Placeholder data structure for user profile
 const initialProfileData = {
-  profilePicture: "https://placehold.co/150x150/E2E8F0/000000?text=Profile", // Placeholder image
-  firstName: "John",
-  lastName: "Doe",
-  email: "john.doe@example.com",
-  dateOfBirth: "1990-01-01",
-  biologicalSex: "Male",
-  height: 175, // in cm
-  currentWeight: 70, // in kg
-  goalWeight: 68, // in kg
-  activityLevel: "Moderately Active",
-  dietaryStyle: ["Vegetarian"],
-  allergies: ["Peanuts"],
-  dislikes: ["Mushrooms"],
-  calorieTarget: 2000,
-  proteinGoal: 100, // in grams
-  carbGoal: 250, // in grams
-  fatGoal: 60, // in grams
-  fiberGoal: 30, // in grams
-  healthConditions: ["None"],
-  fitnessGoals: ["Weight Maintenance"],
-  streak: 5, // Days streak
-  mealsLoggedThisWeek: 14,
+  profilePicture: "/placeholder-profile.png", // Placeholder image path
+  firstName: "",
+  lastName: "",
+  email: "",
+  dateOfBirth: "",
+  biologicalSex: "Male", // Default value
+  height: null, // Use null for numerical fields that could be empty
+  currentWeight: null,
+  goalWeight: null,
+  activityLevel: "Sedentary", // Default value
+  dietaryStyle: [], // Initialize as empty array
+  allergies: [], // Initialize as empty array
+  dislikes: [], // Initialize as empty array
+  calorieTarget: null,
+  proteinGoal: null, // in grams
+  carbGoal: null, // in grams
+  fatGoal: null, // in grams
+  fiberGoal: null, // in grams
+  healthConditions: [], // Initialize as empty array
+  fitnessGoals: [], // Initialize as empty array
+  streak: 0, // Days streak (typically calculated, not edited)
+  mealsLoggedThisWeek: 0, // (typically calculated, not edited)
 }
 
 // Sidebar navigation links
 const sidebarLinks = [
-  { name: "Food Logging", href: "#food-logging" },
   { name: "Profile (Biodata + Medical)", href: "#profile" },
+  { name: "Food Logging", href: "#food-logging" },
   { name: "User Recipe History", href: "#recipe-history" },
 ]
 
@@ -54,67 +55,102 @@ const sidebarVariants = {
 
 // Main Profile Page Component
 const ProfilePage = () => {
-  const user = JSON.parse(localStorage.getItem("user") || null)
-  console.log("User Data:", user)
-  const [profileData, setProfileData] = useState(initialProfileData)
+  const { darkMode, setDarkMode } = useDarkMode() // Use dark mode from context
+  // Attempt to load user data from localStorage, default to empty object if not found
+  // In a real app, this would likely come from an authenticated user context or API call
+  const user = JSON.parse(localStorage.getItem("user") || "{}")
+  console.log("User Data from localStorage:", user)
+
+  // State for profile data, initialized with defaults but potentially overwritten by loaded user data
+  const [profileData, setProfileData] = useState({
+    ...initialProfileData,
+    // Overwrite with actual user data if available (example: name, image)
+    firstName: user?.name?.split(" ")[0] || initialProfileData.firstName,
+    lastName: user?.name?.split(" ")[1] || initialProfileData.lastName,
+    email: user?.email || initialProfileData.email,
+    profilePicture: user?.image || initialProfileData.profilePicture,
+    // In a real app, load other profile data fields from user object or API
+    // For now, keep other initialProfileData defaults or load from a dedicated profile object if stored separately
+  })
+
   const [activeSection, setActiveSection] = useState("#profile") // State to manage active section in sidebar
   const [isSidebarOpen, setIsSidebarOpen] = useState(false) // State to control sidebar visibility on mobile
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768) // State to track if it's a mobile view
+  // Use useEffect to determine initial mobile state and set sidebar visibility
+  const [isMobile, setIsMobile] = useState(false) // Initial state before useEffect
 
-  // Effect to update isMobile state on window resize
+  // Effect to update isMobile state on window resize and set initial sidebar visibility
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768)
-      // If resizing from mobile to desktop, ensure sidebar is visible
-      if (window.innerWidth >= 768) {
-        setIsSidebarOpen(true)
-      } else {
-        // If resizing from desktop to mobile, ensure sidebar is closed initially
-        setIsSidebarOpen(false)
-      }
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+      // Set sidebar visibility based on screen size
+      setIsSidebarOpen(!mobile) // Open sidebar on desktop, close on mobile
     }
+
+    // Set initial state
+    handleResize()
 
     window.addEventListener("resize", handleResize)
 
-    // Initial check on mount
-    setIsSidebarOpen(window.innerWidth >= 768)
-
+    // Cleanup
     return () => {
       window.removeEventListener("resize", handleResize)
     }
   }, []) // Empty dependency array means this effect runs once on mount and cleans up on unmount
 
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setProfileData({ ...profileData, [name]: value })
+  // Handle input changes for single value fields
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value, type } = e.target
+    // Convert numerical inputs to numbers, but allow empty string/null
+    const processedValue =
+      type === "number" && value !== "" ? parseFloat(value) : value
+    setProfileData({ ...profileData, [name]: processedValue })
   }
 
   // Handle array input changes (e.g., allergies, dietary style)
-  const handleArrayInputChange = (name, value) => {
-    // Simple implementation: replace the array with a new one from comma-separated string
+  // Assumes comma-separated string input
+  const handleArrayInputChange = (name: string, value: string) => {
     setProfileData({
       ...profileData,
       [name]: value
         .split(",")
         .map((item) => item.trim())
-        .filter((item) => item !== ""),
-    }) // Filter empty strings
+        .filter((item) => item !== ""), // Filter out empty strings
+    })
   }
 
   // Handle Save Changes
   const handleSaveChanges = () => {
-    console.log("Saving changes:", profileData)
-    // Implement actual save logic here (e.g., API call)
-    // Replace alert with a proper message box or notification
-    alert("Profile changes saved (simulated)!")
+    console.log("Attempting to save changes:", profileData)
+    // TODO: Implement actual save logic here (e.g., API call to backend)
+    // You would typically send profileData to your backend API
+    alert("Profile changes save triggered (API call would go here)!")
+    // After successful save, you might update local storage or a global state
+    // localStorage.setItem("userProfileData", JSON.stringify(profileData));
   }
 
   // Handle Cancel
   const handleCancel = () => {
-    setProfileData(initialProfileData) // Reset to initial data
-    // Replace alert with a proper message box or notification
-    alert("Changes cancelled!")
+    console.log("Changes cancelled, resetting form.")
+    // TODO: Implement actual cancel logic - usually means re-fetching or resetting to the last saved state
+    // For this example, reset to the data loaded on component mount (or initial defaults)
+    // In a real app, you might store the original data in a separate state variable for this
+    // For simplicity here, let's just log it. Resetting to initialProfileData might not be desired
+    // if user data was loaded. A better approach would be to revert to the state *before* editing started.
+    alert("Changes cancelled (form not reset in this example)!")
+    // A real cancel might involve:
+    // setProfileData(originalProfileData); // if original data was stored
+  }
+
+  // Handle Profile Picture Change
+  const handleProfilePictureChange = () => {
+    console.log("Change Profile Picture button clicked.")
+    // TODO: Implement file upload or selection logic here
+    alert("Profile picture change functionality not yet implemented.")
   }
 
   // Toggle sidebar visibility
@@ -123,48 +159,83 @@ const ProfilePage = () => {
   }
 
   // Handle sidebar link click (closes sidebar on mobile)
-  const handleLinkClick = (href) => {
+  const handleLinkClick = (href: string) => {
     setActiveSection(href)
     if (isMobile) {
-      // Check if it's mobile view
-      setIsSidebarOpen(false) // Close sidebar on mobile
+      setIsSidebarOpen(false) // Close sidebar on mobile after clicking a link
     }
-    // In a real app with routing, you would navigate here
+    // In a real app with routing (like Next.js or React Router), you would navigate here
+    // e.g., router.push(href);
   }
 
+  // Determine main content margin based on sidebar visibility and mobile state
+  const mainContentMarginClass = isMobile ? "" : isSidebarOpen ? "md:ml-10" : ""
+
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 font-sans">
+    // Apply dark mode background and text colors to the main container
+    <div
+      className={`flex flex-col min-h-screen font-sans transition-colors duration-300
+                 ${
+                   darkMode
+                     ? "bg-gray-900 text-gray-100"
+                     : "bg-gray-100 text-gray-800"
+                 }`}
+    >
       {/* Navbar */}
-      <Navbar />
+      {/* Navbar should also handle dark mode based on the context */}
+      <Navbar
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+        name={user?.name || "Guest"} // Display user name from localStorage or "Guest"
+        image={user?.image || initialProfileData.profilePicture} // Display user image or placeholder
+      />
       {/* Mobile Sidebar Toggle Button */}
-      {isMobile && ( // Only show toggle button on mobile
-        <div className="flex items-center justify-between p-4 bg-gray-800 text-white">
-          <span className="text-xl font-bold">Nutrition App</span>
-          <button
-            onClick={toggleSidebar}
-            className="p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-          >
-            {isSidebarOpen ? (
-              <XMarkIcon className="w-6 h-6" />
-            ) : (
-              <Bars3Icon className="w-6 h-6" />
-            )}
-          </button>
-        </div>
-      )}
+      {/* Only show toggle button on mobile */}
+      <div
+        className={`flex items-center justify-between p-4 transition-colors duration-300
+                  ${
+                    darkMode
+                      ? "bg-gray-800 text-gray-100 shadow-md"
+                      : "bg-white text-gray-800 shadow-md"
+                  }
+                  md:hidden`} // Hide on medium and up screens
+      >
+        <span className="text-xl font-bold">Nutrition App</span>
+        <button
+          onClick={toggleSidebar}
+          className={`p-2 rounded-md focus:outline-none focus:ring-2 transition-colors duration-300
+                    ${
+                      darkMode
+                        ? "text-gray-100 focus:ring-gray-500"
+                        : "text-gray-800 focus:ring-gray-500"
+                    }`}
+          aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+        >
+          {isSidebarOpen ? (
+            <XMarkIcon className="w-6 h-6" />
+          ) : (
+            <Bars3Icon className="w-6 h-6" />
+          )}
+        </button>
+      </div>
       {/* Main content area including sidebar and main content */}
       <div className="flex flex-1">
-        {" "}
         {/* Use flex-1 to take up remaining vertical space */}
+
         {/* Sidebar */}
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {" "}
-          {/* Use AnimatePresence for exit animations */}
+          {/* initial={false} prevents exit animation on mount */}
           {(isSidebarOpen || !isMobile) && ( // Show sidebar if open on mobile or always on desktop
             <motion.div
               key="sidebar" // Key is important for AnimatePresence
-              className="w-64 bg-gray-800 text-white p-6 space-y-6 flex-shrink-0
-                             fixed inset-y-0 left-0 transform md:relative md:translate-x-0 z-40 md:z-auto" // Fixed for mobile, relative for desktop, z-index adjustment
+              className={`w-64 transition-colors duration-300 p-6 space-y-6 flex-shrink-0
+                        fixed inset-y-0 left-0 transform md:relative md:translate-x-0 z-40 md:z-auto
+                         ${
+                           darkMode
+                             ? "bg-gray-800 text-gray-100"
+                             : "bg-gray-800 text-white"
+                         }`} // Apply dark mode colors
               variants={sidebarVariants}
               initial="hidden"
               animate="visible"
@@ -182,7 +253,7 @@ const ProfilePage = () => {
               <nav>
                 <ul className="space-y-2">
                   {sidebarLinks.map((link) => (
-                    <li key={link.name}>
+                    <li key={link.href}>
                       <a
                         href={link.href}
                         onClick={(e) => {
@@ -190,12 +261,19 @@ const ProfilePage = () => {
                           handleLinkClick(link.href)
                         }}
                         className={`block py-2 px-4 rounded transition duration-200
-                              ${
-                                activeSection === link.href
-                                  ? "bg-gray-700 text-teal-400"
-                                  : "hover:bg-gray-700 hover:text-teal-400"
-                              }
-                            `}
+                           ${
+                             activeSection === link.href
+                               ? `${
+                                   darkMode
+                                     ? "bg-gray-700 text-orange-400"
+                                     : "bg-gray-700 text-teal-400"
+                                 }` // Active link color
+                               : `${
+                                   darkMode
+                                     ? "hover:bg-gray-700 hover:text-orange-400"
+                                     : "hover:bg-gray-700 hover:text-teal-400"
+                                 }` // Hover link color
+                           }`}
                       >
                         {link.name}
                       </a>
@@ -210,25 +288,30 @@ const ProfilePage = () => {
         <AnimatePresence>
           {isSidebarOpen &&
             isMobile && ( // Only show overlay on mobile when sidebar is open
-              <motion.div
-                key="sidebar-overlay"
-                className="fixed inset-0 bg-black bg-opacity-50 z-30" // Adjusted z-index
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
+              <div
                 onClick={toggleSidebar} // Close sidebar when clicking overlay
-              />
+              >
+                <motion.div
+                  key="sidebar-overlay"
+                  className="fixed inset-0 bg-black bg-opacity-50 z-30" // Overlay
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
             )}
         </AnimatePresence>
+
         {/* Main Content Area */}
-        {/* Added ml-64 on md and up to push content when sidebar is visible */}
         <div
-          className={`flex-1 p-4 md:p-8 overflow-y-auto ${
-            !isMobile ? "md:ml-10" : ""
-          }`}
+          className={`flex-1 p-4 md:p-8 overflow-y-auto transition-all duration-300
+                     ${mainContentMarginClass}`} // Dynamic margin
         >
-          <h1 className="text-2xl md:text-3xl font-bold mb-6 md:mb-8 text-gray-800">
+          <h1
+            className={`text-2xl md:text-3xl font-bold mb-6 md:mb-8 transition-colors duration-300
+                         ${darkMode ? "text-gray-100" : "text-gray-800"}`}
+          >
             {/* Dynamically change title based on active section */}
             {sidebarLinks
               .find((link) => link.href === activeSection)
@@ -238,8 +321,9 @@ const ProfilePage = () => {
           {/* Profile Section Content - Conditional Rendering based on activeSection */}
           {activeSection === "#profile" && (
             <motion.div
-              id="profile-content" // Changed ID to avoid conflict with section div
-              className="bg-white p-4 md:p-6 rounded-lg shadow-md space-y-6"
+              id="profile-content"
+              className={`p-4 md:p-6 rounded-lg shadow-md transition-colors duration-300 space-y-6
+                         ${darkMode ? "bg-gray-700" : "bg-white"}`} // Apply dark mode background
               variants={sectionVariants}
               initial="hidden"
               animate="visible"
@@ -252,11 +336,24 @@ const ProfilePage = () => {
                 transition={{ delay: 0.2, duration: 0.5 }}
               >
                 <img
-                  src={user.picture || ""}
+                  src={profileData.profilePicture} // Use profileData's picture
                   alt="Profile"
-                  className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-teal-400"
+                  className={`w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 transition-colors duration-300
+                             ${
+                               darkMode
+                                 ? "border-orange-400"
+                                 : "border-teal-400"
+                             }`} // Apply dark mode border color
                 />
-                <button className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition duration-200 text-sm sm:text-base">
+                <button
+                  onClick={handleProfilePictureChange}
+                  className={`px-4 py-2 rounded-md transition duration-200 text-sm sm:text-base
+                             ${
+                               darkMode
+                                 ? "bg-orange-600 text-white hover:bg-orange-700"
+                                 : "bg-teal-500 text-white hover:bg-teal-600"
+                             }`} // Apply dark mode button styles
+                >
                   Change Profile Picture
                 </button>
               </motion.div>
@@ -266,14 +363,25 @@ const ProfilePage = () => {
                 variants={sectionVariants}
                 initial="hidden"
                 animate="visible"
+                transition={{ delay: 0.3, duration: 0.5 }} // Add delay for staggered animation
               >
-                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                <h2
+                  className={`text-lg md:text-xl font-semibold mb-4 transition-colors duration-300
+                               ${darkMode ? "text-gray-200" : "text-gray-700"}`}
+                >
                   Personal Information & Health Metrics
                 </h2>
                 {/* Adjusted grid for mobile: 1 column on small, 2 on medium and up */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       First Name
                     </label>
                     <input
@@ -281,11 +389,24 @@ const ProfilePage = () => {
                       name="firstName"
                       value={profileData.firstName}
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="Enter your first name" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Last Name
                     </label>
                     <input
@@ -293,11 +414,24 @@ const ProfilePage = () => {
                       name="lastName"
                       value={profileData.lastName}
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="Enter your last name" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Email Address
                     </label>
                     <input
@@ -305,11 +439,24 @@ const ProfilePage = () => {
                       name="email"
                       value={profileData.email}
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="Enter your email" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Date of Birth
                     </label>
                     <input
@@ -317,18 +464,35 @@ const ProfilePage = () => {
                       name="dateOfBirth"
                       value={profileData.dateOfBirth}
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100"
+                                     : "bg-white border-gray-300 text-gray-800"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Biological Sex
                     </label>
                     <select
                       name="biologicalSex"
                       value={profileData.biologicalSex}
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100"
+                                     : "bg-white border-gray-300 text-gray-800"
+                                 }`} // Apply dark mode select styles
                     >
                       <option value="Male">Male</option>
                       <option value="Female">Female</option>
@@ -336,57 +500,118 @@ const ProfilePage = () => {
                     </select>
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Height (cm)
                     </label>
                     <input
                       type="number"
                       name="height"
-                      value={profileData.height}
+                      value={profileData.height || ""} // Use empty string for null/undefined in input value
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 175" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Current Weight (kg)
                     </label>
                     <input
                       type="number"
                       name="currentWeight"
-                      value={profileData.currentWeight}
+                      value={profileData.currentWeight || ""} // Use empty string for null/undefined
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 70" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Goal Weight (kg)
                     </label>
                     <input
                       type="number"
                       name="goalWeight"
-                      value={profileData.goalWeight}
+                      value={profileData.goalWeight || ""} // Use empty string for null/undefined
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 68" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Activity Level
                     </label>
                     <select
                       name="activityLevel"
                       value={profileData.activityLevel}
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100"
+                                     : "bg-white border-gray-300 text-gray-800"
+                                 }`} // Apply dark mode select styles
                     >
-                      <option value="Sedentary">Sedentary</option>
-                      <option value="Lightly Active">Lightly Active</option>
-                      <option value="Moderately Active">
-                        Moderately Active
+                      <option value="Sedentary">
+                        Sedentary (little or no exercise)
                       </option>
-                      <option value="Very Active">Very Active</option>
+                      <option value="Lightly Active">
+                        Lightly Active (light exercise/sports 1-3 days/week)
+                      </option>
+                      <option value="Moderately Active">
+                        Moderately Active (moderate exercise/sports 3-5
+                        days/week)
+                      </option>
+                      <option value="Very Active">
+                        Very Active (hard exercise/sports 6-7 days a week)
+                      </option>
+                      <option value="Extra Active">
+                        Extra Active (very hard exercise/sports & physical job)
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -397,13 +622,24 @@ const ProfilePage = () => {
                 variants={sectionVariants}
                 initial="hidden"
                 animate="visible"
+                transition={{ delay: 0.4, duration: 0.5 }} // Add delay
               >
-                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                <h2
+                  className={`text-lg md:text-xl font-semibold mb-4 transition-colors duration-300
+                               ${darkMode ? "text-gray-200" : "text-gray-700"}`}
+                >
                   Dietary Preferences & Goals
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Dietary Style (comma-separated)
                     </label>
                     <input
@@ -413,11 +649,24 @@ const ProfilePage = () => {
                       onChange={(e) =>
                         handleArrayInputChange("dietaryStyle", e.target.value)
                       }
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., Vegetarian, Vegan, Keto" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Allergies (comma-separated)
                     </label>
                     <input
@@ -427,11 +676,24 @@ const ProfilePage = () => {
                       onChange={(e) =>
                         handleArrayInputChange("allergies", e.target.value)
                       }
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., Peanuts, Gluten, Dairy" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Food Dislikes (comma-separated)
                     </label>
                     <input
@@ -441,67 +703,138 @@ const ProfilePage = () => {
                       onChange={(e) =>
                         handleArrayInputChange("dislikes", e.target.value)
                       }
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., Mushrooms, Olives" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Calorie Target
                     </label>
                     <input
                       type="number"
                       name="calorieTarget"
-                      value={profileData.calorieTarget}
+                      value={profileData.calorieTarget || ""} // Use empty string for null/undefined
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 2000" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Protein Goal (g)
                     </label>
                     <input
                       type="number"
                       name="proteinGoal"
-                      value={profileData.proteinGoal}
+                      value={profileData.proteinGoal || ""} // Use empty string for null/undefined
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 100" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Carbohydrate Goal (g)
                     </label>
                     <input
                       type="number"
                       name="carbGoal"
-                      value={profileData.carbGoal}
+                      value={profileData.carbGoal || ""} // Use empty string for null/undefined
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 250" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Fat Goal (g)
                     </label>
                     <input
                       type="number"
                       name="fatGoal"
-                      value={profileData.fatGoal}
+                      value={profileData.fatGoal || ""} // Use empty string for null/undefined
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 60" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Fiber Goal (g)
                     </label>
                     <input
                       type="number"
                       name="fiberGoal"
-                      value={profileData.fiberGoal}
+                      value={profileData.fiberGoal || ""} // Use empty string for null/undefined
                       onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., 30" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                 </div>
@@ -512,13 +845,24 @@ const ProfilePage = () => {
                 variants={sectionVariants}
                 initial="hidden"
                 animate="visible"
+                transition={{ delay: 0.5, duration: 0.5 }} // Add delay
               >
-                <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-700">
+                <h2
+                  className={`text-lg md:text-xl font-semibold mb-4 transition-colors duration-300
+                               ${darkMode ? "text-gray-200" : "text-gray-700"}`}
+                >
                   Health Conditions & App Progress
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Health Conditions (comma-separated)
                     </label>
                     <input
@@ -531,11 +875,24 @@ const ProfilePage = () => {
                           e.target.value
                         )
                       }
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., Diabetes, Hypertension" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Fitness Goals (comma-separated)
                     </label>
                     <input
@@ -545,33 +902,63 @@ const ProfilePage = () => {
                       onChange={(e) =>
                         handleArrayInputChange("fitnessGoals", e.target.value)
                       }
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      placeholder="e.g., Weight Loss, Muscle Gain" // Placeholder
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-100 placeholder-gray-400"
+                                     : "bg-white border-gray-300 text-gray-800 placeholder-gray-500"
+                                 }`} // Apply dark mode input styles
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Logging Streak (Days)
                     </label>
                     <input
                       type="number"
                       name="streak"
                       value={profileData.streak}
-                      onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      onChange={handleInputChange} // Still include handler even if readOnly, in case you want to enable editing later
                       readOnly // Streak is typically calculated, not edited directly
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base cursor-not-allowed transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-400"
+                                     : "bg-gray-200 border-gray-300 text-gray-600"
+                                 }`} // Styled for readOnly
                     />
                   </div>
                   <div className="flex flex-col">
-                    <label className="text-sm font-medium text-gray-600">
+                    <label
+                      className={`text-sm font-medium transition-colors duration-300
+                                       ${
+                                         darkMode
+                                           ? "text-gray-300"
+                                           : "text-gray-600"
+                                       }`}
+                    >
                       Meals Logged This Week
                     </label>
                     <input
                       type="number"
                       name="mealsLoggedThisWeek"
                       value={profileData.mealsLoggedThisWeek}
-                      onChange={handleInputChange}
-                      className="mt-1 p-2 border border-gray-300 rounded-md text-sm md:text-base"
+                      onChange={handleInputChange} // Still include handler
                       readOnly // This is also typically calculated
+                      className={`mt-1 p-2 border rounded-md text-sm md:text-base cursor-not-allowed transition-colors duration-300
+                                 ${
+                                   darkMode
+                                     ? "bg-gray-600 border-gray-500 text-gray-400"
+                                     : "bg-gray-200 border-gray-300 text-gray-600"
+                                 }`} // Styled for readOnly
                     />
                   </div>
                 </div>
@@ -582,17 +969,27 @@ const ProfilePage = () => {
                 className="flex flex-col sm:flex-row justify-end space-y-4 sm:space-y-0 sm:space-x-4 mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
+                transition={{ delay: 0.6, duration: 0.5 }} // Add delay
               >
                 <button
                   onClick={handleSaveChanges}
-                  className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition duration-200 text-sm md:text-base"
+                  className={`px-6 py-2 rounded-md transition duration-200 text-sm md:text-base
+                             ${
+                               darkMode
+                                 ? "bg-green-700 text-white hover:bg-green-800"
+                                 : "bg-green-600 text-white hover:bg-green-700"
+                             }`} // Apply dark mode save button styles
                 >
                   Save Changes
                 </button>
                 <button
                   onClick={handleCancel}
-                  className="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition duration-200 text-sm md:text-base"
+                  className={`px-6 py-2 rounded-md transition duration-200 text-sm md:text-base
+                             ${
+                               darkMode
+                                 ? "bg-gray-600 text-gray-100 hover:bg-gray-500"
+                                 : "bg-gray-300 text-gray-800 hover:bg-gray-400"
+                             }`} // Apply dark mode cancel button styles
                 >
                   Cancel
                 </button>
@@ -603,37 +1000,53 @@ const ProfilePage = () => {
           {/* Placeholder content for other sections */}
           {activeSection === "#food-logging" && (
             <motion.div
-              id="food-logging-content" // Changed ID
-              className="bg-white p-4 md:p-6 rounded-lg shadow-md"
+              id="food-logging-content"
+              className={`p-4 md:p-6 rounded-lg shadow-md transition-colors duration-300
+                         ${darkMode ? "bg-gray-700" : "bg-white"}`} // Apply dark mode background
               variants={sectionVariants}
               initial="hidden"
               animate="visible"
             >
-              <h2 className="text-lg md:text-xl font-semibold text-gray-700">
+              <h2
+                className={`text-lg md:text-xl font-semibold transition-colors duration-300
+                             ${darkMode ? "text-gray-200" : "text-gray-700"}`}
+              >
                 Food Logging Content Goes Here
               </h2>
-              <p className="mt-4 text-gray-600 text-sm md:text-base">
+              <p
+                className={`mt-4 text-sm md:text-base transition-colors duration-300
+                           ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+              >
                 This section would contain the interface for logging meals,
                 snacks, and drinks.
               </p>
+              {/* TODO: Add actual Food Logging components/UI */}
             </motion.div>
           )}
 
           {activeSection === "#recipe-history" && (
             <motion.div
-              id="recipe-history-content" // Changed ID
-              className="bg-white p-4 md:p-6 rounded-lg shadow-md"
+              id="recipe-history-content"
+              className={`p-4 md:p-6 rounded-lg shadow-md transition-colors duration-300
+                         ${darkMode ? "bg-gray-700" : "bg-white"}`} // Apply dark mode background
               variants={sectionVariants}
               initial="hidden"
               animate="visible"
             >
-              <h2 className="text-lg md:text-xl font-semibold text-gray-700">
+              <h2
+                className={`text-lg md:text-xl font-semibold transition-colors duration-300
+                             ${darkMode ? "text-gray-200" : "text-gray-700"}`}
+              >
                 User Recipe History Content Goes Here
               </h2>
-              <p className="mt-4 text-gray-600 text-sm md:text-base">
+              <p
+                className={`mt-4 text-sm md:text-base transition-colors duration-300
+                           ${darkMode ? "text-gray-300" : "text-gray-600"}`}
+              >
                 This section would display the recipes the user has created or
                 saved.
               </p>
+              {/* TODO: Add actual Recipe History components/UI */}
             </motion.div>
           )}
         </div>
